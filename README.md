@@ -11,7 +11,7 @@ The following labs and exercises will instruct you on how to configure and troub
 
 
 ## Table of Contents
-- [Class 1](#Class1)
+- [Class 1](#Class 1)
 
 
 ### Class1
