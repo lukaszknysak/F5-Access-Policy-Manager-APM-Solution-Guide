@@ -23,8 +23,10 @@ The following labs and exercises will instruct you on how to configure and troub
 
 ## Description
 
+## Table of Contents
+- [Class 1 – Access Policy Manager Solution](#Class 1 – Access Policy Manager Solution)
 
-- [Class 1 – Access Policy Manager Solution (F5 APM)](#Class 1 – Access Policy Manager Solution (F5 APM))
+
 
 ### Class 1 – Access Policy Manager Solution (F5 APM)
   * Module 1: APM GUI Overview
