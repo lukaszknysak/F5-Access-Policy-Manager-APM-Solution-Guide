@@ -24,7 +24,7 @@ The following labs and exercises will instruct you on how to configure and troub
 
 ## Table of Contents
 - [Class 1](#class-1)
-- [Module 1](#module-1)
+  * [Module 1](#module-1)
 
 ## Class 1
 ## Class 1 – Access Policy Manager Solution (F5 APM)
@@ -166,7 +166,8 @@ Internal
 10.1.20.18
 
 Credentials: admin/admin
- 
+
+## Module 1
 ## Module 1 : APM GUI Overview
 Objectives
 The intention of this lab will be to show how to enable Access Policy Manager (APM) through resource provisioning. Next we will explore all the components within the Access left menu. This is not a deep dive on the components but an overview of the components, features and concepts of APM.
