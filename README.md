@@ -19,7 +19,149 @@ The following labs and exercises will instruct you on how to configure and troub
   * Module 3: Server-Side Single Sign-On
   * Module 4: Identity Federation sample use case
 
+# Environment Overview
 
+## UDF Blueprint
+
+## Access Labs & Solutions (Version 16.0)
+
+## Lab Topology
+
+![image](https://user-images.githubusercontent.com/51786870/210523646-afd46189-003d-4d8a-a3f3-6f023cde63ab.png)
+
+The following components have been included in your lab environment:
+
+```Note```
+
+BIG-IP2 and BIG-IP6 are offline by default. Only boot these BIG-IPs when the lab specifies to do so.
+
+4 x F5 BIG-IP VE (v16.0)
+1 x Windows Server 2016 - jumphost.f5lab.local
+1 x Windows 2016 Server - dc1.f5lab.local (AD, CA, OCSP & internal DNS)
+1 x Windows 2016 Server - iis.f5lab.local
+1 x Centos 7 - web.f5lab.local
+Lab Components
+The following table lists VLANS, IP Addresses and Credentials for all components:
+
+Component	VLAN/IP Address(es)	Credentials
+jumpbox.f5lab.local	
+Management 10.1.1.10
+External 10.1.10.10
+Internal 10.1.20.10
+Username	Password
+f5lab\user1	user1
+f5lab\user2	user2
+f5lab\admin	admin
+bigip1.f5lab.local	
+Management 10.1.1.4
+External
+10.1.10.4
+10.1.10.100
+10.1.10.101
+10.1.10.102
+10.1.10.103
+10.1.10.104
+10.1.10.105
+10.1.10.106
+10.1.10.107
+10.1.10.108
+10.1.10.109
+10.1.10.110
+10.1.10.111
+10.1.10.112
+10.1.10.113
+Internal 10.1.20.4
+admin	admin
+ 
+bigip2.f5lab.local	
+Management 10.1.1.5
+External
+10.1.10.5
+10.1.10.200
+10.1.10.201
+10.1.10.202
+10.1.10.203
+10.1.10.204
+10.1.10.205
+10.1.10.206
+10.1.10.207
+10.1.10.208
+10.1.10.209
+10.1.10.210
+10.1.10.211
+10.1.10.212
+10.1.10.213
+Internal 10.1.20.5
+admin	admin
+ 
+bigip5.f5lab.local	
+Management 10.1.1.11
+External
+10.1.10.11
+10.1.10.99
+Internal
+10.1.20.11
+10.1.20.99
+admin	admin
+ 
+bigip6.f5lab.local	
+Management 10.1.1.12
+External
+10.1.10.12
+10.1.10.199
+Internal
+10.1.20.12
+10.1.20.199
+admin	admin
+ 
+dc1.f5lab.local	
+Management 10.1.1.7
+Internal 10.1.20.7
+admin	admin
+ 
+iis.f5lab.local	
+Management 10.1.1.6
+Internal
+10.1.20.6
+10.1.20.16
+admin	admin
+ 
+web.f5lab.local	
+Management 10.1.1.9
+Internal
+10.1.20.9
+10.1.20.19
+admin	admin
+ 
+radius.f5lab.local	
+Management 10.1.1.8
+Internal
+10.1.20.8
+10.1.20.18
+admin	admin
+ 
+
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+##
+#
+#
+#
+#
+#
+#
+#
+#
+#
+##
 
 
 
