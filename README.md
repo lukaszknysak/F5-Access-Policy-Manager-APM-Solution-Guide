@@ -236,6 +236,29 @@ Access Guided Configuration (AGC) provides an easy way to create BIG-IP configur
 ![image](https://user-images.githubusercontent.com/51786870/210528190-f874cb23-d500-4d97-84a2-9b5d10d765ec.png)
 
 
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+
+| General Information |	Name	| basic_log_profile |
+| ------------- | ------------- |
+|	  |		Enable Access System Logs	|	Check box |	
+|	Access System Logs	|	Publisher	|	/Common/sys-db-access-publisher
+|	|		Access Policy |		Notice |	
+|	|	 	ACL	|	Notice |	
+ 	Secure Web Gateway	Notice
+ 	OAuth	Notice
+ 	VDI	Notice
+ 	ADFS Proxy	Notice
+ 	Per-Request Policy	Notice
+ 	SSO	Notice
+ 	ECA	Notice
+ 	PingAccess Profile	Notice
+ 	Endpoint Management System	Notice
+Access Profile	Selected	(leave this blank for now)
+
 #
 #
 #
