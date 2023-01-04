@@ -669,6 +669,8 @@ You now have an object that can be used to facilitate Active Directory authentic
 
 12. Choose the **AD Auth** radio button and click **Add Item**
 
+![image](https://user-images.githubusercontent.com/51786870/210550024-6cc036e0-7b45-4c36-810a-2dd67a1470a7.png)
+
 13. Under the **Server** field click on the drop down menu and choose the AAA server **basic-ad-servers**
 
 14. Click **Save**
@@ -694,7 +696,138 @@ Now you have a basic policy with AD Authentication that you can leverage for Web
 | username |	user1 |
 | -------- | ----- |
 | password	| user1 |
+
+22. After correct login attempt you should see ACME backend app.
+
+![image](https://user-images.githubusercontent.com/51786870/210550391-c9ef10ec-b2bb-46a4-b895-3e5e87f305b9.png)
+
+23. Review Access Session logs and reports.
+
+
+# Task 8: Connectivity/VPN¶
+
+**Note**
+`In interest of time the VPN configuration has already been completed. The next several steps will be observing what the configuration looks like and testing out the connectivity.`
+
+**Policy Walk-Through**
+
+1. Navigate to **Access** –> **Profiles/Policies** –> **Access Profiles (Per-Session Policies)**
+
+2. Locate profile **vpn-psp** and click on **Edit**. This opens the Visual Policy Editor (VPE) and we can take a look at the policy
+
+![image](https://user-images.githubusercontent.com/51786870/210550760-f9b96cc7-b8a2-40ac-8986-61a2a718f74b.png)
+
+3. A user enters their credentials into the logon page agent. - Those credentials are collected, stored as the default system session variables of session.logon.last.username and session.logon.last.password.
+
+4. The AD Auth Agent validates the username and password session variables against the configured AD Domain Controller.
+
+5. The user is assigned resources defined in the Advanced Resource Assign Agent
+
+6. The user is granted access via the Allow Terminal
+
+7. If unsuccessful, the user proceeds down the fallback branch and denied access via the Deny Terminal
+
+**Policy Agent Configuration**
+
+The Logon Page contains only the default setting
+
+![image](https://user-images.githubusercontent.com/51786870/210551123-93409251-f669-4968-8cad-0a9713b1a15b.png)
+
+The AD Auth agent defines the AAA AD Servers that a user will be authenticated against. All Setting are the default.
+
+![image](https://user-images.githubusercontent.com/51786870/210551170-dcf3f56b-0f43-4d2c-ac77-965cfe2fd695.png)
+
+The Advanced Resource Assign agent grants a user access to the assigned resources.
+
+![image](https://user-images.githubusercontent.com/51786870/210551204-192d0cce-1456-490d-8eff-b43ab12a9886.png)
+
+**Supporting APM Objects**
+
+**Network Access Resource**
+
+Navigate to **Access** –> **Connectivity/VPN** –> **Network Access (VPN)** –> **Network Access Lists**
+
+Click the **vpn** Network Access Profile
+
+The Properties page contains the Caption name **VPN**. This is the name displayed to a user.
+
+![image](https://user-images.githubusercontent.com/51786870/210551405-e3b04d05-6705-4e71-ab66-a67cc9246bc7.png)
+
+  * The Network Settings tab assigns the **lease pool** of ip addresses that will be used for the VPN.
+
+  * Split Tunneling is configured to permit only the **10.1.20.0/24** subnet range inside the VPN.
+
+![image](https://user-images.githubusercontent.com/51786870/210551538-c382bdf1-777e-4a0f-8c8f-c219a7594524.png)
+
+
+**Lease Pool**
+
+Navigate to **Access** –> **Connectivity/VPN** –> **Network Access (VPN)** –> **IPV4 Lease Pools**
+
+Click **vpn-vpn_pool** lease pool object
+
+A single address of **10.1.20.254** is assigned inside the lease pool.
+
+![image](https://user-images.githubusercontent.com/51786870/210551633-cb35491e-97f2-4db3-8e19-9a7edc5f1e67.png)
+
+
+**Webtop Sections**
+
+Navigate to **Access** –> **Webtops** –> **Webtop Sections**
+
+Click on **vpn-network_access**
+
+A single section is configured to display a custom name.
+
+![image](https://user-images.githubusercontent.com/51786870/210551708-819923ca-6798-4011-a9ec-7daea88244c1.png)
+
+**Webtop Lists**
+
+Navigate to **Access** –> **Webtops** –> **Webtop Lists**
+
+Click on **vpn-webtop**
+
+  * A Full Webtop was defined with modified default settings.
+  * The Minimize to Tray box is checked to ensure the Webtop is not displayed when a user connects to the VPN.
+
+![image](https://user-images.githubusercontent.com/51786870/210551805-67267735-d738-44b7-ace5-7784e2ada704.png)
+
+
+**The Policy from a user’s perspective**
+
+1. The connects to https://vpn.acme.com with the following credentials
+
+| username |	user1 |
 | -------- | ----- |
+| password	| user1 |
+
+![image](https://user-images.githubusercontent.com/51786870/210551919-3baabc96-a52b-4cbb-a3fc-dd3916d3e999.png)
+
+2. Once authenticated the user is presented a Webtop with a single VPN icon.
+
+![image](https://user-images.githubusercontent.com/51786870/210551961-94f08ac6-6258-48be-a4e9-1836a312f0c0.png)
+
+3. Assuming the VPN has already been installed the user is notified that the client is attempting to start
+
+![image](https://user-images.githubusercontent.com/51786870/210551999-b5983f5e-6884-4edc-9459-8592e46e2e90.png)
+
+**Note**
+
+`You may be prompted to download the VPN update. This is what a user will experience if you have auto-update enabled in the VPN Connectivity Profile. Click Download and wait for the components to update.`
+
+4. A popup opens displaying the status of the VPN connection. The status will eventually become Connected
+
+![image](https://user-images.githubusercontent.com/51786870/210552072-18ad8b64-f573-4274-ac2e-20b2dbf25fcb.png)
+
+**Note**
+
+`If you lose the pop-up check the system tray for the little red ball. Right click and choose restore`
+
+5. Click **Disconnect**
+
+**Note**
+
+`For more information on API Protection consider taking the API Protection lab. For more information on SWG, ACL and Webtops see the appendix or further APM labs.`
 
 
 
@@ -712,31 +845,3 @@ Now you have a basic policy with AD Authentication that you can leverage for Web
 #
 #
 #
-#
-#
-#
-#
-#
-#
-##
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
