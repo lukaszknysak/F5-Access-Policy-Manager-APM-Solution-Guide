@@ -26,7 +26,7 @@ The following labs and exercises will instruct you on how to configure and troub
 - [Class 1](#class-1)
 - [Module 1](#module-1)
 
-
+## Class 1
 ## Class 1 – Access Policy Manager Solution (F5 APM)
   * Module 1: APM GUI Overview
   * Module 2: Building a Basic Access Policy
