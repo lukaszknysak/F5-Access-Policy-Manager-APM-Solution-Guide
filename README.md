@@ -436,13 +436,11 @@ The per-session policy runs when a client initiates a session. (A per-session po
 
 9. Click on the server1-psp and explore the settings for the Profile.
 
-| Settings	| Here you can manage settings for the profile. You may want to change timeouts, max sessions and login attempts. These are settings specifically for this profile. |
+**Settings**	- Here you can manage settings for the profile. You may want to change timeouts, max sessions and login attempts. These are settings specifically for this profile.
 
+**Configurations** - These are more advanced options and covered in other labs
 
-
-
-| Configurations |	These are more advanced options and covered in other labs |
-| Language Settings	| You have to set this at creation. |
+**Language Settings**	- You have to set this at creation.
 
 
 **Note**
@@ -455,8 +453,39 @@ BIG-IP APM offers a number of Single Sign On (SSO) options. The SSO/Auth Domain 
 
 **Note**
 
-`We will not discuss Multi-Domain in this lab but you can find more information in the Appendix`
+`We will not discuss Multi-Domain in this lab but you can find more information in later chapters`
 
+11. From the top menu bar click on Logs
+
+12. The log profile we created earlier is now listed here. The Default log profile is attached but we can remove that and add the basic_log_profile
+
+13. Click Update.
+
+That concludes the review of the Per Session policy.
+
+**Note**
+
+`A per session profile is required (even if it is blank) to be deployed with a per request policy`
+
+**Per Request policies**
+
+1. From the left menu navigate to Access –> Profiles/Policies –> Per Request Policies
+
+APM executes per-session policies when a client attempts to connect to the enterprise. After a session starts, a per-request policy runs each time the client makes an HTTP or HTTPS request. Because of this behavior, a per-request policy is particularly useful in the context of a Secure Web Gateway or Zero Trust scenario, where the client requires re-verification on every request, or changes based on gating criteria.
+
+A per-request policy can include a subroutine, which starts a subsession. Multiple subsessions can exist at one time. You can use nearly all of the same agents in per-request policies that you can use in per-session policies. However, most of the agents (including authentication agents) have to be used in a subroutine in per-request policies.
+
+2. Click **Create**
+
+| General Properties	 |         Name        |	server1_prp_policy |
+|	                    |    Profile Type	    |         All        |
+|                     |	Incomplete Action	  |        Deny        |
+|                     |	Customization Type	 |      Modern        |
+| Language Settings	  | Accepted Languages	 |   English          |
+
+3. Click **Finished**
+
+4. Click **Edit**
 
 #
 #
