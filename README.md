@@ -437,8 +437,26 @@ The per-session policy runs when a client initiates a session. (A per-session po
 9. Click on the server1-psp and explore the settings for the Profile.
 
 | Settings	| Here you can manage settings for the profile. You may want to change timeouts, max sessions and login attempts. These are settings specifically for this profile. |
+
+
+
+
 | Configurations |	These are more advanced options and covered in other labs |
 | Language Settings	| You have to set this at creation. |
+
+
+**Note**
+
+`If you are unsure of the settings you need at profile creation you can see that you can return to the profile and make adjustments.`
+
+10. Still in the profile click on SSO/Auth Domain at the top
+
+BIG-IP APM offers a number of Single Sign On (SSO) options. The SSO/Auth Domain tab in a Per Session Profile is where you will select what SSO method to use for your application. In Task 6 we will cover the objects that need to be created in order to associate that SSO method to a policy. At this time the drop down for the SSO Configuration will have a pre-built SSO object we will use later.
+
+**Note**
+
+`We will not discuss Multi-Domain in this lab but you can find more information in the Appendix`
+
 
 #
 #
