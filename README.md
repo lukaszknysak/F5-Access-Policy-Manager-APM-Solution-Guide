@@ -587,9 +587,61 @@ Bonus Answer: Why don’t we see logon pages?
 `What is in the policy so far?`
 
 
+# Task 5: Authentication¶
 
+BIG-IP APM serves as an authentication gateway or proxy. As an authentication proxy, BIG-IP APM provides separate client-side and server-side authentication. Client-side authentication occurs between the client and BIG-IP APM. Server-side authentication occurs between BIG-IP APM and servers.
 
+Loose coupling between the client-side and server-side layers allows for a rich set of identity transformation services. Combined with a Visual Policy Editor and an expansive set of access iRules functionality, BIG-IP APM provides flexible and dynamic identity and access, based on a variety of contexts and conditions.
 
+For example, a client accessing Microsoft SharePoint through BIG-IP APM in a corporate environment may silently authenticate to BIG-IP APM with NT LAN Manager (NTLM) or Kerberos credentials. On leaving that environment, or on using a different non-sanctioned device, the client may be required to go through another potentially stronger authentication, such as a smart card or other client certificate, RSA SecurID, or one-time passcode. You can require additional device vetting such as file, folder, and registry checks and antivirus and firewall software validation.
+
+A BIG-IP APM authentication and SSO features access and identity security posture can automatically change depending on environmental factors, such as who or where the user is, what resource the user is accessing, or when or with what method the user is attempting to gain access.
+
+Data centers and Cloud deployments often face the challenge of offering multiple applications with different authentication requirements. You can deploy BIG-IP APM to consolidate and enforce all client-side authentication into a single process. BIG-IP APM can also perform identity transformation on the server side to authenticate to server services using the best-supported methods. This can reduce operational costs since applications remain in the most-supported and documented configurations. Common examples of identity transformation are client-side public key infrastructure (PKI) certificate to server-side Kerberos and client-side HTTP form to server-side HTTP Basic.
+
+The following figure shows BIG-IP APM acting as an authentication gateway. Information received during pre-authentication is transformed to authenticate to multiple enterprise applications with different requirements.
+
+![image](https://user-images.githubusercontent.com/51786870/210547813-0aa0243f-ec6e-4270-bac2-b4811caffa78.png)
+
+1. Client-side authentication
+
+Client-side authentication involves the client (typically a user employing a browser) accessing a BIG-IP APM virtual server and presenting identity. This is called authentication, authorization, and accounting (AAA).
+
+BIG-IP APM supports industry standard authentication methods, including:
+
+  * NTLM
+  * Kerberos
+  * Security Assertion Markup Language (SAML)
+  * Client certificate
+  * RSA SecurID
+  * One-time passcode
+  * HTTP Basic
+  * HTTP Form
+  * OAuth 2.0
+  * OpenId Connect
+
+After access credentials are submitted, BIG-IP APM validates the listed methods with industry-standard mechanisms, including:
+
+  * Active Directory authentication and query
+  * LDAP and LDAPS authentication and query
+  * Remote Authentication Dial-in User Service (RADIUS)
+  * Terminal Access Controller Access Control System (TACACS)
+  * Online Certificate Status Protocol (OCSP) and Certificate Revocation List Distribution Point (CRLDP) (for client certificates)
+  * Local User Database authentication
+
+2. Go to Access –> Authentication –> Active Directory
+
+3. Click on basic-ad-servers and review the settings. You can choose to use go direct or use a pool of AD servers.
+
+| General Properties	| Name	| basic-ad-servers |
+| ------------------ | ---- | ---------------- |
+| Configuration	| Domain Name	| f5lab.local |
+| |  	Server Connection	| Use Pool |
+| |  	Domain Controller Pool Name	| /Common/basic-ad-pool |
+| |  	IP Address	| 10.1.20.7 |
+| |  	Hostname	| dc1.f5lab.local |
+| |  	Admin Name	| admin |
+| |  	Admin Password	| admin |
 
 #
 #
