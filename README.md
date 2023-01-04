@@ -150,6 +150,90 @@ Internal
 
 Credentials: admin/admin
  
+# Lab 1: APM GUI Overview
+Objectives
+The intention of this lab will be to show how to enable Access Policy Manager (APM) through resource provisioning. Next we will explore all the components within the Access left menu. This is not a deep dive on the components but an overview of the components, features and concepts of APM.
+
+Setup Lab Environment
+To access your dedicated student lab environment, you will need a web browser and Remote Desktop Protocol (RDP) client software. The web browser will be used to access the Unified Demo Framework (UDF) Training Portal. The RDP client will be used to connect to the jumphost, where you will be able to access the BIG-IP management interfaces (HTTPS, SSH).
+
+1. Click DEPLOYMENT located on the top left corner to display the environment
+
+2. Click ACCESS next to jumphost.f5lab.local
+
+![image](https://user-images.githubusercontent.com/51786870/210525081-9bc87b68-6ef8-4226-a1ed-01364467fcb2.png)
+
+3. Select your RDP resolution.
+
+4. The RDP client on your local host establishes a RDP connection to the Jump Host.
+
+5. Login with the following credentials:
+
+User: f5lab\user1
+Password: user1
+
+6. After successful logon the Chrome browser will auto launch opening the site **https://portal.f5lab.local**. This process usually takes 30 seconds after logon.
+
+7. Click the Classes tab at the top of the page. Scroll down the page until you see 101 Intro to Access Foundational Concepts on the left.
+
+![image](https://user-images.githubusercontent.com/51786870/210526547-33013d9a-5de4-4ad1-bc21-73678de82f76.png)
+
+8. Hover over tile APM GUI Overview. A start and stop icon should appear within the tile. Click the Play Button to start the automation to build the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210526785-3891470b-c0c2-4f49-966a-84318fb1306a.png)
+
+9. After the click it may take up to 30 seconds before you see processing
+
+![image](https://user-images.githubusercontent.com/51786870/210526877-63fe129a-7f9b-419b-996c-62fa21dfcb2a.png)
+
+10. Scroll to the bottom of the automation workflow to ensure all requests succeeded. If you experience errors try running the automation a second time.
+
+![image](https://user-images.githubusercontent.com/51786870/210527173-850b0cfe-72d7-4fe2-87e0-554e86748828.png)
+
+## Task 1: Resource Provisioning¶
+Access Policy Manager (APM) is a module available for use on the BIG-IP platform (Hardware and Virtual). Unlike other modules, APM can be provisioned with limited functionality on any BIG-IP platform without a specific license (see F5 KB15854). APM is licensed based on the number of Access Sessions and Concurrent Users Sessions (see APM Operations Guide). You can provision APM limited and immediately start using all the functions of APM with a limitation of 10 Access and Concurrent user session.
+
+**Important**
+
+`APM has already been provisioned for this lab. The next step would be completed if you are provisioning on your own BIG-IP.`
+
+1. Open new tab and log in to bigip1.f5lab.local with administrative credentials provided
+
+2. On the left menu navigate to System –> Resource Provisioning
+
+Click box and on the drop down next to the module and choose Nominal
+
+**Note**
+
+`In most use cases you will want to use Nominal for provisioning modules. What does each setting mean?`
+
+**Dedicated**	Specifies that all resources are dedicated to the module you are provisioning. For all other modules, the level option must be set to none.
+
+**Minimum**	Specifies that you want to provision the minimum amount of resources for the module you are provisioning.
+
+**Nominal**	Specifies that you want to share all of the available resources equally among all of the modules that are licensed on the unit.
+
+![image](https://user-images.githubusercontent.com/51786870/210527769-df257591-d1ec-4896-9253-b6184bd5843a.png)
+
+4. Before you click on Submit note that this operation will halt operations while the module provisions. Do not do this on an active unit processing traffic unless you are in an outage window. This will not require a reboot but will take approximately 1 to 5 minutes to complete.
+
+![image](https://user-images.githubusercontent.com/51786870/210527834-8ea519f0-b4ad-40f3-8fe0-e2911a11a6fa.png)
+
+**Note**
+
+`Resource Provisioning is not a synced item between HA pairs. You will need to provision the module on all devices in the cluster.`
+
+## Task 2: Guided Configuration¶
+
+Access Guided Configuration (AGC) provides an easy way to create BIG-IP configurations for categories of Access use cases. This feature is an independent release from TMOS and requires updates for new configurations from time to time. To find updates and expanded use cases it will be necessary to download and install updates from https://downloads.f5.com. In this task we are going to explore the menu and take a look at a few options. We will not be deploying any of these solutions in this lab.
+
+1. Go to Access –> Guided Configuration
+
+![image](https://user-images.githubusercontent.com/51786870/210528155-38bebe19-f3da-4c4d-b8a8-b6dfb091426e.png)
+
+2. A set of tiles appears at top listing the areas of use cases where Guided Configuration can be used
+
+![image](https://user-images.githubusercontent.com/51786870/210528190-f874cb23-d500-4d97-84a2-9b5d10d765ec.png)
 
 
 #
