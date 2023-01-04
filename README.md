@@ -1483,9 +1483,66 @@ What we have demonstrated here is the application of step-up authentication to a
 
 **Module 2 is now complete.**
 
+## Module 3
+## Module 3: Server-Side Single Sign-On
 
+The purpose of this lab is to demonstrate Single Sign-On capabilities of APM. The SSO Credential Mapping action enables users to forward stored user names and passwords to applications and servers automatically, without having to input credentials repeatedly. This allows single sign-on (SSO) functionality for secure user access. As different applications and resources support different authentication mechanisms, the SSO system may be required to store and transform credentials to meet these requirements. For example, username and password may be transformed into forms-based authentication, a SAML assertion into Kerberos or Kerberos authentication into SAML.
 
+Although a number of different SSO methods exist, this lab will demonstrate access single SSO method certificate authentication on the client side to Kerberos authentication to the backend server
 
+Objective:
+
+   * Gain an understanding of authentication transformation through APM, client side vs server side
+   * Gain an understanding of the leveraging different auth methods
+   * Develop an awareness of the different deployment models for single sign on
+
+### Lab Requirements:
+
+Virtual Servers policies and configuration for this lab were completed through the automation run in previous lab. We will review the components involved in this SSO solution.
+
+Estimated completion time: 15 minutes
+
+### Task 1: Policy review
+**Note**
+`All the objects and configuration have been completed for you. In this lab we will explore the configuration and test.`
+
+1. From the jumphost launch Chrome and login to **bigip1.f5lab.local** as **admin/admin**
+
+2. Navigate to **Access** -> **Profiles/Policies** -> **Access Profiles (Per-Session Policies)**
+
+3. Locate solution6-psp and click **Edit**
+
+![image](https://user-images.githubusercontent.com/51786870/210596291-d9976c28-7278-4d98-b4ba-cf7b03962ae1.png)
+
+Let’s walk through the policy flow:
+
+   * A user is prompted to select their certificate.
+   * The validation of the user certificates is controlled via CA bundles selected in the Client-side SSL Profile.
+   * The certificate is validated by OCSP if the user presents a certificate issued by a trusted CA
+   * The othername field is extracted from the certificate
+   * A LDAP query is performed to collect the sAMAccountName of the user
+   * The domain and username variables are set
+   * The user is granted access via the Allow Terminal
+   * If the LDAP Query is unsuccessful, the user proceeds down the fallback branch to the Deny Terminal
+   * If the OCSP check is unsuccessful, the user proceeds down the fallback branch to the Deny Terminal
+   * If the user fails to present a certificate, the user proceeds down the fallback branch to the Deny Terminal
+
+### Task 2: Supporting APM Objects review
+
+1. Navigate to Access -> Authentication -> OCSP Responder and click on the AAA OCSP Responder object solution6-ocsp-servers
+
+2. Change the configuration from Basic to Advanced. The OCSP Responder has been configured with the following settings:
+
+   * URL: this field is only used if you check the Ignore AIA field
+   * Certificate Authority File: contains the root ca bundle
+   * Certificate Authority Path: this field is only used if you check the Ignore AIA field
+   * The rest of the settings are default
+
+![image](https://user-images.githubusercontent.com/51786870/210596653-7191348d-ad5f-4c8b-8e3e-6787a71d9273.png)
+
+3. Navigate to **Access** -> **Authentication** -> **LDAP** for the AAA LDAP Object
+
+4. Click on **solution6-ldap-servers**. A single LDAP server of 10.1.20.7 has been configured with a admin service account to support queries
 
 
 #
