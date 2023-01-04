@@ -488,6 +488,104 @@ A per-request policy can include a subroutine, which starts a subsession. Multip
 
 4. Click **Edit**
 
+A per request policy creation will work the same way as a per session policy allowing you to add various items to the main policy and create macros. In addition a per request policy can also contain subroutines.
+
+**Note**
+
+`A per-request policy subroutine is a collection of actions. What distinguishes a subroutine from other collections of actions (such as macros), is that a subroutine starts a subsession that, for its duration, controls user access to specified resources. If a subroutine has an established subsession, subroutine execution is skipped. A subroutine is therefore useful for cases that require user interaction (such as a confirmation dialog or a step-up authentication), since it allows skipping that interaction in a subsequent access.`
+
+You cannot use subroutines in macros within per-request policies. Subroutine properties specify subsession timeout values, maximum macro loop count, and gating criteria. You can reauthenticate, check for changes on the client, or take other actions based on timeouts or gating criteria.
+
+**Note**
+
+`A subsession starts when a subroutine runs and continues until reaching the maximum lifetime specified in the subroutine properties, or until the session terminates. A subsession populates subsession variables that are available for the duration of the subsession. Subsession variables and events that occur during a subsession are logged. Multiple subsessions can exist at the same time. The maximum number of subsessions allowed varies across platforms. The total number of subsessions is limited by the session limits in APM (128 * max sessions). Creating a subsession does not count against the license limit.`
+
+5. If you click on the plus between Start and Allow a new box will appear and you can explore the various components that can be added. At this time we will leave the policy blank and return to populate it in later tasks.
+
+6. Close the VPE tab when you are done exploring.
+
+**Policy Sync**
+
+1. Click on Access –> Profiles/Policies –> Policy sync
+
+BIG-IP APM Policy Sync maintains access policies on multiple BIG-IP APM devices while adjusting appropriate settings for objects that are specific to device locations, such as network addresses. You can synchronize policies from one BIG-IP APM device to another BIG-IP APM device, or to multiple devices in a device group.
+
+A sync-only device group configured for automatic and full sync is required to synchronize access policies between multiple devices.
+
+**Important**
+
+`USE WITH CAUTION. This is an advanced feature and you should consult with your F5 Account team or Professional Services before implementing this configuration.`
+
+**Note**
+
+`In BIG-IP 13.1.0, a maximum of eight BIG-IP APM systems are supported in a sync-only group type.`
+
+**Customization**
+
+1. Click on **Access** –> **Profiles/Policies** –> **Customization**
+
+**What are customization and localization?**
+
+Customization and localization are ways to change the text and the language that users see, and to change the appearance of the user interface that Access Policy Manager presents to client users. Customization provides numerous settings that let you adapt the interface to your particular operation. Localization allows you to use different languages in different countries.
+
+**About the Customization tool**
+
+The Customization tool is part of Access Policy Manager (APM). With the Customization tool, you can personalize screen messages and prompts, change screen layouts, colors, and images, and customize error messages and other messages using specific languages and text for policies and profiles developed in APM. You can customize settings in the Basic Customization view (fewer settings) or change the view to General Customization (many settings). In the General Customization view, you can use the Customization tool in the BIG-IP admin console, or click Popout to open it in a separate browser window. In either view, you can click Preview to see what an object (such as Logon page or Deny Ending Page) will look like.
+
+After you personalize settings, remember to click the Save icon to apply your changes.
+
+![image](https://user-images.githubusercontent.com/51786870/210539400-3cf37ab7-1a23-46d5-a4c0-7b27da61b84c.png)
+
+2. About basic, general, and advanced customization
+
+The Customization tool provides three views that you can use to customize the interface. The General Customization view provides the greatest number of options and is where most of the customization takes place.
+
+![image](https://user-images.githubusercontent.com/51786870/210539479-a4314010-a928-492a-8ba4-3ceff3d45f85.png)
+
+**Note**
+
+`See the APM Customization guide for further details on customization`
+
+3. Under Available Profiles choose the /Common/server1-psp
+
+4. Select Language: **English**
+
+5. Let’s upload a new image. Click **Upload New Image**
+
+6. Browse to Desktop and locate the **Lab01_images** folder
+
+7. Choose an image from the selection and click Open
+
+8. Pick a Background color
+
+9. Pick a Header Background color
+
+10. Change the footer Text
+
+11. Remember to click **Save** icon at the bottom
+
+![image](https://user-images.githubusercontent.com/51786870/210540876-b73ab744-ef51-4a53-a5e1-5c45f14b10f1.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210539701-2ac44fdb-3f81-4970-86d5-08967099e4f9.png)
+
+12. Click on the **Preview** button (At the top right)
+
+![image](https://user-images.githubusercontent.com/51786870/210540902-ae10a959-50ef-49e5-9f91-3d1a1ab433c1.png)
+
+13. Assign Access Profile **server1-psp** to **server1-https** Virtual Server under the settings in **Local Traffic** -> **Virtual Servers** -> **Virtual Server List** -> **server1-https**
+
+![image](https://user-images.githubusercontent.com/51786870/210542491-f5591740-1dd2-474b-8119-033a090aaa00.png)
+
+14. In the browser open new tab and go to https://10.1.10.101/. What is the result?
+
+15. Choose **Access Profiles** –> **/Common/server1-psp** –> **Access Policy** –> **Edit Access Policy for Profile "server1-psp"** -> **Edit Endings**
+
+Bonus Answer: Why don’t we see logon pages?
+
+**Hint**
+
+`What is in the policy so far?`
+
 #
 #
 #
