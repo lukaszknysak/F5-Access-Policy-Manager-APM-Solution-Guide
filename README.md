@@ -235,33 +235,71 @@ Access Guided Configuration (AGC) provides an easy way to create BIG-IP configur
 
 ![image](https://user-images.githubusercontent.com/51786870/210528190-f874cb23-d500-4d97-84a2-9b5d10d765ec.png)
 
+3. Click on the Federation Tile.
 
-| First Header  | Second Header |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+4. Under this tile are several Identity Federation use cases available. Each use case has an accompanying guide to walk you through the configuration. This is not designed for already deployed applications but used for new deployments. All the components needed to create the configuration will be deployed on the BIG-IP through this guide. Editing and configuring of the solution will be maintained within this menu.
 
+5. Click on SAML Service Provider
+
+![image](https://user-images.githubusercontent.com/51786870/210530698-9c5aadea-effd-48c8-ab8f-fd927cf5cd79.png)
+
+6. Here you will find there are couple topologies. SAML SP Initiated and SAML IdP Initiated.
+
+![image](https://user-images.githubusercontent.com/51786870/210530531-dc493270-93d6-4de6-95d9-00e7bb86fbaf.png)
+![image](https://user-images.githubusercontent.com/51786870/210530544-c5645f96-08db-4934-8336-59e0abab6dd0.png)
+
+7. If there are any required configuration pieces missing to complete guided configuration they will appear in the right panel
+
+![image](https://user-images.githubusercontent.com/51786870/210530774-28eb940a-525f-4a34-8c07-5afdfb9dd2a7.png)
+
+8. Below the topologies you will find all the components that will be configured using the guided configured
+
+![image](https://user-images.githubusercontent.com/51786870/210530815-c38ae60e-79c4-4a4c-8f4c-4018b9d7e93c.png)
+
+9. From here you would click next to begin configuration. (We will explore this further in next labs)
+
+10. Click on the Guide Configuration bread crumb at the top of the screen to return to the main menu.
+
+11. Click on the Zero Trust tile.
+
+12. Zero trust follows the principle never trust, always verify and thus enforces authentication and verification for every user or device attempting to access resources whether from within or outside of the network.
+
+**About Identity Aware proxy**
+
+`The easiest way to create policies to support zero trust security is to use the Zero Trust-Identity Aware Proxy template in Access Guided Configuration. The template takes you through the steps needed to create an Identity Aware Proxy. Access Policy Manager (APM) acts as the Identity Aware Proxy helping to simplify client access to both multi-cloud and on-premise web applications, and securely manage access from client devices.`
+
+`On APM, you can develop per-request policies with subroutines that perform different levels of authentication, federated identity management, SSO (single sign on), and MFA (multi-factor authentication) depending on the requirements. Subroutines perform continuous checking based on a specified duration or gating criteria. Policies can be as complex or as simple as you need them to be to provide seamless yet secure access to resources. Refer to Implementing Zero Trust with Per-Request Policies for many examples of per-request policies that implement different aspects of zero trust.`
+
+`For additional security, device posture checking provides instantaneous device posture information. The system can continuously check clients to be sure, for example, that their antivirus, firewall, and patches meet company requirements, ensuring that the device maintains trust at all times.`
+
+`On the client side, F5 Access Guard allows real-time posture information to be inspected with per-request policy subroutines. F5 Access Guard generates posture information asynchronously, and transparently transmits it to chosen APM server endpoints using special HTTP headers. Refer to BIG-IP Access Policy Manager: Configuring F5 Access Guard for details on client requirements.`
+
+13. Click on the Identity Aware Proxy configuration option
+
+14. There are two topologies available:
+
+| Single Proxy | ![image](https://user-images.githubusercontent.com/51786870/210531235-d0fc65fe-9434-4083-928e-cb37c40ff4ee.png)
+ | ![image](https://user-images.githubusercontent.com/51786870/210531222-a027210f-912a-4a13-b414-6d318f3ad92e.png)
+ |
+| Multi-Proxy | ![image](https://user-images.githubusercontent.com/51786870/210531361-e3f0f14d-d0ce-460d-8f11-ced0232ee3b9.png)
+ | ![image](https://user-images.githubusercontent.com/51786870/210531379-241d4758-c194-41e0-955b-597a36fafc9d.png)
+ | 
 
 | General Information |	Name	| basic_log_profile |
-| ------------- | ------------- | ------------- |
 |	  |		Enable Access System Logs	|	Check box |	
 |	Access System Logs	|	Publisher	|	/Common/sys-db-access-publisher |
 |	|		Access Policy |		Notice |	
-|	|	 	ACL	|	Notice |	
-
-
-
-
- 	Secure Web Gateway	Notice
- 	OAuth	Notice
- 	VDI	Notice
- 	ADFS Proxy	Notice
- 	Per-Request Policy	Notice
- 	SSO	Notice
- 	ECA	Notice
- 	PingAccess Profile	Notice
- 	Endpoint Management System	Notice
-Access Profile	Selected	(leave this blank for now)
+|	|	 	ACL	|	|	Notice |	
+|	|	 	Secure Web Gateway	|	Notice |	
+|	|	 	OAuth	|	Notice |	
+|	|	 	VDI	|	Notice |	
+|	|	 	ADFS Proxy	|	Notice |	
+|	|	 	Per-Request Policy	|	Notice |	
+|	|	 	SSO	|	Notice |	 
+|	|	 	ECA	|	Notice |	
+|	|	 	PingAccess Profile	|	Notice
+|	|	 	Endpoint Management System	|	Notice
+|	Access Profile	|	Selected	|	(leave this blank for now)
 
 #
 #
