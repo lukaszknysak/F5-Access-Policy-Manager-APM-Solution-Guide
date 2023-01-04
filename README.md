@@ -396,10 +396,15 @@ The per-session policy runs when a client initiates a session. (A per-session po
 ![image](https://user-images.githubusercontent.com/51786870/210533868-6ad56d0b-56d7-47a0-b6ee-2455655b7ecf.png)
 
 | General Properties	| Name	| server1-psp |
-| | 	Profile Type	| All | 
-|  | 	Profile Scope	| Profile | 
-| |  	Customization Type	| Modern | 
+
+| | Profile Type	| All | 
+
+| | Profile Scope	| Profile | 
+
+| | Customization Type	| Modern | 
+
 | Language Settings	| Accepted Languages	| English | 
+
 
 #
 #
