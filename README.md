@@ -1320,11 +1320,153 @@ In this example we’re going to use a Per-Request Policy with a subroutine to a
 
 ![image](https://user-images.githubusercontent.com/51786870/210575055-1dd31315-6ea7-46e7-b554-f87670b8b65a.png)
 
+4. Click **Finished**
 
+5. Back in the **Access** –> **Profiles/Policies** –> **Per-Request Policies** screen locate **app.acme.com-PRP** policy you just created.
 
+6. Click **Edit** to the right of the name
 
+7. Click on **Add New Subroutine**
+
+![image](https://user-images.githubusercontent.com/51786870/210576808-09992a12-5f26-4191-9dde-de18579656cf.png)
+
+8. Give it a name of **AD_Subrutine** and Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210577246-6e712601-572d-427f-a55b-d3b301f24b06.png)
+
+When you edit created subrutine once again click **Subrutine Settings / Rename**
+
+![image](https://user-images.githubusercontent.com/51786870/210577257-a6b1f4a6-7fba-4d77-baaa-d12839d6ad55.png)
+
+9. Click the **+** between In and Out In the subroutine
+
+10. Click the **Logon** Tab
+
+11. At the middle of the list choose **Logon Page** and click **Add Item**
+
+12. Select **Save** at the bottom of the Logon Page dialog box
+
+13. In the subroutine, between the Logon page and the green **out** terminal click the **+** and select the **Logon Tab** and click the **Logon Page** radio button
+
+![image](https://user-images.githubusercontent.com/51786870/210577979-906a55b9-948b-4201-bf97-1fe479100fd5.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210577998-122075ce-6e32-4e29-a467-1b373194f094.png)
+
+14. Click the + sign between Logon Page and Out and select the **Authentication** tab and click the **AD Auth** radio Button
+
+![image](https://user-images.githubusercontent.com/51786870/210578140-875b110d-2403-4172-8994-9d526b51cb28.png)
+
+15. Select AD Auth and click **Add Item** at the bottom
+
+![image](https://user-images.githubusercontent.com/51786870/210578228-4656d6d4-31ba-4599-9808-8d8870472f8b.png)
+
+16. Give the item a name of **AD_Auth**
+
+17. Select **/Common/lab_sso_sd_server** for the Server option
+
+**Note**
+
+`The lab_sso_ad_server object was created in previous lab`
+
+18. Click the Save
+
+![image](https://user-images.githubusercontent.com/51786870/210578483-55412794-fa8a-4218-940b-83944b0485b8.png)
+
+19. Between **AD Auth** and the Out endpoint click the + Sign
+
+![image](https://user-images.githubusercontent.com/51786870/210578566-974f58d7-3bfe-477b-945d-32ddd64f3cdb.png)
+
+20. Select Authentication and Select the **AD Query** radio button and click Add Item
+
+21. Change the Server option to /Common/lab_sso_ad_server and click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210579017-b58020df-2d99-4bf0-87f9-de56c6264b05.png)
+
+22. Between **AD Query** and the Out endpoint click the + Sign
+
+![image](https://user-images.githubusercontent.com/51786870/210579107-b72199e4-59b4-4b8a-a835-a020bbcb88e3.png)
+
+23. Navigate to the **Assignment** tab and select **Variable Assign** and click **Add Item**
+
+24. Under Variable Assign click **Add New Entry**
+
+![image](https://user-images.githubusercontent.com/51786870/210579235-6e26d4f7-edd2-43d8-ab0e-4a5d6e4d6391.png)
+
+25. Next to “Empty” click the **Change** link
+
+26. Change the drop down on the right hand side to **Session Varaible** and input the following value **subsession.ad.last.attr.memberOf**
+
+27. In the left hand box type the following value **session.adgroups.custom** and then click **Finished** and **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210580020-d65feddf-e3a5-4016-ac35-d73eef30432e.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210580037-eb63b99e-0a92-4a8e-98b5-3e2a3c5134bf.png)
+
+28. Click the + sign between Start and Allow directly under the Per Request Policy at the top of the page
+
+![image](https://user-images.githubusercontent.com/51786870/210580088-41110908-1a27-412c-8a09-50fd00bf2c6b.png)
+
+29. Select the **Classification** tab, click the **URL Branching Radio Button** and click **Add Item**
+
+![image](https://user-images.githubusercontent.com/51786870/210580274-77359403-6b78-4121-ab45-6400fbbc1500.png)
+
+30. Click the **Branch Rules** tab and then click the **change** hyperlink
+
+![image](https://user-images.githubusercontent.com/51786870/210580357-b2b29bb9-2e43-4bbd-b74c-cf06149f6b8a.png)
+
+31. Change the value domain.com to **app.acme.com/apps/app1/** and click finished
+
+![image](https://user-images.githubusercontent.com/51786870/210580544-9e0411fd-8b5f-4333-a8aa-cedbf1d79448.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210580562-65c1acc4-5150-4ff3-94f6-d9ef21e0808f.png)
+
+32. Change the name from **Allow** to **/apps/app1/** and then click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210580668-9945b8de-96e5-4133-a24e-2be4a12accb4.png)
+
+33. Click the + sign after the /apps/app1/ branch you just added and select the subroutines tab and click the AD_Subroutine radio button and click Add Item
+
+![image](https://user-images.githubusercontent.com/51786870/210580716-ea75c739-f367-493d-8f8c-8344605345ff.png)
+
+34. Click the + sign after the AD_Subroutine Box you just added and select the **General Purpose** tab and click the **HTTP Headers** radio Button
+
+![image](https://user-images.githubusercontent.com/51786870/210581133-5f4ac046-cc87-43c6-a977-ec18f4e9eda5.png)
+
+35. Under **HTTP Header Modify**, click **Add new entry**
+
+![image](https://user-images.githubusercontent.com/51786870/210581232-0eaebfb8-5f06-48a5-a105-9d95dc4a2152.png)
+
+36. Type **AD_Groups** for header name and **%{session.adgroups.custom}** for Header Value and click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210581340-651d3517-bb61-4d73-890a-0255e3861e43.png)
+
+37. In the Per-Request Policy follow the fallback branch for the URL Branching. Click on the Reject terminal and change to Allow
+
+38. Your Per-Request Policy should now look like this
+
+![image](https://user-images.githubusercontent.com/51786870/210581620-40bc5f1e-4ecb-489a-9713-7d40fe889420.png)
+
+39. Navigate back to Local Traffic -> Virtual Servers and select your VIP, under the Access policy section of your VIP bind your Per-Session and Per Request policies
+
+![image](https://user-images.githubusercontent.com/51786870/210581843-1b796677-804b-41a8-b32e-e9187bf251e0.png)
+
+40. In a browser on your jumphost access **https://app.acme.com** you should see the webpage listed below, click the **Application1** link
+
+![image](https://user-images.githubusercontent.com/51786870/210581976-c59dabe8-0d63-4c5f-90c7-952763f076db.png)
+
+41. Authenticate with the user1 username and user1 password
+
+![image](https://user-images.githubusercontent.com/51786870/210582342-0eef6594-73f9-48d8-875d-a8537cbc2425.png)
+
+42. Notice the **Ad-Groups** header which contains the extracted AD group information submitted to the application as a HTTP Header
+
+![image](https://user-images.githubusercontent.com/51786870/210582508-81e91a4c-f8a9-4856-b3d0-8b3f189af1d4.png)
+
+What we have demonstrated here is the application of step-up authentication to a portion of the webpage, from there we extracted information from Active Directory to submit to the application in the form of an HTTP Headers
 
 **Module 2 is now complete.**
+
+
 
 
 
