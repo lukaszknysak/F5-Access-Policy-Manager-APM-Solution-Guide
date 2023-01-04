@@ -1,6 +1,34 @@
+# THIS IS UNDER CONSTRUCTION
+
 # F5-Access-Policy-Manager-APM-Solution-Guide
 
-# THIS IS UNDER CONSTRUCTION
+
+# Welcome to the Access Policy Manager (APM) lab guide.
+
+The following labs and exercises will instruct you on how to configure and troubleshoot various APM use cases. This guide is intended to complement lecture material provided during the course as well as a reference guide that can be referred to after the class as a basis for configuring Access solutions in your own environment.
+
+[Original Lab Guide](https://github.com/f5devcentral/f5-agility-labs-iam)
+
+
+
+1 – API Protection
+•	Module 1: API Security AWAF and APM modules
+2 – Access Policy Manager Solution (F5 APM)
+•	Module 1: APM Overview
+•	Module 2: Building a Basic Access Policy
+•	Module 3: Server-Side Single Sign-On
+•	Module 4: Identity Federation sample use case
+
+
+
+
+
+
+
+
+
+
+
 # Welcome to the F5 Advanced Web Application Firewall lab guide
 
 This series of lab exercises is intended to explain and demonstrate key features of F5 Advanced Web Application Firewall. The Blueprint which we use as base for all upcoming Modules is called Advanced WAF Demo v16 + LCC, ML and Device ID+.
