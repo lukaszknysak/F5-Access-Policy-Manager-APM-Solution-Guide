@@ -49,7 +49,8 @@ The following components have been included in your lab environment:
 Management 10.1.1.10
 External 10.1.10.10
 Internal 10.1.20.10
-Username	Password
+
+Credentials:
 f5lab\user1	user1
 f5lab\user2	user2
 f5lab\admin	admin
@@ -72,7 +73,8 @@ External
 10.1.10.112
 10.1.10.113
 Internal 10.1.20.4
-admin	admin
+
+Credentials: admin/admin
  
 ## bigip2.f5lab.local	
 Management 10.1.1.5
@@ -93,7 +95,8 @@ External
 10.1.10.212
 10.1.10.213
 Internal 10.1.20.5
-admin	admin
+
+Credentials: admin/admin
  
 ## bigip5.f5lab.local	
 Management 10.1.1.11
@@ -103,7 +106,8 @@ External
 Internal
 10.1.20.11
 10.1.20.99
-admin	admin
+
+Credentials: admin/admin
  
 ## bigip6.f5lab.local	
 Management 10.1.1.12
@@ -113,33 +117,38 @@ External
 Internal
 10.1.20.12
 10.1.20.199
-admin	admin
+
+Credentials: admin/admin
  
 ## dc1.f5lab.local	
 Management 10.1.1.7
 Internal 10.1.20.7
-admin	admin
+
+Credentials: admin/admin
  
 ## iis.f5lab.local	
 Management 10.1.1.6
 Internal
 10.1.20.6
 10.1.20.16
-admin	admin
+
+Credentials: admin/admin
  
 ## web.f5lab.local	
 Management 10.1.1.9
 Internal
 10.1.20.9
 10.1.20.19
-admin	admin
+
+Credentials: admin/admin
  
 ## radius.f5lab.local	
 Management 10.1.1.8
 Internal
 10.1.20.8
 10.1.20.18
-admin	admin
+
+Credentials: admin/admin
  
 
 
