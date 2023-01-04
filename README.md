@@ -1141,6 +1141,37 @@ The Visual Policy Editor (VPE) will open in a new tab.
 
 8. On the popup menu, choose the **Logon Page** radio button under the Logon tab and click **Add Item**
 
+![image](https://user-images.githubusercontent.com/51786870/210565923-42663a07-b969-4dbe-bb8e-a8cb0586e233.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210565937-e68bd31c-051e-4cfe-b7f9-688228c91868.png)
+
+
+9. Accept the defaults and click **Save**
+
+Now let’s authenticate the client using the credentials to be provided via the **Logon Page** object.
+
+10. Between the **Logon Page** and **Deny** objects, click the **+** icon, select **AD Auth** found under the **Authentication** tab, and click the **Add Item** button
+
+![image](https://user-images.githubusercontent.com/51786870/210566081-4d888884-f513-4b91-85e3-c25adf591538.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210566107-a3567840-082c-4a9a-bdcc-5b2c5cdbb623.png)
+
+11. Accept the default for the **Name** and in the **Server** drop-down menu select the AD server created above: **/Common/lab_sso_ad_server**, then click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210566266-9383aa23-d5a2-40f1-99c6-b7831f593e00.png)
+
+12. On the **Successful** branch between the **AD Auth** and **Deny** objects, click on the word **Deny** to change the ending
+
+![image](https://user-images.githubusercontent.com/51786870/210566315-a05be84b-80e8-4f78-b120-c4da200e9e1a.png)
+
+13. Change the **Successful** branch ending to **Allow**, then click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210566389-9f6b1c59-b665-4033-b175-7b22cf30d0c0.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210566409-500a0192-6e06-4559-90f9-941e7b7743fa.png)
+
+14. In the upper left-hand corner of the screen, click on the **Apply Access Policy** link, then close the window using the **Close** button in the upper right-hand. Click **Yes** when asked **Do you want to close this tab**?
+
 
 
 
