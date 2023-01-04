@@ -403,6 +403,42 @@ The per-session policy runs when a client initiates a session. (A per-session po
 |                    |Customization Type	|     Modern     | 
 | Language Settings	 | Accepted Languages|     English    | 
 
+**Note**
+
+`Customization Type is a newer setting that changes the look and feel of login pages. For the traditional look you can Standard`
+
+![image](https://user-images.githubusercontent.com/51786870/210535592-b0ec4763-2aea-4744-bb76-ad6321e95efd.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210535735-437b3aa3-2fa8-4f25-8c71-47aa6ffff015.png)
+
+3. Click Finished
+
+4. Now we have a basic profile. There were a number of other settings to modify and use in the profile. For now we will focus just on the basics.
+
+5. From the Access Profiles (Per-Session Policies) section locate the server1-psp
+
+6. There are two ways to edit the Policy piece of the profile.
+
+**First way**
+| Click on the profile |
+| Click on Access Policy from the top menu bar |
+| Click on the link to Edit Access Policy for Profile “server1-psp” |
+| This will take you to the Visual Policy Editor (VPE) |
+
+**Second way**
+| Locate the server1-psp in the Profile list and follow the line to the right. |
+| Middle of the line there will be an Edit link |
+| Click the Edit link |
+
+7. Close the VPE (we will visit the VPE and policy in more detail later)
+
+8. Return to Access –> Profiles/Policies –> Access Profiles (Per-Session Policies)
+
+9. Click on the server1-psp and explore the settings for the Profile.
+
+| Settings	| Here you can manage settings for the profile. You may want to change timeouts, max sessions and login attempts. These are settings specifically for this profile. |
+| Configurations |	These are more advanced options and covered in other labs |
+| Language Settings	| You have to set this at creation. |
 
 #
 #
