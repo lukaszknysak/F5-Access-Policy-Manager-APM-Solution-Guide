@@ -643,6 +643,62 @@ After access credentials are submitted, BIG-IP APM validates the listed methods 
 | |  	Admin Name	| admin |
 | |  	Admin Password	| admin |
 
+**Note**
+
+`If you choose to use a pool you can create the pool as you create the AD object. You can also choose to use Direct which allows you to only use one server. Go back and click create to see what this looks like.`
+
+![image](https://user-images.githubusercontent.com/51786870/210548467-a1f1d2c5-d10f-4ded-8a55-7e11b17dd6b4.png)
+
+You now have an object that can be used to facilitate Active Directory authentication in front of any application. The application itself does not need to require authentication. If you were to deploy a policy with AD Auth on a Virtual Server for a web application the policy would preset a login page, prompt for credentials, verify the credentials against this AD object before allowing a user to access the web application.
+
+4. Go to **Access** –> **Profiles/Policies** –> **Access Profiles (Per-Session Policies)**
+
+5. Locate the **server1-psp** and click **Edit**
+
+6. Click the **+** symbol between Start and Deny.
+
+7. From the **Logon** tab select the **Logon Page** radio button
+
+8. Click **Add Item**
+
+9. Notice that you can add fields and change the names of the fields. Click **Save**
+
+10. Click the **+** between **Logon Page** and Deny
+
+11. Click the **Authentication** tab
+
+12. Choose the **AD Auth** radio button and click **Add Item**
+
+13. Under the **Server** field click on the drop down menu and choose the AAA server **basic-ad-servers**
+
+14. Click **Save**
+
+15. On the Success branch click on the **Deny** end point and choose **Allow** then click **Save**
+
+16. Click **Apply Access Policy**
+
+![image](https://user-images.githubusercontent.com/51786870/210548967-25c184ca-872e-4e5f-bddc-818e9f664f56.png)
+
+Now you have a basic policy with AD Authentication that you can leverage for Web Pre-Authorization in front of any application.
+
+17. Go to **Local Traffic** –> **Virtual Servers**
+
+18. Locate **server1-https** and click on it
+
+19. Scroll down to the **Access Policy** section. Next to **Access Profile** click the drop and chose server1-psp
+
+20. Scroll down to the bottom and click **Update**
+
+21. In a new browser tab go to http://server1.acme.com and Login
+
+| username |	user1 |
+| -------- | ----- |
+| password	| user1 |
+| -------- | ----- |
+
+
+
+
 #
 #
 #
