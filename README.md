@@ -1052,7 +1052,7 @@ The environment is the same, but you will have to build the configuration with P
 
 ![image](https://user-images.githubusercontent.com/51786870/210563054-c80e3a78-7fe2-4607-aecf-bc3d20d86615.png)
 
-**Intro to Access Profiles and Policies**
+# Intro to Access Profiles and Policies
 
 Access Policy Manager (APM) provides two types of policies.
 
@@ -1095,7 +1095,7 @@ Before we can create an access profile, we must create the necessary AAA server 
 
 4. Configure the new server profile as follows:
 
-| Name:	| lab_sso_ad_server
+| Name:	| lab_sso_ad_server |
 | ---- | ---- | 
 | Domain Name:	| f5lab.local | 
 | Server Connection:	| Direct | 
@@ -1103,11 +1103,44 @@ Before we can create an access profile, we must create the necessary AAA server 
 | User Name:	| admin | 
 | Password:	| admin | 
 
+![image](https://user-images.githubusercontent.com/51786870/210564908-e637c298-a7ed-4563-b10b-2f28eadb89f4.png)
+
 5. Click **Finished**
 
 **Note**
 
-`If you wish you can simply use the app-ad-servers.`
+`If you wish you can simply use the **app-ad-servers**.`
+
+### Task 2: Create a Simple Access Profile¶
+
+1. Navigate to **Access** > **Profiles / Policies** > **Access Profiles (Per-Session Policies)**
+
+![image](https://user-images.githubusercontent.com/51786870/210564483-e2eeba11-fa37-4b58-9655-9bfa5b6e1d42.png)
+
+2. From the Access Profiles screen, click **Create…** in the upper right-hand corner
+
+3. In the Name field, enter **MyAccessPolicy** and for the **Profile Type**, select the dropdown and choose **All**
+
+![image](https://user-images.githubusercontent.com/51786870/210565408-3a4a23b0-df7d-4300-84f7-89d27ed7ffb0.png)
+
+4. Under “**Language Settings**”, choose **English** and click the **<<** button to slide over to the **Accepted Languages** column.
+
+![image](https://user-images.githubusercontent.com/51786870/210565199-0a7ae2d8-3317-4dfe-86cb-db1a578c7f54.png)
+
+5. Click **Finished**, which will bring you back to the Access Profiles screen.
+
+6. On the Access Profiles screen, click the **Edit** link under the Per-Session Policy column.
+
+![image](https://user-images.githubusercontent.com/51786870/210565614-a3e99a8d-dfd9-4da3-86fa-483e9bd322e3.png)
+
+The Visual Policy Editor (VPE) will open in a new tab.
+
+7. On the VPE page, click the + icon on the fallback path, to the right of the Start object.
+
+![image](https://user-images.githubusercontent.com/51786870/210565703-36e1289b-9dbc-420c-b201-f94107173b2f.png)
+
+8. On the popup menu, choose the **Logon Page** radio button under the Logon tab and click **Add Item**
+
 
 
 
