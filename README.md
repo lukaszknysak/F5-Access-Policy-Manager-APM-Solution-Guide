@@ -1158,7 +1158,7 @@ Now let’s authenticate the client using the credentials to be provided via the
 
 11. Accept the default for the **Name** and in the **Server** drop-down menu select the AD server created above: **/Common/lab_sso_ad_server**, then click **Save**
 
-![image](https://user-images.githubusercontent.com/51786870/210566266-9383aa23-d5a2-40f1-99c6-b7831f593e00.png)
+![image](https://user-images.githubusercontent.com/51786870/210571218-5b44711d-437c-430a-902c-fe345eef4c45.png)
 
 12. On the **Successful** branch between the **AD Auth** and **Deny** objects, click on the word **Deny** to change the ending
 
@@ -1171,6 +1171,160 @@ Now let’s authenticate the client using the credentials to be provided via the
 ![image](https://user-images.githubusercontent.com/51786870/210566409-500a0192-6e06-4559-90f9-941e7b7743fa.png)
 
 14. In the upper left-hand corner of the screen, click on the **Apply Access Policy** link, then close the window using the **Close** button in the upper right-hand. Click **Yes** when asked **Do you want to close this tab**?
+
+![image](https://user-images.githubusercontent.com/51786870/210571383-f8da0cbd-1a6a-48c8-9d63-c8328571b62b.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210571444-8e9f340b-9c18-4820-b6a1-f18d42a43f66.png)
+
+### Task 3: Associate Access Policy to Virtual Servers¶
+
+Now that we have created an access policy, we must apply it to the appropriate virtual server to be able to use it.
+
+1. Navigate to **Local Traffic** –> **Virtual Servers** –> **Virtual Server List** and click the name of the virtual server created previously: **app-https**
+
+2. Scroll down to the **Access Policy** section, for the **Access Profile** dropdown, select **MyAccessPolicy**
+
+![image](https://user-images.githubusercontent.com/51786870/210571800-ffa24455-ef09-45f8-af33-756d6c221ece.png)
+
+3. Click **Update** at the bottom of the screen
+
+### Task 4: Testing
+
+Now you are ready to test.
+
+1. Open a new browser window and open the URL for the virtual server that has the access policy applied:
+
+**https://app.acme.com**
+
+You will be presented with a login window
+
+![image](https://user-images.githubusercontent.com/51786870/210572167-9d796471-2c01-4000-90ae-f629fbe21272.png)
+
+2. Enter the following credentials and click **Logon**:
+
+| username |	user1 |
+| -------- | ----- |
+| password	| user1 |
+
+You will see a screen similar to the following:
+
+![image](https://user-images.githubusercontent.com/51786870/210572287-b3ed94ef-34ac-4d67-a35d-a24998d2c868.png)
+
+### Task 5: Troubleshooting tips
+
+You can view active sessions by navigating Access/Overview/Active Sessions
+
+You will see a screen similar to the following:
+
+Click on the session id for the active session. If the session is active it will show up as a green in the status.
+
+![image](https://user-images.githubusercontent.com/51786870/210572810-57686f25-a88e-416b-8df5-5e3965acbbfb.png)
+
+Click on the “**session ID**” next to the active session. Note every session has a unique session id. Associated with it. This can be used for troubleshooting specific authentication problem.
+
+Once you click on the **session id** you will be presented with a screen that is similar to the following.
+
+![image](https://user-images.githubusercontent.com/51786870/210572975-8e442137-9024-4708-b9f3-ff384bdbd0cc.png)
+
+Note that the screen will show all of the log messages associated with the session. This becomes useful if there is a problem authenticating users.
+
+The default log level shows limited “informational” messages but you can enable debug logging in the event that you need to increase the verbosity of the logging on the APM policy. Note you should always turn off debug logging when you are finished with trouble shooting as debug level logging can generate a lot of messages that will fill up log files and could lead to disk issues in the event that logging is set to log to the local Big-IP.
+
+Please review the following support article that details how to enable debug logging.
+
+https://support.f5.com/csp/article/K45423041
+
+### Step up Authentication with Per-Request Policies
+
+# Objectives
+The purpose of this lab is to familiarize the Student with Per Request Policies. The F5 Access Policy Manager (APM) provides two types of policies.
+
+Access Policy - The access policy runs when a client initiates a session. Depending on the actions you include in the access policy, it can authenticate the user and perform group or class queries to populate session variables with data for use throughout the session. We created one of these in the prior lab
+
+Per-Request Policy - After a session starts, a per-request policy runs each time the client makes an HTTP or HTTPS request. A per-request policy can include a subroutine, which starts a sub-session. Multiple sub-sessions can exist at one time. One access policy and one per-request are specified within a virtual server.
+
+**It’s important to note that APM first executes a per-session policy when a client attempts to connect to a resource. After the session starts then a per-request policy runs on each HTTP/HTTPS request. Per-Request policies can be utilized in a number of different scenarios; however, in the interest of time this lab will only demonstrate one method of leveraging Per-Request policies for controlling access to specific URI’s and submitting information from Active Directory as a header to the application.**
+
+# Objective:
+   * Gain an understanding of Per Request policies
+   * Gain an understanding of use for Per Request Policy
+
+# Lab Requirements:
+All lab requirements will be noted in the tasks that follow
+   * Estimated completion time: 15 minutes
+
+### TASK 1: Create Per Session Policy
+
+Refer to the instructions and screen shots below:
+
+1. Login to your lab provided **Virtual Edition BIG-IP**
+
+   * On your jumphost launch Chrome and click the bigip1 link from the app shortcut menu
+   * Login with credentials admin/admin
+
+2. Begin by selecting: **Access** -> **Profiles/Policies** -> **Per Session Policies** ->
+
+3. Click the **+** Sign next to **Access Profiles (Per-Session Policies)**
+
+![image](https://user-images.githubusercontent.com/51786870/210573911-913ddc97-f83d-41cd-8ef1-7d82a3457ed3.png)
+
+4. Enter the name of the policy, profile type, and profile scope
+
+| Name:	| app.acme.com-PSP | 
+| ---- | ---- | 
+| Profile Type:	| All | 
+| Profile Scope:	| Profile | 
+| Accept Languages:	| English (en) | 
+
+**Note**
+
+`You will need a per session policy and a per request policy but we will be leaving the per session policy blank and performing our auth in per Request`
+
+![image](https://user-images.githubusercontent.com/51786870/210574249-47c7a796-279d-408e-8749-19690f6ca443.png)
+
+5. On the app.acme.com-PSP policy click **Edit**
+
+6. Click on the **Deny** and change the Select Ending to **Allow**
+
+![image](https://user-images.githubusercontent.com/51786870/210574623-8172368d-4f00-44d4-9131-1d26d611fe7e.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210574648-be310436-d8c5-4359-9a93-a54180c318b4.png)
+
+7. Click **Save**
+
+8. Click **Apply policy**
+
+**Note**
+
+`Nothing will be set in this policy we will simply establish a session and manage all the authentication in the Per-Request Policy`
+
+9. Close Visual Policy Editor
+
+### Task 2: Step Up Authentication with Per Request Policies
+
+Step-up authentication can be used to protect layers or parts of a web application that manage more sensitive data. It can be used to increase protection by requiring stronger authentication within an already authenticated access to the web application. Step-up authentication can be a part of using the portal access or web application management (reverse proxy) features of Access Policy Manager.
+
+In this example we’re going to use a Per-Request Policy with a subroutine to authenticate user when they access a specific URI, extract information from Active Directory and submit that information as a header
+
+1. Begin by selecting: **Access** -> **Profiles/Policies** -> **Per Request Policies** ->
+
+2. Click the **Create** button (far right)
+
+![image](https://user-images.githubusercontent.com/51786870/210574902-7244424c-c305-4c86-9147-f61d28bc3c22.png)
+
+3. Give the policy a name and select the Language Settings
+
+ | Name:	| app.acme.com-PRP | 
+ | ---- | ---- | 
+| Accept Languages:	| English (en) | 
+
+![image](https://user-images.githubusercontent.com/51786870/210575055-1dd31315-6ea7-46e7-b554-f87670b8b65a.png)
+
+
+
+
+
+**Module 2 is now complete.**
 
 
 
