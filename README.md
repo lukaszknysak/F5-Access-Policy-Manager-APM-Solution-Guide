@@ -576,7 +576,9 @@ The Customization tool provides three views that you can use to customize the in
 
 ![image](https://user-images.githubusercontent.com/51786870/210542491-f5591740-1dd2-474b-8119-033a090aaa00.png)
 
-14. In the browser open new tab and go to https://10.1.10.101/. What is the result?
+14. In the browser open new tab and go to https://10.1.10.101/. What is the result? Why you are blocked and don't see any logon pages?
+
+![image](https://user-images.githubusercontent.com/51786870/210542937-0baf60e2-6c82-4992-914a-258193ca87da.png)
 
 15. Choose **Access Profiles** –> **/Common/server1-psp** –> **Access Policy** –> **Edit Access Policy for Profile "server1-psp"** -> **Edit Endings**
 
@@ -585,6 +587,11 @@ Bonus Answer: Why don’t we see logon pages?
 **Hint**
 
 `What is in the policy so far?`
+
+
+
+
+
 
 #
 #
