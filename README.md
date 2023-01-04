@@ -11,20 +11,7 @@ The following labs and exercises will instruct you on how to configure and troub
 
 
 ## Table of Contents
-- [Description](#description)
-- [Installation](#installation)
-	- [Stats](#stats)
-	- [Run](#run)
-- [License](LICENSE)
-
-
-
-&nbsp;&nbsp;
-
-## Description
-
-## Table of Contents
-- [Class1](#Class1)
+- [Class1](#Class 1)
 
 
 ### Class1
