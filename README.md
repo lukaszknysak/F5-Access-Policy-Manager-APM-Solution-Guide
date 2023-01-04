@@ -726,6 +726,7 @@ BIG-IP APM supports industry standard authentication methods, including:
 2. Click **basic-sso**
 
 | General Properties	| Name	| basic-sso | 
+| --- | --- | --- |
 | Credential Source	| Username Source	| session.sso.token.last.username | 
 | |  	Password Source | session.sso.token.last.password | 
 | SSO Method Conversion	| Username Conversion	unchecked | 
