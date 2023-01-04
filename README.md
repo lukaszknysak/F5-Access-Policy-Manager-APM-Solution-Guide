@@ -774,6 +774,114 @@ BIG-IP APM supports industry standard authentication methods, including:
 16. Now you should have been signed in to the backend server with Single Sign On.
 
 
+### Task 7: Federation
+**Note**
+
+`In this task we will examine SAML IDP and SP configuration. All the configuration has been completed the next several steps you will just be examining the objects and testing the configuraiton. For more in depth instruction on Federatoion consider taking a 300 series course.`
+
+**BIG-IP APM federation with SAML**
+
+BIG-IP APM supports SAML 2.0 and can act as the IdP for popular SPs, such as Microsoft Office 365 and Salesforce. The system supports both IdP- and SP-initiated identity federation deployments.
+
+**IdP-initiated federation with BIG-IP APM**
+
+![image](https://user-images.githubusercontent.com/51786870/210555795-bd466fe3-0a9f-4508-b569-b60a48d0a0f6.png)
+
+  * The user logs in to the BIG-IP APM IdP and the system directs them to the BIG-IP APM webtop.
+  * The user selects the SP they want, such as Salesforce.
+  * The system retrieves any required attributes from the user data store to pass on to the SP.
+  * The system uses the browser to direct the request to the SP, along with the SAML assertion and any required attributes.
+
+1. In a new tab go to https://idp.acme.com
+
+2. Login to the SAML IdP
+
+| username |	user1 |
+| -------- | ----- |
+| password	| user1 |
+
+![image](https://user-images.githubusercontent.com/51786870/210556032-c5ff38bf-29f0-4eab-9742-33af6f17ee6b.png)
+
+3. You are logged in to a webtop where a SAML SP object resides. Click on the SAML Resource sp.acme.com
+
+![image](https://user-images.githubusercontent.com/51786870/210556084-9a154b75-d1d2-4f0b-9ae1-7dabab519f2d.png)
+
+4. Since you authenticated through the SAML IdP you will not be prompted for authentication again and are connected to the SAML SP resource.
+
+![image](https://user-images.githubusercontent.com/51786870/210556141-b0ba0804-dd30-4250-9b5c-9f17a4a0724a.png)
+
+5. Return to bigip1.f5lab.local. From the left menu click **Access** –> **Profiles/Policies** –> **Access Profiles (Per-Session Policies)**
+
+6. Locate the policy **idp-psp** and click on **Edit**
+
+![image](https://user-images.githubusercontent.com/51786870/210556226-32726380-0751-4f40-8ddb-8559dd4fb402.png)
+
+7. Click AD Auth* object within the Policy. Examine the settings
+
+![image](https://user-images.githubusercontent.com/51786870/210556272-ba2b0693-d9d1-4f86-8cfc-ade986472f35.png)
+
+**Note**
+
+`If you look at the AAA server under Active directory you will find the idp-ad-server object. We are leveraging Active Directory as the credential verification but BIG-IP is acting as a SAML Identity Provider. BIG-IP will verify the credentials against Active Directory and create a SAML Assertion for the user requesting access. That assertion can then be used by the SAML Service Provider to provide access to the SAML SP resource.`
+
+![image](https://user-images.githubusercontent.com/51786870/210556335-9e240127-af9f-4ee5-a650-ca3256d5a602.png)
+
+8. Click Advanced Resource Assign. Examine the settings
+
+![image](https://user-images.githubusercontent.com/51786870/210556566-be2bbb3d-a7a4-4a0b-98c5-878dc140c7ee.png)
+
+**Note**
+
+`You can click on the Add/Delete button and add other SAML Resources (if available). We will cover more on Webtop in next labs.`
+
+9. Return to the BIG-IP click on **Access** –> **Federation** –> **SAML Identity Provider**
+
+![image](https://user-images.githubusercontent.com/51786870/210556735-f9e96cf6-d9ef-4802-bd80-2251da864d8c.png)
+
+In order for the BIG-IP to be configured as a SAML IdP you must define the Identity provider and bind it with a SAML Service Provider. This object contains the settings required to configure BIG-IP as a SAML SP. For more information on SAML and uses with BIG-IP consider taking the Federation lab.
+
+**Note**
+
+`You can export the Metadata of the SAML IdP in this menu by clicking the SAML IdP and clicking the Export Metadata button. It will output an XML file that you can use to upload in to a SAML Service Provider with all the IdP setting particular to this IdP.`
+
+**SP-initiated federation with BIG-IP APM**
+
+![image](https://user-images.githubusercontent.com/51786870/210556814-5cd1e865-71a0-4d61-80e2-cd7fcd6675b1.png)
+
+  * The user logs in to the SP, such as Salesforce.
+  * The SP uses the browser to redirect the user back to the BIG-IP APM IdP.
+  * The BIG-IP APM IdP prompts the user to log in.
+  * The system retrieves any required attributes from the user data store to pass on to the SP.
+  * The system uses the browser to send the SAML assertion and any required attributes to the SP.
+
+1. Open a new incognito window and go to https://sp.acme.com
+
+2. Notice that you get redirected to https://idp.acme.com for authentication
+
+![image](https://user-images.githubusercontent.com/51786870/210557082-9dee8935-710d-432f-8a55-6e5554697129.png)
+
+| username |	user1 |
+| -------- | ----- |
+| password	| user1 |
+
+
+3. Once logged in you arrive at https://sp.acme.com
+
+![image](https://user-images.githubusercontent.com/51786870/210557211-7db70918-3953-4738-b4d8-d0a910aaff6a.png)
+
+4. Return to the BIG-IP. From the left menu navigate to **Access** –> **Profiles/Policies** –> **Access Profiles (Per-Session Policies)**
+
+5. Locate the sp-psp profile and cick **Edit**
+
+![image](https://user-images.githubusercontent.com/51786870/210557320-4bd105f3-74b9-4770-b5e0-3715e27a8fe3.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210557338-4d099f79-c5f9-4aca-bf58-bee02db2b18d.png)
+
+6. Return to the BIG-IP and navigate to Access –> Federation –> SAML Service Provider
+
+![image](https://user-images.githubusercontent.com/51786870/210557385-60235425-b4f6-4238-8fa2-d66df32febf6.png)
+
+The SAML SP object contains information about the SAML SP object and the binding to the SAML Identity Provider. You can see on the screen that we have a Service Provider object defined and it is bound to a SAML Identity Provider. The configuration of these objects is covered in more detail in the Access Federation labs.
 
 
 ### Task 8: Connectivity/VPN
@@ -901,6 +1009,22 @@ Click on **vpn-webtop**
 
 `For more information on API Protection consider taking the API Protection lab. For more information on SWG, ACL and Webtops see the appendix or further APM labs.`
 
+### Task 9: Lab Cleanup¶
+
+1. Open a new tab and click on the Access: PORTAL bookmark then select **CLASSES**
+
+2. Locate the **APM GUI Overview** Tile and click on the **Stop** button
+
+![image](https://user-images.githubusercontent.com/51786870/210558784-6de5fe68-f5f3-46ed-9401-a16194bf0271.png)
+![image](https://user-images.githubusercontent.com/51786870/210558798-88c9bb09-18d9-41a0-b1bf-0dfb934bc100.png)
+
+3. Wait about 30 seconds for the processing to begin
+
+![image](https://user-images.githubusercontent.com/51786870/210558838-4479bda4-bb15-4359-8486-8f5ff23da8ca.png)
+
+4. This process will take up to 30 seconds. Scroll to the bottom of the script and verify no issues.
+
+**Module 1 is now complete.**
 
 
 
