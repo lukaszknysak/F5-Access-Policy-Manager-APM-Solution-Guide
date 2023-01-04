@@ -341,20 +341,21 @@ The Overview menu is where an administrator can view active sessions, previous s
 ![image](https://user-images.githubusercontent.com/51786870/210532686-05e808fc-e52b-4e17-8ea3-2e4beb8c6792.png)
 
 | General Information |	Name	| basic_log_profile |
-|	  |		Enable Access System Logs	|	Check box |	
+| ------------------ | ----- | ----------------- |
+|	  |		Enable Access System Logs	|	Check box |
 |	Access System Logs	|	Publisher	|	/Common/sys-db-access-publisher |
-|	|		Access Policy |		Debug |	
-|	|	 	ACL	|	|	Notice |	
-|	|	 	Secure Web Gateway	|	Notice |	
-|	|	 	OAuth	|	Notice |	
-|	|	 	VDI	|	Notice |	
-|	|	 	ADFS Proxy	|	Notice |	
-|	|	 	Per-Request Policy	|	Notice |	
-|	|	 	SSO	|	Notice |	 
-|	|	 	ECA	|	Notice |	
-|	|	 	PingAccess Profile	|	Notice
-|	|	 	Endpoint Management System	|	Notice
-|	Access Profile	|	Selected	|	(leave this blank for now)
+|	|		Access Policy |		Debug |
+|	|	 	ACL	|	|	Notice |
+|	|	 	Secure Web Gateway	|	Notice |
+|	|	 	OAuth	|	Notice |
+|	|	 	VDI	|	Notice |
+|	|	 	ADFS Proxy	|	Notice |
+|	|	 	Per-Request Policy	|	Notice |
+|	|	 	SSO	|	Notice |
+|	|	 	ECA	|	Notice |
+|	|	 	PingAccess Profile	|	Notice |
+|	|	 	Endpoint Management System	|	Notice |
+|	Access Profile	|	Selected	|	(leave this blank for now) |
 
 
 **Note**
