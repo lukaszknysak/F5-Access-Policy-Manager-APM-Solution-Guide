@@ -278,17 +278,72 @@ Access Guided Configuration (AGC) provides an easy way to create BIG-IP configur
 
 14. There are two topologies available:
 
-| Single Proxy | ![image](https://user-images.githubusercontent.com/51786870/210531235-d0fc65fe-9434-4083-928e-cb37c40ff4ee.png)
- | ![image](https://user-images.githubusercontent.com/51786870/210531222-a027210f-912a-4a13-b414-6d318f3ad92e.png)
- |
-| Multi-Proxy | ![image](https://user-images.githubusercontent.com/51786870/210531361-e3f0f14d-d0ce-460d-8f11-ced0232ee3b9.png)
- | ![image](https://user-images.githubusercontent.com/51786870/210531379-241d4758-c194-41e0-955b-597a36fafc9d.png)
- | 
+**Single Proxy**
+![image](https://user-images.githubusercontent.com/51786870/210531235-d0fc65fe-9434-4083-928e-cb37c40ff4ee.png)
+![image](https://user-images.githubusercontent.com/51786870/210531222-a027210f-912a-4a13-b414-6d318f3ad92e.png)
+
+**Multi-Proxy
+**![image](https://user-images.githubusercontent.com/51786870/210531361-e3f0f14d-d0ce-460d-8f11-ced0232ee3b9.png)
+![image](https://user-images.githubusercontent.com/51786870/210531379-241d4758-c194-41e0-955b-597a36fafc9d.png)
+
+15. Proceeding with this configuration will create a number of object as seen here.
+
+**Note**
+
+`If you are interested in learning more on this specific solution please consider taking the Zero Trust Identity Aware Proxy class.`
+
+![image](https://user-images.githubusercontent.com/51786870/210531744-7519398e-761b-4d1b-8adb-b32385df5025.png)
+
+**Note**
+
+`Webtop is available as of version 16.0`
+
+## Task 3: Overview
+
+The Overview menu is where an administrator can view active sessions, previous sessions, and view various reports.
+
+1. Click on Access –> Overview from the left menu
+
+2. Here is where we would see Active Sessions. When users login to applications using APM policies the sessions will appear in this pane.
+
+![image](https://user-images.githubusercontent.com/51786870/210531967-4bfb37d6-19da-4532-9676-7de34462a8c4.png)
+
+3. This is also where you will be able to kill sessions. For more on logging see next lab
+
+![image](https://user-images.githubusercontent.com/51786870/210532060-68664679-c485-4498-9d59-34c36829aba7.png)
+
+4. Click on Access –> Overview –> Access Report
+
+5. This section will give you details on the all sessions active and inactive. Each log item is a message on the policy flow as a user walks through an Access policy. (We will cover Per Session policies in in more detail later).
+
+6. You will be prompted to enter a time period to run the report
+
+![image](https://user-images.githubusercontent.com/51786870/210532265-ba4cc40b-f640-4f49-b189-bd1ab4c9feda.png)
+
+**Note**
+
+`This is how you can view past sessions. Pick a time frame and run a report.`
+
+7. There are two other reporting functions in this screen, **OAuth Report** and **SWG Reports**. We will not cover these reports in this lab.
+
+8. The last section is Event Logs.
+
+**Note**
+
+`URL Request Logs is part of SWG functionality and will not be covered in this lab`
+
+9. From the top menu bar Click on the drop down next to **Event Logs** and choose **Settings**. This is where you can create logging profiles for access policies. From here you can specify what information to collect and to what detail.
+
+10. Click the **Create** button
+
+11. We will create a new APM Log profile
+
+![image](https://user-images.githubusercontent.com/51786870/210532686-05e808fc-e52b-4e17-8ea3-2e4beb8c6792.png)
 
 | General Information |	Name	| basic_log_profile |
 |	  |		Enable Access System Logs	|	Check box |	
 |	Access System Logs	|	Publisher	|	/Common/sys-db-access-publisher |
-|	|		Access Policy |		Notice |	
+|	|		Access Policy |		Debug |	
 |	|	 	ACL	|	|	Notice |	
 |	|	 	Secure Web Gateway	|	Notice |	
 |	|	 	OAuth	|	Notice |	
@@ -300,6 +355,51 @@ Access Guided Configuration (AGC) provides an easy way to create BIG-IP configur
 |	|	 	PingAccess Profile	|	Notice
 |	|	 	Endpoint Management System	|	Notice
 |	Access Profile	|	Selected	|	(leave this blank for now)
+
+
+**Note**
+
+`Within the Access System Logs section of the log profile is where you can change the logging for various portions of the APM Policies. The one you will use most will be to move Access Policy from Notice to Debug and/or Pre-Request Policy from Notice to Debug. As you can see you can pick and choose what level of notifications you want in your logs. This will impact what you see in Access Reports for a session and what appears in /var/log/apm.`
+
+12. Click OK
+
+13. From the left menu go to Access –> Overview –> Dashboard
+
+![image](https://user-images.githubusercontent.com/51786870/210533121-e4bf61dd-103d-4bcb-a1b5-840a7e5242c9.png)
+
+14. The Dashboard can give you a quick synopsis on Access Session, Network Access Session, Portal Access and Access control Lists.
+
+![image](https://user-images.githubusercontent.com/51786870/210533190-4c88d871-9f08-478a-93db-c3fae08ddc0d.png)
+
+**Note**
+
+`For more reporting on APM stats look to BIG-IQ or exporting logs to 3rd party SIEMs and create your own dashboard.`
+
+## Task 4: Profile/Policies
+
+Profiles and Policies are where we begin to learn about what makes APM function. In order for APM functions to be added to a Virtual server we need to create Access Profiles and Policies. These entities take all the components we will look at below and put them in a logical flow through the Visual Policy Editor (VPE). These entities are things like login pages, authentication, single sign on methods and endpoint checks. To being we have to create an Access Profile. Within that profile we create a per session policy. When that is completed we attach that profile to a Virtual Server.
+
+**Note**
+
+`You can associate one Access Profile (which includes a per-session policy) and one per-request policy per virtual server.`
+
+**Important**
+
+`We will creating objects for use within this task.`
+
+1. From the left menu go to Access –> Profiles/Policies –> Access Profiles (Per-Session Policies)
+
+The per-session policy runs when a client initiates a session. (A per-session policy is also known as an access policy.) Depending on the actions you include in the access policy, it can authenticate the user and perform other actions that populate session variables with data for use throughout the session.
+
+2. Click on the Create button on the far right or the + sign
+
+![image](https://user-images.githubusercontent.com/51786870/210533868-6ad56d0b-56d7-47a0-b6ee-2455655b7ecf.png)
+
+| General Properties	| Name	| server1-psp |
+| | 	Profile Type	| All | 
+|  | 	Profile Scope	| Profile | 
+| |  	Customization Type	| Modern | 
+| Language Settings	| Accepted Languages	| English | 
 
 #
 #
