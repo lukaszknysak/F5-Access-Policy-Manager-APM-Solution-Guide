@@ -151,7 +151,7 @@ Internal
 
 Credentials: admin/admin
  
-# Lab 1: APM GUI Overview
+# Module 1: APM GUI Overview
 Objectives
 The intention of this lab will be to show how to enable Access Policy Manager (APM) through resource provisioning. Next we will explore all the components within the Access left menu. This is not a deep dive on the components but an overview of the components, features and concepts of APM.
 
