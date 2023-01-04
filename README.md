@@ -566,8 +566,6 @@ The Customization tool provides three views that you can use to customize the in
 
 ![image](https://user-images.githubusercontent.com/51786870/210540876-b73ab744-ef51-4a53-a5e1-5c45f14b10f1.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210539701-2ac44fdb-3f81-4970-86d5-08967099e4f9.png)
-
 12. Click on the **Preview** button (At the top right)
 
 ![image](https://user-images.githubusercontent.com/51786870/210540902-ae10a959-50ef-49e5-9f91-3d1a1ab433c1.png)
