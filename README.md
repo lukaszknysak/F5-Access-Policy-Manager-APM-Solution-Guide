@@ -14,7 +14,7 @@ The following labs and exercises will instruct you on how to configure and troub
 ### Class 1 – API Protection
   * Module 1: API Security AWAF and APM modules
 ### Class 2 – Access Policy Manager Solution (F5 APM)
-  * Module 1: APM Overview
+  * Module 1: APM GUI Overview
   * Module 2: Building a Basic Access Policy
   * Module 3: Server-Side Single Sign-On
   * Module 4: Identity Federation sample use case
@@ -587,7 +587,7 @@ Bonus Answer: Why don’t we see logon pages?
 `What is in the policy so far?`
 
 
-# Task 5: Authentication¶
+### Task 5: Authentication¶
 
 BIG-IP APM serves as an authentication gateway or proxy. As an authentication proxy, BIG-IP APM provides separate client-side and server-side authentication. Client-side authentication occurs between the client and BIG-IP APM. Server-side authentication occurs between BIG-IP APM and servers.
 
@@ -703,8 +703,79 @@ Now you have a basic policy with AD Authentication that you can leverage for Web
 
 23. Review Access Session logs and reports.
 
+### Task 6: Single Sign-On
+**Note**
+`All the objects used to demonstrate Server-side Single Sign-On have already been created. The next steps will walk you through what the configuration looks like.`
 
-# Task 8: Connectivity/VPN¶
+Client side and server side are loosely coupled in the authentication proxy. Because of this, BIG-IP APM can transform client-side identity values of one type into server-side identity values of another type. You configure SSO within an SSO profile, which is applied to an access profile. The system triggers SSO at the end of successful access policy evaluation and on subsequent client-side requests.
+
+BIG-IP APM supports industry standard authentication methods, including:
+
+  * NTLM
+  * Kerberos
+  * HTTP Basic
+  * HTTP Form
+  * Security Assertion Markup Language (SAML)
+
+**Note**
+
+`Client-side authentication methods outnumber server-side methods. This is because BIG-IP APM does not transmit client certificate, RSA SecurID, or one-time passcodes to the server on the client’s behalf.`
+
+1. Go to **Access** –> **Single Sign-On** –> **HTTP Basic**
+
+2. Click **basic-sso**
+
+| General Properties	| Name	| basic-sso | 
+| Credential Source	| Username Source	| session.sso.token.last.username | 
+| |  	Password Source | session.sso.token.last.password | 
+| SSO Method Conversion	| Username Conversion	unchecked | 
+
+**Note**
+
+`Username conversion can be enabled if you want domain\username or username@domain to convert to just username.`
+
+3. Click on **Access** –> **Profiles/Policies** –> **Access Profiles (Per-Session Policies)**
+
+4. Locate the **basic-psp** profile and click on the name
+
+5. Click on **SSO/Auth Domains**
+
+6. Under SSO Configuration notice **basic_sso** is selected
+
+7. From the top menu bar click **Access Policy** and click **Edit Access Policy for Profile “basic-psp”** link
+
+![image](https://user-images.githubusercontent.com/51786870/210554675-9de69197-44a9-4e8e-8236-3333f23c3ddc.png)
+
+8. Click on **SSO Credential Mapping**
+
+![image](https://user-images.githubusercontent.com/51786870/210554731-1b1ba4a7-f563-4f05-ae47-ba14b14d9fe4.png)
+
+**Note**
+
+`You can modify these options based on the variables collected in the user’s session. In this case we accept the defaults.`
+
+9. Open an incognito window and try go to https://basic.acme.com
+
+10. You should have been prompted with a windows login. Close the Window
+
+11. Go to **Local Traffic –> Virtual Servers** and open **basic-https**
+
+12. Scroll to **Access Policy** and click the drop down next to **Access Profile**. Choose **basic-psp**
+
+![image](https://user-images.githubusercontent.com/51786870/210554995-61b84651-4f77-4050-8876-395b667c17e9.png)
+
+13. Scroll down click **Update**
+
+14. Open a new incognito tab. Go to https://basic.acme.com
+
+15. Login **user1** and **user1**
+
+16. Now you should have been signed in to the backend server with Single Sign On.
+
+
+
+
+### Task 8: Connectivity/VPN
 
 **Note**
 `In interest of time the VPN configuration has already been completed. The next several steps will be observing what the configuration looks like and testing out the connectivity.`
