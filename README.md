@@ -478,6 +478,7 @@ A per-request policy can include a subroutine, which starts a subsession. Multip
 2. Click **Create**
 
 | General Properties	 |         Name        |	server1_prp_policy |
+| ------------------- | ------------------- | ------------------ |
 |	                    |    Profile Type	    |         All        |
 |                     |	Incomplete Action	  |        Deny        |
 |                     |	Customization Type	 |      Modern        |
