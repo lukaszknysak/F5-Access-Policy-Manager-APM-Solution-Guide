@@ -11,13 +11,13 @@ The following labs and exercises will instruct you on how to configure and troub
 
 
 
-1 – API Protection
-•	Module 1: API Security AWAF and APM modules
-2 – Access Policy Manager Solution (F5 APM)
-•	Module 1: APM Overview
-•	Module 2: Building a Basic Access Policy
-•	Module 3: Server-Side Single Sign-On
-•	Module 4: Identity Federation sample use case
+### Class 1 – API Protection
+  * Module 1: API Security AWAF and APM modules
+### Class 2 – Access Policy Manager Solution (F5 APM)
+  * Module 1: APM Overview
+  * Module 2: Building a Basic Access Policy
+  * Module 3: Server-Side Single Sign-On
+  * Module 4: Identity Federation sample use case
 
 
 
