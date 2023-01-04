@@ -1010,7 +1010,7 @@ Click on **vpn-webtop**
 
 `For more information on API Protection consider taking the API Protection lab. For more information on SWG, ACL and Webtops see the appendix or further APM labs.`
 
-### Task 9: Lab Cleanup¶
+### Task 9: Lab Cleanup
 
 1. Open a new tab and click on the Access: PORTAL bookmark then select **CLASSES**
 
@@ -1026,6 +1026,88 @@ Click on **vpn-webtop**
 4. This process will take up to 30 seconds. Scroll to the bottom of the script and verify no issues.
 
 **Module 1 is now complete.**
+
+# Module 2: Building a Basic Access Policy
+
+The environment is the same, but you will have to build the configuration with Postman/Newman scrits automating the configuration.
+
+1. Click the **Classes** tab at the top of the page.
+
+![image](https://user-images.githubusercontent.com/51786870/210562696-d4abb398-8925-481a-ab91-4ee8fc838b3d.png)
+
+2. Scroll down the page until you see 102 Access Building Blocks on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210562840-570ec080-181d-408d-b34f-a4d6ebf1d4e2.png)
+
+3. Hover over tile Building a Basic Acces Policy. A start and stop icon should appear within the tile. Click the Play Button to start the automation to build the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210562912-fcf67ca5-f137-4048-8d6a-783301296a3b.png)
+![image](https://user-images.githubusercontent.com/51786870/210562922-fd5311bd-2e53-4e64-8cba-ca7e8ecaf90e.png)
+
+4. After the click it may take up to 30 seconds before you see processing
+
+![image](https://user-images.githubusercontent.com/51786870/210562951-93f539b0-925f-44f7-b204-4cb986545032.png)
+
+5. Scroll to the bottom of the automation workflow to ensure all requests succeeded.
+
+![image](https://user-images.githubusercontent.com/51786870/210563054-c80e3a78-7fe2-4607-aecf-bc3d20d86615.png)
+
+**Intro to Access Profiles and Policies**
+
+Access Policy Manager (APM) provides two types of policies.
+
+**Per-session policy**
+
+The per-session policy runs when a client initiates a session. (A per-session policy is also known as an access policy.) Depending on the actions you include in the access policy, it can authenticate the user and perform other actions that populate session variables with data for use throughout the session.
+Per-request policy
+
+After a session starts, a per-request policy runs each time the client makes an HTTP or HTTPS request. Because of this behavior, a per-request policy is particularly useful in the context of a Zero Trust scenario, where the client requires re-verification on every request. A per-request policy can include a subroutine, which starts a subsession. Multiple subsessions can exist at one time. You cannot use subroutines in macros within per-request policies.
+
+You can associate one access policy and one per-request policy with a virtual server.
+
+**Access Session**
+
+An access session is recorded when a client initiates a connection through a per-session policy. Once an access session is established it has a set of timeouts set within the Access profile. A session will terminate if it reaches a timeout or the client ends the session. An access session is now not limited by a license but by the platform running APM. For more information on APM licensing see K15624537: BIG-IP APM Licensing for BIG-IP Standard Platforms
+
+**Subsession**
+
+A subsession is part of the per-request policy framework. It starts when a subroutine (within a per-request policy) runs and continues until reaching the maximum lifetime specified in the subroutine properties, or until the session terminates. A subsession populates subsession variables that are available for the duration of the subsession. Subsession variables and events that occur during a subsession are logged.
+
+Multiple subsessions can exist at the same time. The maximum number of subsessions allowed varies across platforms. The total number of subsessions is limited by the session limits in APM (128 * max sessions). Creating a subsession does not count against the license limit.
+
+# Objectives
+
+The lab has a pre-configured test Virtual Server which will be used throughout the lab. You will use the Visual Policy Editor (VPE) to create and attach a simple Access Profile which performs user authentication.
+
+# Lab Requirements
+   * A pre existing virtual server at 10.1.10.101 or https://app.acme.com
+
+
+### Task 1: Define an Authentication Server
+
+Before we can create an access profile, we must create the necessary AAA server profile for our Active Directory.
+
+1. Click the bigip1 bookmark from within Chrome and login to the BIG-IP, admin/admin
+
+2. From the main screen, browse to Access > Authentication > Active Directory
+
+3. Click **Create** in the upper right-hand corner
+
+4. Configure the new server profile as follows:
+
+| Name:	| lab_sso_ad_server
+| ---- | ---- | 
+| Domain Name:	| f5lab.local | 
+| Server Connection:	| Direct | 
+| Domain Controller:	| 10.1.20.7 | 
+| User Name:	| admin | 
+| Password:	| admin | 
+
+5. Click **Finished**
+
+**Note**
+
+`If you wish you can simply use the app-ad-servers.`
 
 
 
