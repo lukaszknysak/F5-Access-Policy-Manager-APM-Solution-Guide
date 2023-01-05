@@ -1484,7 +1484,7 @@ What we have demonstrated here is the application of step-up authentication to a
 **Module 2 is now complete.**
 
 ## Module 3
-## Module 3: Server-Side Single Sign-On
+## Module 3: Server-Side Single Sign-On and Webtop Access Policy Build
 
 The purpose of this lab is to demonstrate Single Sign-On capabilities of APM. The SSO Credential Mapping action enables users to forward stored user names and passwords to applications and servers automatically, without having to input credentials repeatedly. This allows single sign-on (SSO) functionality for secure user access. As different applications and resources support different authentication mechanisms, the SSO system may be required to store and transform credentials to meet these requirements. For example, username and password may be transformed into forms-based authentication, a SAML assertion into Kerberos or Kerberos authentication into SAML.
 
@@ -1604,6 +1604,116 @@ return [string range $field $start [expr { [string first ">" $field $start] - 1 
 return "UPN-NOT-FOUND";
 ```
 10. Click **Cancel** twice
+
+11. Click the **LDAP Query** box. The LDAP query connects to the LDAP server to the **dc=f5lab,dc=local** DN for a user that contains the userPrincipalName matching the value stored in session.custom.upn.
+
+12. You can see that we are using the **AAA LDAP** object created early to validate the variable** session.custom.upn**. The LDAP query requests the **sAMAccountName** attribute if the user is found.
+
+![image](https://user-images.githubusercontent.com/51786870/210729752-cc914f97-cab8-4957-9f84-b1da41d614a0.png)
+
+13. Click on **Branch Rules**. The branch rule was modified to only require a LDAP Query passed condition
+
+![image](https://user-images.githubusercontent.com/51786870/210729951-73093023-dc51-44f7-961f-4fd241a59c3d.png)
+
+14. Click **Cancel**
+
+15. Click the **set_variables** box. Two session variables are set
+
+   * session.logon.last.username is populated with the value of the sAMAccountName returned in the LDAP query
+   * session.logon.last.domain is populated with a static value for the Active Directory domain F5LAB.LOCAL
+
+![image](https://user-images.githubusercontent.com/51786870/210730065-7620d779-45db-4ae3-87ae-e3dba1096620.png)
+
+### Task 4: Customized LTM Profile settings
+
+We will need to make some modifications to the client SSL profile to accommodate Certificate authentication.
+
+1. Navigate to Local Traffic from the left menu. Under Partitions select the drop down and choose solution6. This will change the partition so that you can see the LTM objects used in this lab.
+
+**Note**
+
+`We deployed the LTM objects in to another administrative partition for the purposes of separating the objects. If you were to deploy this in your own environment using a partition is not a requirement.`
+
+![image](https://user-images.githubusercontent.com/51786870/210730338-c391ccfd-2616-41f0-85b0-fe8144ed9ee8.png)
+
+2. Navigate to **Local Traffic** -> **Profiles** -> **SSL** -> **Client**. Click on **solution6-clientssl**.
+
+![image](https://user-images.githubusercontent.com/51786870/210730775-ac97e55b-ab1b-4b6d-abf4-d1996aedacba.png)
+
+3. In he Client-side SSL profile scroll down to the **Client Authentication** section and notice it has been modified to support certificate authentication
+
+**Trusted Certificate Authorities has been set to ca.f5lab.local**
+
+   * The bundle validates client certificates by these issuers
+   * The bundle must include all CAs in the chain
+
+**Advertised Certificate Authorities has ben set to ca.f5lab.local**
+
+   * The bundle controls which certificates are displayed to a user when they are prompted to select their certificate
+
+![image](https://user-images.githubusercontent.com/51786870/210730514-fed3b891-14d4-44a5-a8c3-877a0e74d575.png)
+
+### Task 5: Logging in from a user’s perspective
+
+1. Open an incognito window in the Chrome browser and access https://solution6.acme.com
+
+2. You will be presented with three possible certificates. Choose **User1** and click **OK**
+
+![image](https://user-images.githubusercontent.com/51786870/210730868-f7fc7fb6-cd2c-44cf-867e-74cace42d53e.png)
+
+3. If successful the user is granted access to the application
+
+![image](https://user-images.githubusercontent.com/51786870/210731022-b713fa06-ab42-4515-a0f6-fd03e935efbd.png)
+
+### Task 5: Webtop Access Policy Build - Create a Webtop resource
+
+In this lab, we will add a Webtop resource to the Access Policy created in the previous lab. A full webtop provides an access policy ending for an access policy branch to which you can optionally assign portal access resources, app tunnels, remote desktops, and webtop links, in addition to network access tunnels. Then, the full webtop provides your clients with a web page on which they can choose resources, including a network access connection to start.
+
+1. Expand the **Access** tab from the main menu on the left and navigate to **Webtops > Webtop Lists**.
+
+2. Click **Create** to create a new Webtop called **MyFullWebtop**, select Type **Full** , uncheck **Minimize To Tray** and click **Finished**.
+
+![image](https://user-images.githubusercontent.com/51786870/210731896-91980d9f-8e40-4b77-9163-e24bec0b9363.png)
+
+### Task 6: Create Webtop Item
+
+1. Browse to **Access** > **Webtops** >** Webtop Link** and click create.
+
+2. Complete the following entries.
+
+   * Name: F5Rocks
+   * Link Type Dropdown: Application URI
+   * Applicatoin URI : https://www.f5.com
+   * Application Caption : F5 Rocks.
+
+![image](https://user-images.githubusercontent.com/51786870/210732012-99e8bfd6-4469-4502-8b0e-8bed669eac67.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210732344-c20c014b-392a-403d-8416-7222b662dd39.png)
+
+
+### Task 7: Add Webtop resource to existing Access Policy
+
+1. Browse to **Access** > **Profiles / Policies** > **Access Profiles (Per-Session Policies)**, click on **Edit** for **MyAccessPolicy**. A new tab should open to the Visual Policy Editor for **MyAccessPolicy**.
+
+![image](https://user-images.githubusercontent.com/51786870/210732515-badfd6a6-101e-4ab5-9125-e80320b6d53d.png)
+
+2. In between the AD Auth APM Item and the Allow APM item click the + option to add an item.
+
+![image](https://user-images.githubusercontent.com/51786870/210732557-d8bff0a1-9aae-44e6-a71f-8c029a8f28a3.png)
+
+3. Select the Advanced Resource Assign object. Click on the “Assignment Tab” and select the “Advanced Resource Assign” radio button. Click Add Item.
+
+
+
+
+
+**Module 3 is now complete.**
+
+## Module 4
+## Module 4: Server-Side Single Sign-On and Webtop Access Policy Build
+
+
+
 
 
 
