@@ -2308,7 +2308,7 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 
 28. Click Add new entry
 
-29. Add sAMAAccountName to the list of Required Attributes
+29. Add sAMAccountName to the list of Required Attributes
 
 ![image](https://user-images.githubusercontent.com/51786870/210796110-ede296df-b67b-481f-b579-85b99b4fc057.png)
 
@@ -2504,6 +2504,35 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 6. Review your Active Sessions (Access ‑> Overview ‑> Active Sessions­­­)
 
 7. Review your Access Report Logs (Access ‑> Overview ‑> Access Reports)
+
+### Task 11 - Lab Cleanup
+
+1. From a browser on the jumphost navigate to https://portal.f5lab.local
+
+2. Click the **Classes** tab at the top of the page.
+
+![image](https://user-images.githubusercontent.com/51786870/210806286-7f5e114f-0f2c-4550-a535-91cf1acee990.png)
+
+3. Scroll down the page until you see 301 SAML Federation on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210806359-40348c50-bb16-4810-9a8e-a877645cae1b.png)
+
+4. Hover over tile SAML Identity Provider (IdP) - Cert Auth. A start and stop icon should appear within the tile. Click the Stop Button to trigger the automation to remove any prebuilt objects from the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210806402-12332300-d350-43ec-92ca-6e1352128c8e.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210806418-dbf1d40f-06fe-4c9f-be24-52fe66d4a863.png)
+
+5. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded.
+
+![image](https://user-images.githubusercontent.com/51786870/210806480-4b4bf967-440b-42a9-954b-003c162b23ce.png)
+
+6. **This concludes the lab.**
+
+
+
+
+
 
 #
 #
