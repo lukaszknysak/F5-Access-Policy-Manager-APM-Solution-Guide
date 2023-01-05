@@ -3194,9 +3194,11 @@ The API Protection Profile allows a BIG-IP administrator to throttle the amount 
 
 2. Click Run Again to rerun the request an additional 100 times.
 
-![image](https://user-images.githubusercontent.com/51786870/210815563-c51cb0fd-55d3-4a79-8588-1eaf56d3cabc.png)
+![image](https://user-images.githubusercontent.com/51786870/210821214-cbd7b8df-939c-4251-946f-87287eb4171f.png)
 
 3. On the 6th request you begin to receive a 429 Too Many Requests response status code
+
+![image](https://user-images.githubusercontent.com/51786870/210821265-156fc9fa-466e-456b-94f6-f01c21cb06a1.png)
 
 
 **Section 1.5 - Onboard a New API**
@@ -3221,17 +3223,19 @@ Organizations change. With this change, new APIs are introduced requiring modifi
 
 1. From the browser, navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile (not the + Plus symbol)
 
+![image](https://user-images.githubusercontent.com/51786870/210821472-2b7530aa-c983-40ac-8a02-fbd836eec22a.png)
+
 2. Click api-protection
 
-image64
+![image](https://user-images.githubusercontent.com/51786870/210821501-5dd4b9a6-aa34-44ee-86ca-af4f11d3b225.png)
 
 3. Click Paths
 
-image65
+![image](https://user-images.githubusercontent.com/51786870/210821525-29d582e8-7e2e-4faf-accb-cc97ec49dc55.png)
 
 4. Click Create
 
-image66
+![image](https://user-images.githubusercontent.com/51786870/210821584-612ef488-c930-4b80-9ba1-170cda91efa8.png)
 
 5. The URI /dns
 
@@ -3239,11 +3243,11 @@ image66
 
 7. Click Add
 
-image67
+![image](https://user-images.githubusercontent.com/51786870/210821617-58713200-1364-4309-add0-9dfa1ce16438.png)
 
 8. Click Save
 
-image68
+![image](https://user-images.githubusercontent.com/51786870/210821644-99c2f7ec-ee70-4033-9e31-e6e558f7ea02.png)
 
 ### Task 3 - Test Access to the new path
 
@@ -3251,7 +3255,7 @@ image68
 
 2. You receive a 200 OK that the endpoint is now published.
 
-image102
+![image](https://user-images.githubusercontent.com/51786870/210821695-1939c47b-2a32-4c1d-af0a-ba0bff134670.png)
 
 
 
