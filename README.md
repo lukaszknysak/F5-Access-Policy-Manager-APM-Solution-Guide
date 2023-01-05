@@ -2004,18 +2004,10 @@ Students will leverage Access Guided Configuration (AGC) to configure the variou
 **This concludes Part 1**
 
 ## Module 4 Part 2
-## Module 4: Part 2 - SAML Identity Provider (IdP) - kerberos Auth
+## Module 4: Part 2 - SAML Identity Provider (IdP) - Certificate Auth
 
-The purpose of this lab is to deploy and test a Kerberos to SAML configuration. Students will modify a previous built Access Policy and create a seamless access experience from Kerberos to SAML for connecting users. 
+To access your dedicated student lab environment, you will need a web browser and Remote Desktop Protocol (RDP) client software. The web browser will be used to access the Unified Demo Framework (UDF) Training Portal. The RDP client will be used to connect to the jumphost, where you will be able to access the BIG-IP management interfaces (HTTPS, SSH).
 
-**Objective:**
-
-   * Gain an understanding of the Kerberos to SAML relationship its component parts.
-   * Develop an awareness of the different deployment models that Kerberos to SAML authentication opens up
-
-**Lab Requirements:**
-
-   * All Lab requirements will be noted in the tasks that follow
 
 Estimated completion time: 25 minutes
 
@@ -2031,13 +2023,15 @@ Estimated completion time: 25 minutes
 
 ![image](https://user-images.githubusercontent.com/51786870/210755014-b526c231-f2fb-4295-831c-b005ae619c15.png)
 
-4. Hover over tile **SAML Identity Provider (IdP) - Kerberos Auth**. A start and stop icon should appear within the tile. Click the **Play** Button to start the automation to build the environment
+4. Hover over tile **SAML Identity Provider (IdP) - Cert Auth**. A start and stop icon should appear within the tile. Click the **Play** Button to start the automation to build the environment
 
-![image](https://user-images.githubusercontent.com/51786870/210755063-c56bca94-baf0-48a7-94ba-d93e85972b8f.png)
+![image](https://user-images.githubusercontent.com/51786870/210789876-25451bfd-bc86-49e8-a086-bef38a10695f.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210789894-c3c59a85-c7c4-48d0-9b04-b55f592a5ab6.png)
 
 5. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded.
 
-![image](https://user-images.githubusercontent.com/51786870/210755347-e6d427a3-0e4c-42fa-ba0f-9802bb7c5e64.png)
+![image](https://user-images.githubusercontent.com/51786870/210789920-d1e7bb4e-d30d-4f88-afd7-05e71b0f6649.png)
 
 ### Task 2 ‑ Configure the SAML Identity Provider (IdP)
 
@@ -2064,26 +2058,11 @@ Estimated completion time: 25 minutes
 
    * **Assertion Subject Type**:	**Persistent Identifier** (drop down)
    * **Assertion Subject Value**:	**%{session.logon.last.username}** (drop down)
+   * **Authentication Context Class Reference**	**urn:oasis:names:tc:SAML:2.0:ac:classes:SmartcardPKI**
 
-![image](https://user-images.githubusercontent.com/51786870/210756196-8bb2c003-323a-452e-b00f-01c3bcfe6a97.png)
+![image](https://user-images.githubusercontent.com/51786870/210791034-b6aacce8-e6ae-4073-88bc-0a59e030a301.png)
 
-5. In the **Create New SAML IdP Service** dialog box, click **SAML Attributes** in the left navigation pane and click the **Add** button as shown
-
-![image](https://user-images.githubusercontent.com/51786870/210756240-ebf69280-dc3e-46c0-828e-1aa9b2f4439f.png)
-
-6. In the **Name** field in the resulting pop-up window, enter the following: **emailaddress**
-
-7. Under **Attribute Values**, click the Add button
-
-8. In the Values line, enter the following: **%{session.ad.last.attr.mail}**
-
-9. Click the **Update** button
-
-10. Click the **OK** button
-
-![image](https://user-images.githubusercontent.com/51786870/210756492-c679ee83-7faf-4745-a161-e3966a78674b.png)
-
-11. In the **Create New SAML IdP Service** dialog box, click **Security Settings** in the left navigation pane and key in the following:
+5. In the **Create New SAML IdP Service** dialog box, click **Security Settings** in the left navigation pane and key in the following:
 
    * **Signing Key**:	**/Common/idp.acme.com (drop down)**
    * **Signing Certificate**:	**/Common/idp.acme.com (drop down)**
@@ -2092,7 +2071,7 @@ Estimated completion time: 25 minutes
 
 `The certificate and key were previously imported`
 
-12. Click **OK** to complete the creation of the IdP service
+6. Click **OK** to complete the creation of the IdP service
 
 ![image](https://user-images.githubusercontent.com/51786870/210756787-3ba7d8d3-ce53-4d21-968f-dc12bed2da1f.png)
 
@@ -2171,35 +2150,52 @@ Estimated completion time: 25 minutes
 
 ![image](https://user-images.githubusercontent.com/51786870/210777481-65eec353-33e0-4ef1-a130-29527fea4781.png)
 
-### Task 5 - Create a Kerberos AAA Object
+### Task 5 - Create an OCSP Responder
 
-1. From the **jumphost**, navigate to the command line enter the command below to generate a **kerberos key tab file**
+1. Navigate to Access >> Authentication >> OCSP Responder >> Click the Plus (+) Sign.
 
-`ktpass -princ HTTP/idp.acme.com@F5LAB.LOCAL -mapuser f5lab\krbtsrv -ptype KRB5_NT_PRINCIPAL -pass 'P@$$w0rd' -out C:\Users\user1\Desktop\out.keytab`
+![image](https://user-images.githubusercontent.com/51786870/210792185-4f199c19-5cf2-4de7-a7f4-f129b1333fc2.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210777616-c622568b-1659-48fd-93fc-31aa36ea91bc.png)
+2. Enter the following information for the OCSP Responder configuration:
 
-2. From the BIG-IP GUI, navigate to **Access** >> **Authentication** >> **Kerberos** >> Click the **+** Plus Symbol
-
-![image](https://user-images.githubusercontent.com/51786870/210777904-e6532875-5520-4e8b-9b15-a705403d35b3.png)
-****
-    * **Name**:	**idp.acme.com**
-    * **SPN Format**:	**Host-based service**
-    * **Auth Realm**:	**F5LAB.LOCAL**
-    * **Service Name**:	**HTTP**
-    * **Keytab File**:	**out.keytab**
+   * Name:	ocsp_servers
+   * Configuration:	Advanced
+   * URL:	http://dc1.f5lab.local
+   * Certificate Authority File	ca.f5lab.local
+   * Certificate Authority Path:	/ocsp
+   * Options:	Uncheck Nonce
 
 3. Click **Finished**
 
-![image](https://user-images.githubusercontent.com/51786870/210778528-9db3a5b6-19c5-45bf-af85-82ef3a52cac9.png)
+![image](https://user-images.githubusercontent.com/51786870/210792482-e7d2e86f-dabd-4304-94f1-ba824e9bc867.png)
 
-### Task 6 - Create a SAML IdP Access Policy
+
+### Task 6 - Create an AAA LDAP Server
+
+1. Navigate to Access >> Authentication >> LDAP >> Click the Plus (+) Sign.
+
+![image](https://user-images.githubusercontent.com/51786870/210792615-453d2500-c0d6-4857-8976-7b8981a41374.png)
+
+2. Enter the following information for the LDAP Server configuration:
+
+Name:	ldap_servers
+Server Connection:	Use Pool
+Server Pool Name:	ldap_pool
+Server Addresses:	10.1.20.7
+Admin DN:	CN=admin,CN=Users,DC=f5lab,DC=local
+Admin Password:	admin
+
+3. Click Finished
+
+![image](https://user-images.githubusercontent.com/51786870/210792889-74bbe4f2-ed52-4f9f-acc7-0ba64480f49f.png)
+
+### Task 7 - Create a SAML IdP Access Policy
 
 1. Select **Access** ‑> **Profiles/Policies** ‑> **Access Profiles (Per-Session Policies)**
 
 2. Click the **Create** button (far right)
 
-![image](https://user-images.githubusercontent.com/51786870/210778673-28e1c89f-3b8b-4fc2-a0fa-8d944b44c358.png)
+![image](https://user-images.githubusercontent.com/51786870/210792998-1cfb7f02-6259-47fe-a999-c8adf05a2b9d.png)
 
 3. In the New Profile window, enter the following information:
 
@@ -2224,140 +2220,242 @@ Estimated completion time: 25 minutes
 
 8. Click the **Plus (+)** Sign between **Start** and **Deny**
 
-![image](https://user-images.githubusercontent.com/51786870/210779260-85ba0da9-645a-43c2-bfe0-1952179c57f2.png)
+![image](https://user-images.githubusercontent.com/51786870/210793118-347555ce-3030-47ba-bc33-2edd543340e0.png)
 
-9. In the pop-up dialog box, select the **Logon** tab and then select the **Radio** next to **HTTP 401 Response**, and click the **Add Item** button
+9. In the pop-up dialog box, select the **Logon** tab and then select the **Radio** next to **On-Demand Cert Auth**, and click the **Add Item** button
 
-![image](https://user-images.githubusercontent.com/51786870/210779514-f8ee49ac-1ef3-410c-be64-3d507639155a.png)
+![image](https://user-images.githubusercontent.com/51786870/210794502-40143390-9dd7-4878-8bf9-01d8b9956a96.png)
 
-10. In the HTTP 401 Response dialog box, enter the following information:
+10. Click Save in the resulting Logon Page dialog box
 
-   * **HTTP Auth Level**:	**negotiate** (drop down)
+![image](https://user-images.githubusercontent.com/51786870/210794604-89029ba3-1231-463d-9f9d-7b4c2c7e2620.png)
 
-11. Click the **Save** button at the bottom of the dialog box
+11. On the successful branch of the On-Demand Cert Auth Policy-Item click the Plus (+) Sign
 
-![image](https://user-images.githubusercontent.com/51786870/210779714-3563b41d-eced-4647-abb8-719c1c0506d2.png)
+![image](https://user-images.githubusercontent.com/51786870/210794710-d5396d01-655c-44fc-9585-d6eefd742017.png)
 
-12. Click the **Branch Rules** tab
+12. In the pop-up dialog box, select the Authentication tab and then select the Radio next to OCSP Auth, and click the Add Item button
 
-13. Click the **X** on the Basic Branch
-
-![image](https://user-images.githubusercontent.com/51786870/210779870-e757dd32-f4a4-4e53-9c98-1a275a0fcee2.png)
-
-14. Click **Save**
-
-![image](https://user-images.githubusercontent.com/51786870/210779929-219fb136-ad6c-4201-a011-e1b78294838f.png)
-
-15. Click the **+** (Plus symbo) on the negotiate branch
-
-![image](https://user-images.githubusercontent.com/51786870/210779987-6e78fa18-70af-46ab-a7d3-256cd566b0d4.png)
-
-16. Click the **Authentication** tab
-
-17. Select **Kerberos Auth**
-
-18. Click **Add Item**
-
-![image](https://user-images.githubusercontent.com/51786870/210780077-e2ba67ca-27cf-4ee8-a3b6-df211c556797.png)
-
-19. In the **Kerberos Auth** dialog box, enter the following information:
-
-   * **AAA Server**:	**/Common/idp.acme.com** (drop down)
-   * **Request Based Auth**:	**Enabled** (drop down)
-
-20. Click **Save**
-
-![image](https://user-images.githubusercontent.com/51786870/210780199-cf006892-d7be-4410-a697-f3ebf5b9932b.png)
-
-21. Click the **Plus (+) Sign** on the **Successful** branch between **Kerberos Auth** and **Deny**
-
-![image](https://user-images.githubusercontent.com/51786870/210780320-a7769b0a-e322-4afd-907f-60b46256ae75.png)
-
-22. In the pop-up dialog box, select the **Authentication** tab and then select the **Radio** next to **AD Query**, and click the **Add Item** button
-
-![image](https://user-images.githubusercontent.com/51786870/210780416-79b6efa1-c273-4ab8-8f29-8070b4faeacb.png)
-
-23. In the resulting **AD Query** pop-up window, select **/Commmon/f5lab.local** from the **Server** drop down menu
-
-24. In the **SearchFilter** field, enter the following value: **userPrincipalName=%{session.logon.last.username}**
-
-![image](https://user-images.githubusercontent.com/51786870/210780624-0d2ae8d3-9b99-4667-b86c-6f0849d047a7.png)
+![image](https://user-images.githubusercontent.com/51786870/210794863-be46f00d-ff7a-4bd9-b9ad-c6284894741e.png)
 
 
-25. In the **AD Query** window, click the **Branch Rules** tab
+
+13. Select /Common/ocsp_servers from the OCSP Responder drop down menu.
+
+14. Click Save at the bottom of the window
+
+![image](https://user-images.githubusercontent.com/51786870/210795031-ae68f557-755c-4580-a24a-07d2aa054bef.png)
+
+15. Click the Plus (+) Sign on the successful branch between OCSP Auth and Deny
+
+![image](https://user-images.githubusercontent.com/51786870/210795087-cd8d0446-63c4-4912-a990-5d1c143b1562.png)
+
+16. In the pop-up dialog box, select the Assignment tab and then select the Radio next to Variable Assign, and click the Add Item button
+
+![image](https://user-images.githubusercontent.com/51786870/210795197-7a94059b-da42-4e6d-b0f4-411474777ee5.png)
+
+17. Enter the Name upn_extract
+
+18. Click Add new entry
+
+19. Click Change
+
+![image](https://user-images.githubusercontent.com/51786870/210795392-e383eb63-b6cf-40ab-ba4f-0972ce82a72e.png)
+
+20. Enter the Custom Variable session.custom.upn
+
+21. Select Custom Expresssion from the right drop down menu
+
+22. Enter the text below for the custom expression.
+
+```
+set x509e_fields [split [mcget {session.ssl.cert.x509extension}] "\n"];
+# For each element in the list:
+foreach field $x509e_fields {
+# If the element contains UPN:
+if { $field contains "othername:UPN" } {
+## set start of UPN variable
+set start [expr {[string first "othername:UPN<" $field] +14}]
+# UPN format is <user@domain>
+# Return the UPN, by finding the index of opening and closing brackets, then use string range to get everything between.
+return [string range $field $start [expr { [string first ">" $field $start] - 1 } ] ];  } }
+#Otherwise return UPN Not Found:
+return "UPN-NOT-FOUND";
+```
+
+23. Click Finished
+
+![image](https://user-images.githubusercontent.com/51786870/210795726-9892d4a5-1566-4cfd-af68-f55877f51265.png)
+
+24. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210795763-a4f713a4-7310-4e76-8caf-db9dce303815.png)
+
+
+25. Click the Plus (+) Sign between upn_extract and Deny
+
+![image](https://user-images.githubusercontent.com/51786870/210795815-63c9c4b2-a25b-4430-8a61-52443b3e7e3d.png)
 
 26. Change the **Name** of the branch to **Successful**.
 
-27. Click the **Change** link next to the **Expression**
+![image](https://user-images.githubusercontent.com/51786870/210795896-cbabb9eb-2cf4-4323-a4ce-436cf2afd740.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210780812-5fb895da-e4ce-42e8-b2e9-a0162ca6c0a9.png)
+27. In the LDAP Query Properties window, enter the following information:
 
-28. In the resulting **pop-up** window, delete the existing expression by clicking the **X** as shown
+Server:	/Common/ldap_servers (drop down)
+Search DN:	dc=f5lab,dc=local 
+SearchFilter:	(userPrincipalName=%{session.custom.upn})
 
-![image](https://user-images.githubusercontent.com/51786870/210781036-6b65ac7e-e8c5-499d-83ab-ebb145c7c215.png)
+28. Click Add new entry
 
-29. Create a new **Simple** expression by clicking the **Add Expression** button
+29. Add sAMAAccountName to the list of Required Attributes
 
-![image](https://user-images.githubusercontent.com/51786870/210781104-d092b984-d5c3-4139-9832-58a356d1431b.png)
+![image](https://user-images.githubusercontent.com/51786870/210796110-ede296df-b67b-481f-b579-85b99b4fc057.png)
 
-30. In the resulting menu, select the following from the drop down menus:
+30. Click the Branch Rules tab
 
-   * **Agent Sel**:	**AD Query**
-   * **Condition**:	**AD Query Passed**
+31. Click the X on the User Group Membership line
 
-31. Click the **Add Expression** Button
+![image](https://user-images.githubusercontent.com/51786870/210796219-08299017-7eb4-4f80-a8a8-15da07428942.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210781289-ce19f0da-a17f-4a69-97c2-c9f3426915a2.png)
+32. Click Add Branch Rule
 
-32. Click the **Finished** button to complete the expression
+![image](https://user-images.githubusercontent.com/51786870/210796491-c40bc475-6171-4001-91ab-779a76983c5c.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210781340-326d4693-ccc9-4963-aa86-95243d24c982.png)
+33. Enter the name **LDAP Query Passed**
 
-33. Click the **Save** button to complete the **AD Query**
+34. Click **change**
 
-![image](https://user-images.githubusercontent.com/51786870/210781398-80efb224-5edb-4ca5-8295-d74cd412539f.png)
+![image](https://user-images.githubusercontent.com/51786870/210796701-0058fef9-c6dd-48ba-9ab3-3cb42fe21cd6.png)
 
-34. Click the **Plus (+) Sign** on the **Successful** branch between **AD Query** and **Deny**
+35. Click Add Expression
 
-![image](https://user-images.githubusercontent.com/51786870/210781501-9e74ab81-eb0f-4286-a6a4-fd1234f084de.png)
+![image](https://user-images.githubusercontent.com/51786870/210796753-105d7a9b-bf0e-4944-978c-48a755707171.png)
 
-35. In the **pop-up** dialog box, select the **Assignment** tab and then select the **Radio** next to **Advanced Resource Assign**, and click the **Add Item** button
+36. Select LDAP Query from the Context dropdown menu
 
-![image](https://user-images.githubusercontent.com/51786870/210781613-59d7c760-655f-4e8c-8b1e-450d554cccc8.png)
+37. Select LDAP Query Passed from the Condition dropdown menu
 
-36. In the resulting **Advanced Resource Assign** pop-up window, click the **Add New Entry** button
+38. Click Add Expression
 
-37. In the new **Resource Assignment** entry, click the **Add/Delete** link
+![image](https://user-images.githubusercontent.com/51786870/210796929-e5b68dec-f323-4cad-87e6-fab42eaf2435.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210781736-959a7280-ef28-484f-9a60-24a1358ec4a8.png)
+39. Click Finsished
 
-38. In the resulting pop-up window, click the **SAML** tab, and select the **Checkbox** next to **/Common/sp.acme.com**
+![image](https://user-images.githubusercontent.com/51786870/210796957-abb2948c-14e0-43c5-a4f8-99979e1abb37.png)
 
-![image](https://user-images.githubusercontent.com/51786870/210781796-de5e986d-cbb0-4696-a7eb-795aaaf957fa.png)
+40. Click Save
 
-39. Click the **Webtop** tab, and select the **Checkbox** next to **/Common/full_webtop**
+![image](https://user-images.githubusercontent.com/51786870/210797039-f4054d66-92b8-4507-9c80-a29c3953fb0b.png)
 
-40. Click the **Update** button at the bottom of the window to complete the Resource Assignment entry
+41. Click the Plus (+) Sign on the LDAP Query Passed branch between LDAP Query and Deny
 
-![image](https://user-images.githubusercontent.com/51786870/210782060-751be2dc-5b57-42cb-8482-98716f665e42.png)
+![image](https://user-images.githubusercontent.com/51786870/210797077-8fba8452-7b56-451e-8cc0-f86bb58aa3fd.png)
 
-41. Click the **Save** button at the bottom of the **Advanced Resource Assign** window
+42.In the pop-up dialog box, select the Assignment tab and then select the Radio next to Variable Assign, and click the Add Item button
 
-![image](https://user-images.githubusercontent.com/51786870/210782146-b8b83101-13bc-4f83-9d38-867e7a0bf5e6.png)
+![image](https://user-images.githubusercontent.com/51786870/210797232-1c3e4123-9bb3-4ebb-9b08-2044b4cd5582.png)
 
-42. In the **Visual Policy Editor**, select the **Deny** ending on the fallback branch following **Advanced Resource Assign**
-
-![image](https://user-images.githubusercontent.com/51786870/210782215-cb6dc71a-de59-4ff8-8dce-f57dabb53522.png)
-
-43. In the **Select Ending** dialog box, selet the **Allow** radio button and then click **Save**
+43. Enter the Name set_username
 
 ![image](https://user-images.githubusercontent.com/51786870/210782278-81871182-9f55-48d5-9c0f-b1469690f8a5.png)
 
-44. In the **Visual Policy Editor**, click **Apply Access Policy** (top left), and close the **Visual Policy Editor**
+44. Click Add new entry
 
-![image](https://user-images.githubusercontent.com/51786870/210782384-79780ac0-a46a-440f-a23e-0325f7776363.png)
+45. Click Change
 
-### Task 7 - Create the IdP Virtual Server
+![image](https://user-images.githubusercontent.com/51786870/210797369-0b40f90c-4e14-4a64-bdbd-6e2a9d170b78.png)
+
+46. Enter the Custom Variable session.logon.last.username
+
+47. Select Session Variable from the right drop down menu
+
+48. Enter the session variable name session.ldap.last.attr.sAMAccountName
+
+49. Click Finished
+
+![image](https://user-images.githubusercontent.com/51786870/210797853-5d690ec1-614f-437b-902b-56249c591c61.png)
+
+50. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210798000-67c44035-2d1f-4780-9b88-77d9831f61c0.png)
+
+51. Click the Plus (+) Sign between set_username and Deny
+
+![image](https://user-images.githubusercontent.com/51786870/210798053-283c5c38-233e-4407-95c6-729bfb079e9e.png)
+
+52. In the pop-up dialog box, select the Assignment tab and then select the Radio next to Advanced Resource Assign, and click the Add Item button
+
+![image](https://user-images.githubusercontent.com/51786870/210798093-2fc5ce9e-0da4-4926-a8ce-de6544c8c1da.png)
+
+53. In the new Resource Assignment entry, click the Add/Delete link
+
+![image](https://user-images.githubusercontent.com/51786870/210798136-0ed9a1c8-5618-4d56-ba8a-41e40b596953.png)
+
+54. In the resulting pop-up window, click the SAML tab, and select the Checkbox next to /Common/sp.acme.com
+
+![image](https://user-images.githubusercontent.com/51786870/210798276-42dfc0c1-5fde-438c-a993-ccb505d7cdff.png)
+
+55. Click the Webtop tab, and select the Checkbox next to /Common/full_webtop
+
+56. Click the Update button at the bottom of the window to complete the Resource Assignment entry
+
+![image](https://user-images.githubusercontent.com/51786870/210798352-91905033-2b0a-4dfe-b405-5fa8fd777248.png)
+
+57. Click the Save button at the bottom of the Advanced Resource Assign window
+
+![image](https://user-images.githubusercontent.com/51786870/210798477-a6379f57-ce1b-4e0f-9024-3b594b4390d6.png)
+
+58. In the Visual Policy Editor, select the Deny ending on the fallback branch following Advanced Resource Assign
+
+![image](https://user-images.githubusercontent.com/51786870/210798595-11820a96-5187-4f9e-a3e3-f5c3f440af73.png)
+
+59. In the Select Ending dialog box, selet the Allow radio button and then click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210798636-b7e8ddcf-f4d2-4428-b4f3-281e07ee06fb.png)
+
+60. In the Visual Policy Editor, click Apply Access Policy (top left), and close the Visual Policy Editor
+
+![image](https://user-images.githubusercontent.com/51786870/210798693-95a1e272-db74-415e-b277-5f3ed9dfacf9.png)
+
+
+### Task 8 - Create a Client-side SSL Profile
+
+1. Navigate to Local Traffic ‑> Profile -> SSL -> Client. Click the Plus (+) Sign
+
+![image](https://user-images.githubusercontent.com/51786870/210798992-763c6993-4042-4030-b935-739d37a9ee7b.png)
+
+2. Enter the Name idp.acme.com-clientssl
+
+3. Check the custom box on the Certificate Key Chain Line
+
+4. Click Add
+
+![image](https://user-images.githubusercontent.com/51786870/210799065-e42d2255-e263-4729-b902-e80ac44da398.png)
+
+5. Select acme.com-wildcard from the Certificate dropdown menu
+
+6. Select acme.com-wildcard from the Key dropdown menu
+
+7. Click Add
+
+![image](https://user-images.githubusercontent.com/51786870/210799121-e5bcfa17-d763-4a65-82ea-93fd048fe350.png)
+
+8. Check the custom box on the Trusted Certificate Authorities Line
+
+9. Select ca.f5lab.local from the Trusted Certificate Authorities dropdown menu
+
+10. Check the custom box on the Advertised Certificate Authorities Line
+
+11. Select ca.f5lab.local from the Advertised Certificate Authorities dropdown menu
+
+![image](https://user-images.githubusercontent.com/51786870/210799193-d3aa0436-ae41-48c7-97cc-7eb265940326.png)
+
+12. Click Finished
+
+
+
+### Task 9 - Create the IdP Virtual Server
 
 1. Begin by selecting **Local Traffic** ‑> **Virtual Servers**
 
@@ -2376,9 +2474,9 @@ Estimated completion time: 25 minutes
 
    * **Configuration**
    * **HTTP Profile**:	**http** (drop down)
-   * **SSL Profile (Client)**:	**wildcard.acme.com**
+   * **SSL Profile (Client)**:	**idp.acme.com-clientssl**
 
-![image](https://user-images.githubusercontent.com/51786870/210783378-a207c833-81e5-4c0e-a619-0b862940dcad.png)
+![image](https://user-images.githubusercontent.com/51786870/210799759-1d3a2e3f-f228-4a4c-a799-a4ba1e93fd75.png)
 
    * **Access Policy**
    * **Access Profile**:	**idp.acme.com-psp**
@@ -2387,12 +2485,25 @@ Estimated completion time: 25 minutes
 
 4. Scroll to the bottom of the configuration window and click **Finished**
 
-### Task 8 - Test the Configuration
+### Task 10 - Test the Configuration
 
-1. From the **jumphost**, navigate to the SAML IdP you previously configured at **https://idp.acme.com**. Notice you are automatically signed into the IDP.
+1. From the **jumphost**, navigate to the SAML IdP you previously configured at **https://idp.acme.com**.
 
-2. Click **sp.acme.com**
+2. Select the user1 certificate
 
+3. Click OK
+
+![image](https://user-images.githubusercontent.com/51786870/210799983-78dbb4eb-ad12-4979-a205-d0dc011b1078.png)
+
+4. Click **sp.acme.com**
+
+5. You are then successfully logged into https://sp.acme.com and presented a webpage.
+
+![image](https://user-images.githubusercontent.com/51786870/210800066-9f2c7fe3-09a0-439f-9af5-1a99e984aed2.png)
+
+6. Review your Active Sessions (Access ‑> Overview ‑> Active Sessions­­­)
+
+7. Review your Access Report Logs (Access ‑> Overview ‑> Access Reports)
 
 #
 #
