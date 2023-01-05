@@ -1770,7 +1770,7 @@ This will open the APM Webtop landing page that shows the resources you are allo
 
 3. Wait about 30 seconds for the processing to begin
 
-![image](https://user-images.githubusercontent.com/51786870/210737528-4ce9e728-9bb4-495a-be80-0ea68315956f.png)
+![image](https://user-images.githubusercontent.com/51786870/210737783-4e05e71b-921e-4f20-889b-c061fb392bca.png)
 
 4. This process will take up to 30 seconds. Scroll to the bottom of the script and verify no issues.
 
@@ -1779,8 +1779,109 @@ This will open the APM Webtop landing page that shows the resources you are allo
 
 
 
-## Module 4
-## Module 4: Server-Side Single Sign-On and Webtop Access Policy Build
+## Module 4 Part 1
+## Module 4: Part 1 - SAML SP Access Guided Configuration (AGC)
+
+The purpose of this lab is to configure and test SAML Federation Services. This lab will be configured in two parts.
+
+Students will leverage Access Guided Configuration (AGC) to configure the various aspects of a SAML Service Provider (SP), import and bind to a SAML Identity Provider (IdP) and test SP-Initiated SAML Federation.
+
+### Objective:
+
+   * Gain an understanding of SAML Federation configurations and their component parts through Access Guided Configuration (AGC)
+   * Gain an understanding of the access flow for IDP & SP Initiated SAML
+
+### Lab Requirements:
+
+   * All Lab requirements will be noted in the tasks that follow
+   * Estimated completion time: 25-30 minutes
+
+### Task 1 - Setup Lab environment
+
+1. Open Chrome browser and launch the site https://portal.f5lab.local.
+
+2. Click the **Classes** tab at the top of the page.
+
+![image](https://user-images.githubusercontent.com/51786870/210740642-0de495be-7143-429a-a09a-e67680771656.png)
+
+3. Scroll down the page until you see **202 - Federation** on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210740741-b1e4df56-236e-4648-84fc-e18d29870490.png)
+
+4. Hover over tile **SAML SP Access Guided Configuration(AGC) Lab**. A start and stop icon should appear within the tile. Click the **Play** Button to start the automation to build the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210740902-14c8e875-15e1-4caa-9ba8-0a94c4825e25.png)
+
+10. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded.
+
+![image](https://user-images.githubusercontent.com/51786870/210740987-b2973049-4956-4242-8e06-784c0b01f400.png)
+
+### Task 2: Configure a SAML Service Provider (SP) via AGC
+
+1. Navigate to **Access** -> **Guided Configuration** in the left-hand menu.
+
+2. Once **Guided Configuration** loads, click on **Federation**.
+
+![image](https://user-images.githubusercontent.com/51786870/210741143-51f3a953-6064-4fe8-9f63-540891a72f32.png)
+
+3. In the resulting **Federation** sub-menu click, **SAML Service Provider**.
+
+![image](https://user-images.githubusercontent.com/51786870/210741211-994a0c0b-6f6a-4df1-b64a-ad3d3724cfbb.png)
+
+4. In the resulting **SAML Service Provider** window, review the (**SP-Initiated**) flow and then click the **right arrow**.
+
+![image](https://user-images.githubusercontent.com/51786870/210741515-54dad002-bc55-4c18-9282-a2be7da005fc.png)
+
+5. Review the **IdP-Initiated** flow and then scroll down to the bottom of the window.
+
+![image](https://user-images.githubusercontent.com/51786870/210741590-b438cc33-bb38-4ad7-b619-507b26643483.png)
+
+6. Review the configuration objects to be created and the click **Next**.
+
+### Task 3: Configure the Service Provider
+
+1. In the **Service Provider Properties** section, enter the following values in the fields provided:
+
+   * In the **Configuration Name** field input **sp.acme.com**.
+   * In the **Entity ID** field input **https://sp.acme.com**.
+
+2. In the **Security Settings** section, check the checkbox next to **Sign Authentication Requests**.
+
+3. In the updated **Security Settings** section, use the dropdowns to select the following:
+
+   * For the **Message Signing Key** select **sp.acme.com**.
+   * For the **Message Signing Certificate** select **sp.acme.com**.
+
+4. Click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210742865-1a5a90b6-02b0-4d9d-b295-0185d337661e.png)
+
+### Task 3: Configure the Virtual Server
+
+1. In the **Virtual Server Properties** section, enter the following values in the fields provided:
+
+   * In the **Destination Address** field input **10.1.10.103**.
+   * In the **Service Port** field input **443 HTTPS**
+   * In the **Redirect Port** field input **80 HTTP**
+
+2. In the **Client SSL Profile** section, use the arrows to move only the **wildcard.acme.com** profile to the right-hand column as shown.
+
+3. Click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210743314-0113e83d-9382-4bdb-ae8c-117bbf64ec01.png)
+
+### Task 4: Configure External IdP Connector¶
+In the External Identity Provider Connector Settings section, use the first dropdown
+
+Select Method to configure your IdP Connector to select Metadata.
+
+In the updated window, click the Choose File button and then browse the Jumphost
+
+desktop and select the file idp_acme_com.xml.
+
+In the Name field, input idp.acme.com
+
+Click Save & Next.
 
 
 
