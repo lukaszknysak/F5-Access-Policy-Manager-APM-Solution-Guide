@@ -1871,21 +1871,151 @@ Students will leverage Access Guided Configuration (AGC) to configure the variou
 ![image](https://user-images.githubusercontent.com/51786870/210743314-0113e83d-9382-4bdb-ae8c-117bbf64ec01.png)
 
 ### Task 4: Configure External IdP Connector¶
-In the External Identity Provider Connector Settings section, use the first dropdown
 
-Select Method to configure your IdP Connector to select Metadata.
+1. In the **External Identity Provider Connector Settings** section, use the first dropdown **Select Method** to configure your **IdP Connector** to select **Metadata**.
 
-In the updated window, click the Choose File button and then browse the Jumphost
+2. In the updated window, click the **Choose File** button and then browse the **Jumphost desktop** and select the **file idp_acme_com.xml**.
 
-desktop and select the file idp_acme_com.xml.
+3. In the **Name** field, input **idp.acme.com**
 
-In the Name field, input idp.acme.com
+4. Click **Save & Next**.
 
-Click Save & Next.
+![image](https://user-images.githubusercontent.com/51786870/210749659-204a8794-0d73-4d65-968b-0f592b89c1a5.png)
 
+### Task 5: Configure Pool
 
+1. Click **Show Advanced Setting** in the upper right of the **Guided Configuration**.
 
+2. In the **Pool Properties** section, use the dropdown to select **Create New** for **Select a Pool**.
 
+3. In the **Health Monitors** section, use the arrows to move only the **/Common/http** health monitor to the right-hand column as shown.
+
+4. In the **Resource Properties** section, use the dropdown to select **Least Connections (member)** for Load Balancing Method.
+
+5. For the **Pool Servers** section, use the first dropdown for **IP Address/Node Nam**e to select **/Common/10.1.20.6**. Ensure port **80** and **HTTP** are set for the **Port**.
+
+6. Click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210750219-05d35ace-356e-4a37-86c9-4eb901a1da74.png)
+
+# Task 6: Configure SSO
+
+1. In the Single Sign-On Settings section, check the Enable Signle Sign-On checkbox.
+
+2. Use the **Selected Single Sign-On Type** dropdown to select **HTTP header-based**.
+
+3. In the **Header Valu**e field, ensure **session.saml.last.identit**y is present.
+
+4. In the **SSO Headers** section, makes sure the following values are correct:
+   * **Header Operation**: **replace**
+   * **Header Name**: **Authorization**
+   * **Header Value**: **%{session.saml.last.identity}**
+
+5. Scroll to the bottom of the window and Click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210750915-aca62225-899e-4bb8-ba96-595ca1d055ee.png)
+
+### Task 7: Configure Endpoint Checks
+
+1. In the **Endpoints Checks Properties** window, click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210751035-3d778d44-9509-4d0f-ac38-6d53453ad26c.png)
+
+### Task 8: Configure Session Management
+
+1. Review the **Session Managment** settings, in the **Timeout Settings** section then scroll to the bottom of the window and click **Save & Next**.
+
+![image](https://user-images.githubusercontent.com/51786870/210751213-0c8d2195-4adf-4c85-9a9a-0f79e79e95d2.png)
+
+### Task 9: Review the Summary and Deploy
+
+1. Review the Summary, then scroll to the bottom of the window and click **Deploy**.
+
+![image](https://user-images.githubusercontent.com/51786870/210751315-0e7788c6-f1c2-428c-ac8a-a3b3037304d2.png)
+
+2. The application is now deployed click **Finish**.
+
+![image](https://user-images.githubusercontent.com/51786870/210751439-7720ebd5-c61f-425e-a49e-ff130b0ed387.png)
+
+3. Review the Access Guided Confguration window, **Status** for **sp.acme.com** is **DEPLOYED**.
+
+![image](https://user-images.githubusercontent.com/51786870/210751474-37e2b64e-89b4-4ab3-b8d9-dc42ed68c353.png)
+
+### Task 10: Testing the SAML Service Provider (SP)
+
+1. Open Firefox from the Jumphost desktop and navigate to https://sp.acme.com
+
+**Note**
+
+`If you have issues, open Firefox in a New Private Window (Incognito/Safe Mode)`
+
+2. Once the page loads, enter **user1** for username and **user1** for password in the **Secure Logon** form and click the **Logon** button.
+
+![image](https://user-images.githubusercontent.com/51786870/210752366-0e362293-7746-45a6-b921-4e532c8d69c7.png)
+
+3. The **sp.acme.com** application will now open if successfully configured.
+
+![image](https://user-images.githubusercontent.com/51786870/210752424-5e6d096f-cae8-40fe-921f-20497155cc70.png)
+
+### Task 11: Lab CleanUp
+
+1. Navigate to **Access** -> **Guided Configuration** in the left-hand menu.
+
+![image](https://user-images.githubusercontent.com/51786870/210752668-b3b66d52-1f13-4ade-aff2-1242de0f2e02.png)
+
+2. Click the **Undeploy** button
+
+![image](https://user-images.githubusercontent.com/51786870/210752757-ff475ebc-9292-42b1-91a6-4d98e05488a9.png)
+
+3. Click **OK** when asked, “Are you sure you want to undeploy this configuration?”
+
+![image](https://user-images.githubusercontent.com/51786870/210752866-187e5a98-ce08-4317-b93d-312f5a7a5812.png)
+
+4. Click the **Delete** button once the deployment is undeployed
+
+![image](https://user-images.githubusercontent.com/51786870/210752939-a455001f-38e2-4d3e-8c14-117f3a18b62e.png)
+
+5. Click **OK** when asked, “Are you sure you want to delete this configuration?”
+
+![image](https://user-images.githubusercontent.com/51786870/210753018-a3742dd7-af68-4008-b920-2d4851bd494d.png)
+
+6. The Configuration section should now be empty
+
+![image](https://user-images.githubusercontent.com/51786870/210753098-ba002f8a-eeea-4f63-9a22-9ed5cf98e302.png)
+
+7. From a browser on the jumphost navigate to **https://portal.f5lab.local**
+
+8. Click the **Classes** tab at the top of the page.
+
+![image](https://user-images.githubusercontent.com/51786870/210753199-810dcb24-c553-48b9-9882-286fc41d65d6.png)
+
+9. Scroll down the page until you see **202 - Federation** on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210753285-0cef4841-f8f2-4c67-8594-2a6ace05bd80.png)
+
+10. Hover over the tile **SAML SP Access Guided Configuration(AGC) Lab**. A start and stop icon should appear within the tile. Click the Stop Button to start the automation to delete any prebuilt objects
+
+![image](https://user-images.githubusercontent.com/51786870/210753359-e29f27af-552d-44d2-9835-f119d508fc2d.png)
+
+11. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded. 
+
+![image](https://user-images.githubusercontent.com/51786870/210753433-0c6ec134-41db-40ad-835b-af76461a577b.png)
+
+**This concludes Part 1**
+
+## Module 4 Part 2
+## Module 4: Part 2 - SAML Identity Provider (IdP) - kerberos Auth
+
+The purpose of this lab is to deploy and test a Kerberos to SAML configuration. Students will modify a previous built Access Policy and create a seamless access experience from Kerberos to SAML for connecting users. This lab will leverage the work performed previously in Lab 2. Archive files are available for the completed Lab 2.
+
+Objective:
+
+Gain an understanding of the Kerberos to SAML relationship its component parts.
+Develop an awareness of the different deployment models that Kerberos to SAML authentication opens up
+Lab Requirements:
+
+All Lab requirements will be noted in the tasks that follow
+Estimated completion time: 25 minutes
 
 
 #
@@ -1901,3 +2031,6 @@ Click Save & Next.
 #
 #
 #
+
+![image](https://user-images.githubusercontent.com/51786870/210753550-c4afc7ab-9105-44db-aa49-8950b19ec101.png)
+
