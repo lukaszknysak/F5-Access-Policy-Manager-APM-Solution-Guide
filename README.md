@@ -2536,6 +2536,717 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 ### Class 2 – API Protection
   * Module 1: API Security AWAF and APM modules
 
+# Part 1 Deploy an API Protection Profile
+
+Lab 1: Deploy an API Protection Profile¶
+Section 1.1 - Setup Lab Environment¶
+To access your dedicated student lab environment, you will need a web browser and Remote Desktop Protocol (RDP) client software. The web browser will be used to access the Unified Demo Framework (UDF) Training Portal. The RDP client will be used to connect to the jumphost, where you will be able to access the BIG-IP management interfaces (HTTPS, SSH).
+
+Click DEPLOYMENT located on the top left corner to display the environment
+
+Click ACCESS next to jumphost.f5lab.local
+
+![image](https://user-images.githubusercontent.com/51786870/210808500-825a8300-49e2-4685-a0f0-410c6fd0a78d.png)
+
+Select your RDP resolution.
+
+The RDP client on your local host establishes a RDP connection to the Jumphost.
+
+5. Login with the following credentials:
+
+User: f5lab\user1
+Password: user1
+
+6. After successful logon the Chrome browser will auto launch opening the site https://portal.f5lab.local. This process usually takes 30 seconds after logon.
+
+![image](https://user-images.githubusercontent.com/51786870/210808662-e67f0ea6-4582-4800-85cc-569c5561c72b.png)
+
+7. Click the Classes tab at the top of the page.
+
+8. Scroll down the page until you see 304 API Protection on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210808725-9b2f8e36-48db-410f-b31b-9dcf45bd319a.png)
+
+9. Hover over tile Deploy an API Protection Profile. A start and stop icon should appear within the tile. Click the Play Button to start the automation to build the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210808769-b574604c-4fec-4aee-9a9b-90a41e50f498.png)
+
+10. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded. If you you experience errors try running the automation a second time or open an issue on the Access Labs Repo.
+
+![image](https://user-images.githubusercontent.com/51786870/210808804-9442470a-a735-4465-b8b1-0081bb2b0baf.png)
+
+# Section 1.2 - Implement Course-Graing Access Control
+# Task 1 - Create a Provider¶
+
+The cornerstone of the API protection profile is the ability to authorize users using JWT. Unlike Guided Configuration that creates the JWT Provider for you based on a few defined parameters, you must create the provider manually.
+
+1. Navigate to Access >> Federation >> OAuth Client/Resource Server >> Provider. Click the + (Plus Symbol)
+
+![image](https://user-images.githubusercontent.com/51786870/210808884-f4940a4a-bafe-4fb0-a538-be9aa2888fd9.png)
+
+2. Configure the following parameters:
+
+Name: api-as-provider
+Trusted Certificate Authorities: ca.acme.com.
+OpenID URL: replace f5-oauth.local with as.acme.com
+
+3. Click Discover
+
+![image](https://user-images.githubusercontent.com/51786870/210808974-05111009-04ca-4fbf-9c56-b88ff9953439.png)
+
+4. The Authentication URI, Token URI, Token Validation Scope URI, UserInfo URI and keys should be updated.
+
+![image](https://user-images.githubusercontent.com/51786870/210809025-ef7cb933-5b0a-4c34-98f3-789144f0e3ad.png)
+
+5. Click Save
+
+### Task 2 - Create a JWT Provider
+
+1. Navigate to Access >> Federation >> JSON Web Token >> Provider List. Click the + (Plus Symbol).
+
+![image](https://user-images.githubusercontent.com/51786870/210809131-dc06daa8-89b0-42aa-b362-5ad53849f7fb.png)
+
+2. Enter the name: as-jwt-provider
+
+3. Click Add so api-as-provider is added to list of providers
+
+4. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210809176-cc46cab3-10e7-409a-a581-2e16ccdc0f58.png)
+
+### Task 3 - Create an API Protection Profile
+
+1. Navigate to API Protection >> Profile. Click the + (plus symbol)
+
+![image](https://user-images.githubusercontent.com/51786870/210809253-048fc95e-bc08-42e5-b6fb-c523452ab33a.png)
+
+**Note**
+
+`The JSON file is located on the jumpbox in c:\access-labs\class3\module4\student_files`
+
+2. Enter the following parameters:
+
+Name: api-protection
+OpenAPI File: Active Directory OpenAPI.json
+DNS Resolver: internal-dns-resolver
+Authorization: OAuth 2.0
+
+3. Click Add
+
+4. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210809327-d74b6b2e-fa54-43e2-80d0-7079689f10c3.png)
+
+
+
+### Task 4 - Explore the Path Configuration
+
+
+1. Note the Spec file contained a single path of /user but it supports four different request methods.
+
+2. The API server that all requests will be sent to is http://adapi.f5lab.local:81
+
+![image](https://user-images.githubusercontent.com/51786870/210809478-e47b9b8a-4e40-4047-83e4-65e0bc4d4f1c.png)
+
+### Task 5 - Associate a JWT Provider
+
+1. Click Access Control from the top ribbon
+
+2. Click Edit (Per Request Policy)
+
+![image](https://user-images.githubusercontent.com/51786870/210809573-6e5d505a-cdc9-4fcd-844d-c4c4b79a7969.png)
+
+3. Notice the same paths displayed in the API Protection profile appear here. Currently there is no fine-grained access control. We will implement it later in the lab.
+
+4. Click the + (plus symbol) next the Subroutine OAuth Scope Check AuthZ to expand its properties:
+
+![image](https://user-images.githubusercontent.com/51786870/210809637-61a89bf3-4119-47ad-801f-a7d2fe524eec.png)
+
+**Note**
+
+`The OAuth scope agent currently has a red asterisk since no provider is associated with it.`
+
+5. Click OAuth Scope
+
+![image](https://user-images.githubusercontent.com/51786870/210809703-a6812ded-a848-4089-b691-6a478c92dd1c.png)
+
+6. Enter the following parameters:
+
+Token Validation Mode: Internal
+JWT Provider List: as-jwt-provider
+Response: api-protection_auto_response1
+
+7. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210809787-1b08a091-8cc7-475c-bd7f-759063de4764.png)
+
+### Task 6 - Create a virtual server
+
+1. Navigate to Local Traffic >> Virtual Servers >> Virtual Server List. Click the + (plus symbol)
+
+![image](https://user-images.githubusercontent.com/51786870/210809881-ffca2cdd-3668-4db0-b75d-517a23e19412.png)
+
+2. Enter the following parameters:
+
+Name: api.acme.com
+Destination Address/Mask: 10.1.10.102
+Service Port: 443
+HTTP Profile (Client): http
+SSL Profile(Client): acme.com
+Source Address Translation: Auto Map
+API Protection: api-protection
+
+3. Click Finished
+
+![image](https://user-images.githubusercontent.com/51786870/210809985-65d6abc2-9f07-41d0-bc6c-1743b0a44e39.png)
+![image](https://user-images.githubusercontent.com/51786870/210810026-cf28889c-0cf7-4678-8008-2dd87f4cf5b5.png)
+
+
+### Task 7 - Import Postman Collections
+
+1. From the Jumpbox, open Postman via the desktop shortcut or toolbar at the bottom
+
+![image](https://user-images.githubusercontent.com/51786870/210810096-ff789a70-6769-45ca-91be-51937dee2dfa.png)
+
+2. Click Yes if prompted for “Do you want to allow this app to make changes to your device?”
+
+![image](https://user-images.githubusercontent.com/51786870/210810121-c5a22a81-6ad4-4aef-a7ea-0ae1d4404199.png)
+
+3. Click Import located on the top left of the Postman application
+
+![image](https://user-images.githubusercontent.com/51786870/210810189-20b2d97d-ff03-49c9-b7a7-67521ce6816c.png)
+
+4. Click Upload Files
+
+![image](https://user-images.githubusercontent.com/51786870/210810232-68cc9ee7-f4c9-4065-b019-2b697576ec96.png)
+
+5. Navigate to C:\access-labs\class3\module4\student_files, select student-class3-module4-lab01.postman_collection.json, and click Open
+
+![image](https://user-images.githubusercontent.com/51786870/210810265-91802266-dbeb-49f1-89bd-f8f58a72d736.png)
+
+6. Click Import
+
+![image](https://user-images.githubusercontent.com/51786870/210810300-df027855-7e45-41e7-a77c-4d601291a955.png)
+
+7. A collection called student-class3-module4-lab01 will appear on the left side in Postman
+
+### Task 8 - Retreive your OAuth clientID
+
+1. Expand the student-class3-module4-lab01 Collection
+
+2. Select the request Request1: Retrieve Postman ClientID
+
+3. Click Send
+
+![image](https://user-images.githubusercontent.com/51786870/210810449-7750fcd3-2dc1-4bd7-838a-c4e42f8ff4b6.png)
+
+4. You receive a 200 OK with a response body. The clientID is now stored as a Postman Variable to be used in future requests. Your ClientID will not be the same as displayed in the screenshot below.
+
+![image](https://user-images.githubusercontent.com/51786870/210810489-8e0d7ae1-ec8e-4c23-8ae3-1f71920c12eb.png)
+
+### Task 9 - Attempt to Retrieve User1's Attributes without JWT
+
+1. Select the request Request 2: Retrieve User Attributes without JWT
+
+2. Click Send
+
+3. You receive a 403 Forbidden response status code since you do not have a valid JWT
+
+![image](https://user-images.githubusercontent.com/51786870/210810563-78b3507e-3fd2-4796-9564-df5db0162554.png)
+
+### Task 10 - Retrieve User1's Attributes with a JWT
+
+1. Select the request Request 3: Retrieve User Attributes with JWT
+
+2. Select the Authorization tab
+
+3. Click Get New Access Token
+
+![image](https://user-images.githubusercontent.com/51786870/210810662-08c9d64a-2854-4d38-b38f-8c0aecc04420.png)
+
+4. Login using Username: user1, Password: user1
+
+![image](https://user-images.githubusercontent.com/51786870/210810705-bc410156-5385-4e43-b9d3-809b768b719e.png)
+
+5. Click Use Token.
+
+![image](https://user-images.githubusercontent.com/51786870/210810722-1dc55512-afc1-4866-a573-e1d34a5e4bed.png)
+
+6. Notice the Access Token field is now populated
+
+![image](https://user-images.githubusercontent.com/51786870/210810759-2aa9d49c-7f4d-414c-b489-b6f8e81b0b9e.png)
+
+7. Click Send
+
+8. You receive a 200 OK response status code with attributes for user1 in the body of the response
+
+![image](https://user-images.githubusercontent.com/51786870/210810838-361146dc-db44-4fb7-a2cc-82facb7ae47d.png)
+
+### Task 11 - Set a Valid User Attribute
+
+1. Select the request Request 4: Update a Valid User Attribute
+
+2. Select the Authorization tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+![image](https://user-images.githubusercontent.com/51786870/210810955-3af82f5c-b737-4da6-b2b0-2bfdccad628e.png)
+
+4. The Token field is now populated
+
+![image](https://user-images.githubusercontent.com/51786870/210810987-6ff05b56-e188-4069-ae6c-dffc7b616564.png)
+
+5. Click Send
+
+**Note**
+
+`If you receive a 403 response status code, request a new token. You can change the name of the token request prior to sending by setting the Token Name. You can delete expired tokens by clicking the Available Tokens dropdown, clicking Manage Tokens, and then clicking the trashcan next to the Token.`
+
+6. You receive a 200 OK response status code with a response body that contains user1’s employeeNumber 123456
+
+![image](https://user-images.githubusercontent.com/51786870/210811061-722e54c7-24be-4f4e-84ad-cfb492f6698a.png)
+
+### Task 12 - Set an Nonexistent User’s Attribute
+
+1. Select the request Request 5: Update a Nonexistent User's Attribute
+
+2. Select the Authorization tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+4. The Token field is now populated
+
+5. Click Send
+
+**Note**
+
+`If you receive a 403 response status code, request a new token. You can change the name of the token request prior to sending by setting the Token Name. You can delete expired tokens by clicking the Available Tokens dropdown, clicking Manage Tokens, and then clicking the trashcan next to the Token.`
+
+6. You receive a 2O0 OK response status code. The request successfully passed through the API Gateway, but the server failed to process the request.
+
+![image](https://user-images.githubusercontent.com/51786870/210811165-fddf5cd4-55bb-45f2-840b-07bb06f8026c.png)
+
+### Task 13 - Update a Valid User with PUT
+
+1. Select the request Request 6: Update a Valid User’s Attribute with PUT
+
+2. Select the Authorization tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+4. The Token field is now populated
+
+5. Click Send
+
+6. You receive a 403 Forbidden response status code. This is expected because the PUT Method was not specified in the API Protection Profile for the path /user
+
+![image](https://user-images.githubusercontent.com/51786870/210811275-d720a4a3-066e-412b-9daf-1fdfe413f508.png)
+
+### Task 14 - Create a User
+
+1. Select the request Request 7: Create a User
+
+2. Select the Authorization tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+![image](https://user-images.githubusercontent.com/51786870/210811336-4ccd7836-9b98-4e35-b3dc-e8a5b37fb20f.png)
+
+4. Click Send
+
+5. You receive a 200 OK response status code with a response body that contains Bob Smith’s user attributes
+
+![image](https://user-images.githubusercontent.com/51786870/210811445-d8f63dae-716f-4044-b0f1-d7d9e92b3eb0.png)
+
+### Task 15 - Request invalid endpoint
+
+1. Select the request Request 8: Request Invalid Endpoint
+
+2. Select the Authorization tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+4. The Token field is now populated
+
+5. Click Send
+
+6. You receive a 403 Forbidden response status code. This is expected because the path /hacker/attack was not specified in the API Protection Profile
+
+![image](https://user-images.githubusercontent.com/51786870/210811543-b18bed88-cdde-41eb-a66f-e6c0f86e77a7.png)
+
+# Section 1.3 - Implement Fine-Grained Access Controls
+
+Up to this point any authenticated user to the API is authorized to use them. In this section we will restrict user1’s ability to create users, but will still be able to modify a user’s employee number.
+
+### Task 1 - Retrieve Group Membership Subsession Variable
+
+**Note**
+
+`In order to implement fine-grained control the session variables that contain the data must be known. This first session shows you how to display the session variables and their values.`
+
+1. From the Jumpbox desktop click on the BIG-IP1 Putty icon
+
+![image](https://user-images.githubusercontent.com/51786870/210811753-70c3351a-fede-4389-929c-63086105db8d.png)
+
+2. Enter the command sessiondump –delete all to remove any existing APM sessions
+
+![image](https://user-images.githubusercontent.com/51786870/210811814-d73c1ba8-ef0e-4943-8866-bd29fde98f5c.png)
+
+3. Enter the command tailf /var/log/apm. Hit enter a few times to create some space on the screen
+
+![image](https://user-images.githubusercontent.com/51786870/210811860-283fb6f7-42eb-4d00-ac50-de775bea9358.png)
+
+4. From Postman, Select the request Request 3: Retrieve User Attributes with JWT. The Authorization field should already be populated with User1’s token.
+
+5. Click Send
+
+6. You receive a 200 OK response status code with attributes for user1 in the body of the response
+
+![image](https://user-images.githubusercontent.com/51786870/210811936-e53fc002-3d55-4ad8-b106-02b247f741b6.png)
+
+**Note**
+
+`Your SessionID will be different`
+
+7. Return to the CLI and examine the logs. You will see a message about a new subsession being created. Copy the subsession ID
+
+![image](https://user-images.githubusercontent.com/51786870/210812019-e01526f7-6e68-4102-95b2-becf36380b0d.png)
+
+8. Exit the logs using Ctrl+Z
+
+9. Enter the command sessiondump -subkeys <subsessionID>
+
+![image](https://user-images.githubusercontent.com/51786870/210812072-7df648ee-29e1-4d0a-a29c-b1ab59efd732.png)
+
+10. Scroll through input until you find the session variable for subsession.oauth.scope.last.jwt.groups
+
+![image](https://user-images.githubusercontent.com/51786870/210812107-621641c8-bb8c-4445-ad02-c1395a3eedf8.png)
+
+
+ ### Task 2 - Edit the per-request policy
+
+1. Return to BIG-IP1’s management interface and navigate to Access >> API Protection >> Profile. Click Profile to modify the previously created API protection Profile (not the + Plus symbol)
+
+2. Click Edit Under Per-Request Policy
+
+![image](https://user-images.githubusercontent.com/51786870/210812473-5c817eef-1464-42d2-8979-d66df431a53a.png)
+
+3. Click the Allow terminal located at the end of the POST /user branch
+
+![image](https://user-images.githubusercontent.com/51786870/210812448-e80179ed-1d4c-4145-9778-3903e8db71c9.png)
+
+4. Select Reject
+
+5. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210812529-3faa57d9-fd54-482d-97d8-a04450ef2296.png)
+
+6. Click the + (Plus Symbol) on the POST /user branch
+
+![image](https://user-images.githubusercontent.com/51786870/210812574-554eb306-f8a7-4eaa-9fbb-1288cc8017b5.png)
+
+7. Click the General Purpose tab
+
+8. Select Empty
+
+9. Click Add Item
+
+![image](https://user-images.githubusercontent.com/51786870/210812653-1484e8d9-0ec6-4268-9f5b-d4792aad8a94.png)
+
+10. Enter the name Claim Check
+
+![image](https://user-images.githubusercontent.com/51786870/210812693-c4c27e05-dfd4-4b78-ade3-19d3f848ebcf.png)
+
+11. Click the Branch Rules tab
+
+12. Click the Add Branch Rule
+
+![image](https://user-images.githubusercontent.com/51786870/210812985-bdba7cb1-6f34-421b-bfe4-e6164e5d8d6a.png)
+
+13. Enter Name CreateUser
+
+14. Click Change
+
+![image](https://user-images.githubusercontent.com/51786870/210813088-82db6fc3-66dd-49bc-be8f-ee72447895d2.png)
+
+15. Click the Advanced tab
+
+16. Enter the string in the notes section to restrict access to only members of the CreateUser Group. Make sure the ” characters are properly formatted after pasting. If they aren’t, simply delete and re-enter them manually.
+
+17. Click Finished
+
+**Note**
+
+`expr {[mcget {subsession.oauth.scope.last.jwt.groups}] contains “CreateUser”}`
+
+![image](https://user-images.githubusercontent.com/51786870/210813192-020afd46-c21e-433e-b31b-a224e5872963.png)
+
+18. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210813285-8b034e75-5ef3-4aec-b1fc-8f5905f6fd0b.png)
+
+19. Click Reject on the CreateUser Branch to permit access
+
+![image](https://user-images.githubusercontent.com/51786870/210813342-860e35ca-19da-4028-a7f6-cf06f98f28fd.png)
+
+20. Select Allow
+
+21. Click Save
+
+![image](https://user-images.githubusercontent.com/51786870/210813385-ce4f0624-1619-445b-a3a9-ebc21a955944.png)
+
+22. Review the Policy Flow
+
+![image](https://user-images.githubusercontent.com/51786870/210813443-d7151d18-c3e6-4ef4-a759-bac8430d7054.png)
+
+### Task 3 - Test the Fine-Grained Access Control with user1
+ 
+1. From Postman select the request Request 7: Create User
+
+2. Select the Authorization Tab
+
+3. Select the previously created User1 token from the Available Tokens dropdown
+
+4. The Token field is now populated
+
+5. Click Send
+
+6. You receive a 403 Forbidden response status code when using user1. User1 does not contain the proper claim data.
+
+![image](https://user-images.githubusercontent.com/51786870/210813556-681960d7-318c-452e-9ed7-e48e1539c119.png)
+
+### Task 4 - Test the Fine-Grained Access Control with user2
+ 
+1. Select the request Request 7: Create User
+
+2. Select the Authorization tab
+
+3. Ensure the Token Name is set to user2
+
+4. Click Get New Access Token
+
+![image](https://user-images.githubusercontent.com/51786870/210813638-335c42ff-30d1-47e3-adca-bd4cf14ac65a.png)
+
+5. Login using Username: user2, Password: user2
+
+![image](https://user-images.githubusercontent.com/51786870/210813662-4dc1c0ac-b088-4064-a762-4f3a999a312f.png)
+
+6. Ensure the User2 Token is selected
+
+7. Click Use Token at the top right.
+
+![image](https://user-images.githubusercontent.com/51786870/210813703-2d7702a3-080e-46bf-bf45-3aa05091da4f.png)
+
+8. The Token field is now populated
+
+9. Click Send
+
+10. You receive a 200 OK response status code when using user2. User2 does contain the proper claim data
+
+![image](https://user-images.githubusercontent.com/51786870/210813757-cfefebc2-ad05-4718-bce2-731980d7f6fd.png)
+
+# Section 1.4 - Implement Rate Limiting
+The API Protection Profile allows a BIG-IP administrator to throttle the amount of connections to an API through the use of Key Names.
+
+Task 1 - Test pre-rate limiting Access¶
+Click the arrow located to the right of the student-class3-module4-lab01 collection.
+
+Click Run
+
+image104
+
+Deselect all requests except Request 3: Retrieve User Attributes with JWT
+
+Set the iterations to 100
+
+Click the blue Run Student-class3-module4-la… button
+
+image105
+
+You receive a 200 OK for every request. Leave Runner open
+
+image92
+
+Task 2 - Define the rate limiting keys¶
+Navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile. Not the + Plus symbol.
+
+image48
+
+Click api-protection
+
+image64
+
+Click Rate Limiting from the top ribbon
+
+image69
+
+Note
+
+The API protection profile default settings contains five Key Names created, but their values are empty. Additional Keys can be created if necessary
+
+Click api-protection_auto_rate_limiting_key1
+
+image70
+
+Enter the Key Value %{subsession.oauth.scope.last.jwt.user}
+
+Click Edit
+
+image71
+
+Click api-protection_auto_rate_limiting_key2
+
+Enter the Key Value %{subsession.oauth.scope.last.jwt.groupid}
+
+Click Edit
+
+image73
+
+Click api-protection_auto_rate_limiting_key3
+
+Enter the Key Value %{subsession.oauth.scope.last.jwt.client}
+
+Click Edit
+
+image75
+
+Click api-protection_auto_rate_limiting_key4
+
+Enter the Key Value %{subsession.oauth.scope.last.jwt.tier}
+
+Click Edit
+
+image77
+
+Click api-protection_auto_rate_limiting_key5
+
+Enter the Key Value %{subsession.oauth.scope.last.jwt.org}
+
+Click Edit
+
+image79
+
+Click Save
+
+image80
+
+Task 3 - Create a Rate Limiting Policy¶
+Click Create in the rate limiting section
+
+image81
+
+Enter the Name acme-rate-limits
+
+Move all five keys under Selected Keys
+
+Enter 10 for the number of requests per minute
+
+Enter 5 for the number requests per second
+
+Click Add.
+
+image82
+
+Click Save
+
+image83
+
+Task 4 - Apply the Rate Limiting Policy¶
+Click Access Control from the ribbon
+
+image93
+
+Click Edit Per Request Policy
+
+image94
+
+Click the + (Plus Symbol) on the Out branch of the OAuth Scope Check AuthZ Macro
+
+image95
+
+Click the Traffic Management tab
+
+Select API Rate Limiting
+
+Click Add Item
+
+image96
+
+Click Add new entry
+
+Select acme-rate-limits
+
+Click Save
+
+image97
+
+Verify the Rate Limiting agent now appears in the appropriate location
+
+image98
+
+Task 5 - Test Rate Limiting¶
+Return to Postman
+
+Click Run Again to rerun the request an additional 100 times.
+
+image103
+
+On the 6th request you begin to receive a 429 Too Many Requests response status code
+
+image99
+
+Section 1.5 - Onboard a New API¶
+Organizations change. With this change, new APIs are introduced requiring modifications to the API Gateway. In this section you will learn how to add additional paths.
+
+Task 1 - Verify no access to API¶
+From Postman, select the request Request 9: Create DNS Entry
+
+Select the Authorization tab
+
+Select the previously created User1 token from the Available Tokens dropdown
+
+The Token field is now populated
+
+Click Send
+
+You receive a 403 Forbidden response status code because the the new API has not been published at the Gateway.
+
+Task 2 - Add the new API path¶
+From the browser, navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile (not the + Plus symbol)
+
+image48
+
+Click api-protection
+
+image64
+
+Click Paths
+
+image65
+
+Click Create
+
+image66
+
+The URI /dns
+
+Select the Method POST
+
+Click Add
+
+image67
+
+Click Save
+
+image68
+
+Task 3 - Test Access to the new path¶
+From Postman, select the request Request 9: Create DNS Entry
+You receive a 200 OK that the endpoint is now published.
+image102
+
+
+
 
 
 #
