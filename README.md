@@ -2182,13 +2182,216 @@ Estimated completion time: 25 minutes
 2. From the BIG-IP GUI, navigate to **Access** >> **Authentication** >> **Kerberos** >> Click the **+** Plus Symbol
 
 ![image](https://user-images.githubusercontent.com/51786870/210777904-e6532875-5520-4e8b-9b15-a705403d35b3.png)
-
-
+****
     * **Name**:	**idp.acme.com**
     * **SPN Format**:	**Host-based service**
     * **Auth Realm**:	**F5LAB.LOCAL**
     * **Service Name**:	**HTTP**
     * **Keytab File**:	**out.keytab**
+
+3. Click **Finished**
+
+![image](https://user-images.githubusercontent.com/51786870/210778528-9db3a5b6-19c5-45bf-af85-82ef3a52cac9.png)
+
+### Task 6 - Create a SAML IdP Access Policy
+
+1. Select **Access** ‑> **Profiles/Policies** ‑> **Access Profiles (Per-Session Policies)**
+
+2. Click the **Create** button (far right)
+
+![image](https://user-images.githubusercontent.com/51786870/210778673-28e1c89f-3b8b-4fc2-a0fa-8d944b44c358.png)
+
+3. In the New Profile window, enter the following information:
+
+   * **Name**:	**idp.acme.com‑psp**
+   * **Profile Type**:	**All** (drop down)
+   * **Profile Scope**:	**Profile** (default)
+   * **Customization Type**:	**modern** (default)
+
+![image](https://user-images.githubusercontent.com/51786870/210778935-8f5a8d3d-c287-46cf-8715-56492cb4e95f.png)
+
+4. Scroll to the bottom of the **New Profile** window to the **Language Settings** section
+
+5. Select **English** from the **Factory Built‑in Languages** menu on the right and click the **Double Arrow (<<)**, then click the **Finished** button.
+
+6. The **Default Language** should be automatically set
+
+![image](https://user-images.githubusercontent.com/51786870/210779125-a66399a3-e266-4977-a050-fbacaca326b6.png)
+
+7. From the **Access** ‑> **Profiles/Policies** ‑> **Access Profiles (Per-Session Policies)** screen, click the **Edit** link on the previously created **idp.acme.com-psp** line
+
+![image](https://user-images.githubusercontent.com/51786870/210779164-72f27535-c213-4aa4-853a-63e45b47357f.png)
+
+8. Click the **Plus (+)** Sign between **Start** and **Deny**
+
+![image](https://user-images.githubusercontent.com/51786870/210779260-85ba0da9-645a-43c2-bfe0-1952179c57f2.png)
+
+9. In the pop-up dialog box, select the **Logon** tab and then select the **Radio** next to **HTTP 401 Response**, and click the **Add Item** button
+
+![image](https://user-images.githubusercontent.com/51786870/210779514-f8ee49ac-1ef3-410c-be64-3d507639155a.png)
+
+10. In the HTTP 401 Response dialog box, enter the following information:
+
+   * **HTTP Auth Level**:	**negotiate** (drop down)
+
+11. Click the **Save** button at the bottom of the dialog box
+
+![image](https://user-images.githubusercontent.com/51786870/210779714-3563b41d-eced-4647-abb8-719c1c0506d2.png)
+
+12. Click the **Branch Rules** tab
+
+13. Click the **X** on the Basic Branch
+
+![image](https://user-images.githubusercontent.com/51786870/210779870-e757dd32-f4a4-4e53-9c98-1a275a0fcee2.png)
+
+14. Click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210779929-219fb136-ad6c-4201-a011-e1b78294838f.png)
+
+15. Click the **+** (Plus symbo) on the negotiate branch
+
+![image](https://user-images.githubusercontent.com/51786870/210779987-6e78fa18-70af-46ab-a7d3-256cd566b0d4.png)
+
+16. Click the **Authentication** tab
+
+17. Select **Kerberos Auth**
+
+18. Click **Add Item**
+
+![image](https://user-images.githubusercontent.com/51786870/210780077-e2ba67ca-27cf-4ee8-a3b6-df211c556797.png)
+
+19. In the **Kerberos Auth** dialog box, enter the following information:
+
+   * **AAA Server**:	**/Common/idp.acme.com** (drop down)
+   * **Request Based Auth**:	**Enabled** (drop down)
+
+20. Click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210780199-cf006892-d7be-4410-a697-f3ebf5b9932b.png)
+
+21. Click the **Plus (+) Sign** on the **Successful** branch between **Kerberos Auth** and **Deny**
+
+![image](https://user-images.githubusercontent.com/51786870/210780320-a7769b0a-e322-4afd-907f-60b46256ae75.png)
+
+22. In the pop-up dialog box, select the **Authentication** tab and then select the **Radio** next to **AD Query**, and click the **Add Item** button
+
+![image](https://user-images.githubusercontent.com/51786870/210780416-79b6efa1-c273-4ab8-8f29-8070b4faeacb.png)
+
+23. In the resulting **AD Query** pop-up window, select **/Commmon/f5lab.local** from the **Server** drop down menu
+
+24. In the **SearchFilter** field, enter the following value: **userPrincipalName=%{session.logon.last.username}**
+
+![image](https://user-images.githubusercontent.com/51786870/210780624-0d2ae8d3-9b99-4667-b86c-6f0849d047a7.png)
+
+
+25. In the **AD Query** window, click the **Branch Rules** tab
+
+26. Change the **Name** of the branch to **Successful**.
+
+27. Click the **Change** link next to the **Expression**
+
+![image](https://user-images.githubusercontent.com/51786870/210780812-5fb895da-e4ce-42e8-b2e9-a0162ca6c0a9.png)
+
+28. In the resulting **pop-up** window, delete the existing expression by clicking the **X** as shown
+
+![image](https://user-images.githubusercontent.com/51786870/210781036-6b65ac7e-e8c5-499d-83ab-ebb145c7c215.png)
+
+29. Create a new **Simple** expression by clicking the **Add Expression** button
+
+![image](https://user-images.githubusercontent.com/51786870/210781104-d092b984-d5c3-4139-9832-58a356d1431b.png)
+
+30. In the resulting menu, select the following from the drop down menus:
+
+   * **Agent Sel**:	**AD Query**
+   * **Condition**:	**AD Query Passed**
+
+31. Click the **Add Expression** Button
+
+![image](https://user-images.githubusercontent.com/51786870/210781289-ce19f0da-a17f-4a69-97c2-c9f3426915a2.png)
+
+32. Click the **Finished** button to complete the expression
+
+![image](https://user-images.githubusercontent.com/51786870/210781340-326d4693-ccc9-4963-aa86-95243d24c982.png)
+
+33. Click the **Save** button to complete the **AD Query**
+
+![image](https://user-images.githubusercontent.com/51786870/210781398-80efb224-5edb-4ca5-8295-d74cd412539f.png)
+
+34. Click the **Plus (+) Sign** on the **Successful** branch between **AD Query** and **Deny**
+
+![image](https://user-images.githubusercontent.com/51786870/210781501-9e74ab81-eb0f-4286-a6a4-fd1234f084de.png)
+
+35. In the **pop-up** dialog box, select the **Assignment** tab and then select the **Radio** next to **Advanced Resource Assign**, and click the **Add Item** button
+
+![image](https://user-images.githubusercontent.com/51786870/210781613-59d7c760-655f-4e8c-8b1e-450d554cccc8.png)
+
+36. In the resulting **Advanced Resource Assign** pop-up window, click the **Add New Entry** button
+
+37. In the new **Resource Assignment** entry, click the **Add/Delete** link
+
+![image](https://user-images.githubusercontent.com/51786870/210781736-959a7280-ef28-484f-9a60-24a1358ec4a8.png)
+
+38. In the resulting pop-up window, click the **SAML** tab, and select the **Checkbox** next to **/Common/sp.acme.com**
+
+![image](https://user-images.githubusercontent.com/51786870/210781796-de5e986d-cbb0-4696-a7eb-795aaaf957fa.png)
+
+39. Click the **Webtop** tab, and select the **Checkbox** next to **/Common/full_webtop**
+
+40. Click the **Update** button at the bottom of the window to complete the Resource Assignment entry
+
+![image](https://user-images.githubusercontent.com/51786870/210782060-751be2dc-5b57-42cb-8482-98716f665e42.png)
+
+41. Click the **Save** button at the bottom of the **Advanced Resource Assign** window
+
+![image](https://user-images.githubusercontent.com/51786870/210782146-b8b83101-13bc-4f83-9d38-867e7a0bf5e6.png)
+
+42. In the **Visual Policy Editor**, select the **Deny** ending on the fallback branch following **Advanced Resource Assign**
+
+![image](https://user-images.githubusercontent.com/51786870/210782215-cb6dc71a-de59-4ff8-8dce-f57dabb53522.png)
+
+43. In the **Select Ending** dialog box, selet the **Allow** radio button and then click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/210782278-81871182-9f55-48d5-9c0f-b1469690f8a5.png)
+
+44. In the **Visual Policy Editor**, click **Apply Access Policy** (top left), and close the **Visual Policy Editor**
+
+![image](https://user-images.githubusercontent.com/51786870/210782384-79780ac0-a46a-440f-a23e-0325f7776363.png)
+
+### Task 7 - Create the IdP Virtual Server
+
+1. Begin by selecting **Local Traffic** ‑> **Virtual Servers**
+
+2. Click the **Create** button (far right)
+
+![image](https://user-images.githubusercontent.com/51786870/210782542-d28ae08a-9fb3-43bd-ac69-34528c261c40.png)
+
+3. In the **New Virtual Server** window, enter the following information:
+
+   * **General Properties**
+   * **Name**:	**idp.acme.com**
+   * **Destination Address/Mask**:	**10.1.10.102**
+   * **Service Port**:	**443**
+
+![image](https://user-images.githubusercontent.com/51786870/210783276-099bf127-cffc-4622-bca9-0c3cb98f9e79.png)
+
+   * **Configuration**
+   * **HTTP Profile**:	**http** (drop down)
+   * **SSL Profile (Client)**:	**wildcard.acme.com**
+
+![image](https://user-images.githubusercontent.com/51786870/210783378-a207c833-81e5-4c0e-a619-0b862940dcad.png)
+
+   * **Access Policy**
+   * **Access Profile**:	**idp.acme.com-psp**
+
+![image](https://user-images.githubusercontent.com/51786870/210783632-2d2e861c-8d72-4138-958e-d763acc6058b.png)
+
+4. Scroll to the bottom of the configuration window and click **Finished**
+
+### Task 8 - Test the Configuration
+
+1. From the **jumphost**, navigate to the SAML IdP you previously configured at **https://idp.acme.com**. Notice you are automatically signed into the IDP.
+
+2. Click **sp.acme.com**
 
 
 #
