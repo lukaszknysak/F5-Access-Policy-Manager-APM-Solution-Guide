@@ -2006,17 +2006,103 @@ Students will leverage Access Guided Configuration (AGC) to configure the variou
 ## Module 4 Part 2
 ## Module 4: Part 2 - SAML Identity Provider (IdP) - kerberos Auth
 
-The purpose of this lab is to deploy and test a Kerberos to SAML configuration. Students will modify a previous built Access Policy and create a seamless access experience from Kerberos to SAML for connecting users. This lab will leverage the work performed previously in Lab 2. Archive files are available for the completed Lab 2.
+The purpose of this lab is to deploy and test a Kerberos to SAML configuration. Students will modify a previous built Access Policy and create a seamless access experience from Kerberos to SAML for connecting users. 
 
-Objective:
+**Objective:**
 
-Gain an understanding of the Kerberos to SAML relationship its component parts.
-Develop an awareness of the different deployment models that Kerberos to SAML authentication opens up
-Lab Requirements:
+   * Gain an understanding of the Kerberos to SAML relationship its component parts.
+   * Develop an awareness of the different deployment models that Kerberos to SAML authentication opens up
 
-All Lab requirements will be noted in the tasks that follow
+**Lab Requirements:**
+
+   * All Lab requirements will be noted in the tasks that follow
+
 Estimated completion time: 25 minutes
 
+### Task 1 - Setup Lab Environment
+
+1. Open the site **https://portal.f5lab.local**. 
+
+2. Click the **Classes** tab at the top of the page.
+
+![image](https://user-images.githubusercontent.com/51786870/210754960-ee437be0-b984-4bd9-a6e6-6b44abe49e86.png)
+
+3. Scroll down the page until you see **301 SAML Federation** on the left
+
+![image](https://user-images.githubusercontent.com/51786870/210755014-b526c231-f2fb-4295-831c-b005ae619c15.png)
+
+4. Hover over tile **SAML Identity Provider (IdP) - Kerberos Auth**. A start and stop icon should appear within the tile. Click the **Play** Button to start the automation to build the environment
+
+![image](https://user-images.githubusercontent.com/51786870/210755063-c56bca94-baf0-48a7-94ba-d93e85972b8f.png)
+
+5. The screen should refresh displaying the progress of the automation within 30 seconds. Scroll to the bottom of the automation workflow to ensure all requests succeeded.
+
+![image](https://user-images.githubusercontent.com/51786870/210755347-e6d427a3-0e4c-42fa-ba0f-9802bb7c5e64.png)
+
+### Task 2 ‑ Configure the SAML Identity Provider (IdP)
+
+**IdP Service**
+
+1. Begin by selecting: **Access** ‑> **Federation** ‑> **SAML Identity Provider** ‑> **Local IdP Services**
+
+2. Click the **Create** button (far right)
+
+![image](https://user-images.githubusercontent.com/51786870/210755673-3611be4a-c83a-4bfa-a6d1-0b168026c627.png)
+
+3. In the** Create New SAML IdP Service** dialog box, click **General Settngs** in the left navigation pane and key in the following:
+
+   * **IdP Service Name**:	**idp.acme.com**
+   * **IdP Entity ID**:	**https://idp.acme.com**
+
+![image](https://user-images.githubusercontent.com/51786870/210755903-11d7b439-5157-4ac9-b0d1-fb73f19c8386.png)
+
+**Note**
+
+`The yellow box on “Host” will disappear when the Entity ID is entered`
+
+4. In the **Create New SAML IdP Service** dialog box, click **Assertion Settings** in the left navigation pane and key in the following:
+
+   * **Assertion Subject Type**:	**Persistent Identifier** (drop down)
+   * **Assertion Subject Value**:	**%{session.logon.last.username}** (drop down)
+
+![image](https://user-images.githubusercontent.com/51786870/210756196-8bb2c003-323a-452e-b00f-01c3bcfe6a97.png)
+
+5. In the **Create New SAML IdP Service** dialog box, click **SAML Attributes** in the left navigation pane and click the **Add** button as shown
+
+![image](https://user-images.githubusercontent.com/51786870/210756240-ebf69280-dc3e-46c0-828e-1aa9b2f4439f.png)
+
+6. In the **Name** field in the resulting pop-up window, enter the following: **emailaddress**
+
+7. Under **Attribute Values**, click the Add button
+
+8. In the Values line, enter the following: **%{session.ad.last.attr.mail}**
+
+9. Click the **Update** button
+
+10. Click the **OK** button
+
+![image](https://user-images.githubusercontent.com/51786870/210756492-c679ee83-7faf-4745-a161-e3966a78674b.png)
+
+11. In the **Create New SAML IdP Service** dialog box, click **Security Settings** in the left navigation pane and key in the following:
+
+   * **Signing Key**:	**/Common/idp.acme.com (drop down)**
+   * **Signing Certificate**:	**/Common/idp.acme.com (drop down)**
+
+**Note**
+
+`The certificate and key were previously imported`
+
+12. Click **OK** to complete the creation of the IdP service
+
+![image](https://user-images.githubusercontent.com/51786870/210756787-3ba7d8d3-ce53-4d21-968f-dc12bed2da1f.png)
+
+**SP Connector**
+
+1. Click on External SP Connectors (under the SAML Identity Provider tab) in the horizontal navigation menu
+
+Click specifically on the Down Arrow next to the Create button (far right)
+
+Select From Metadata from the drop down menu
 
 #
 #
