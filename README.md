@@ -26,6 +26,9 @@ The following labs and exercises will instruct you on how to configure and troub
 - [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
   * [Module 1: APM GUI Overview](#module-1)
 
+- [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
+  * [Module 1: API Security AWAF and APM modules](#module-1)
+
 ## Class 1
 ## Class 1 – Access Policy Manager Solution (F5 APM)
   * Module 1: APM GUI Overview
@@ -33,8 +36,7 @@ The following labs and exercises will instruct you on how to configure and troub
   * Module 3: Server-Side Single Sign-On
   * Module 4: Identity Federation sample use case
 
-### Class 2 – API Protection
-  * Module 1: API Security AWAF and APM modules
+
 
 # Environment Overview
 
@@ -2530,7 +2532,9 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 6. **This concludes the lab.**
 
 
-
+## Class 2
+### Class 2 – API Protection
+  * Module 1: API Security AWAF and APM modules
 
 
 
