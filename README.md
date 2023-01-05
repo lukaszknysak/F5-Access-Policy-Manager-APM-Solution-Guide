@@ -2139,7 +2139,56 @@ Estimated completion time: 25 minutes
 
 ![image](https://user-images.githubusercontent.com/51786870/210757786-fa36ea2b-0304-47ba-8e7a-94fdc93aad60.png)
 
+### Task 3 - Create a SAML Resource
 
+1. Begin by selecting **Access** ‑> **Federation** ‑> **SAML Resources** >> **+ (Plus Button)**
+
+![image](https://user-images.githubusercontent.com/51786870/210776992-3f388a59-b9f5-4f4b-9cf6-ba0a59ba2f25.png)
+
+2. In the **New SAML Resource** window, enter the following values:
+
+    * **Name**:	**sp.acme.com**
+    * **SSO Configuration**:	**idp.acmem.com**
+    * **Caption**:	**sp.acme.com**
+
+3. Click **Finished** at the bottom of the configuration window
+
+![image](https://user-images.githubusercontent.com/51786870/210777152-f7404ec8-c332-427e-b425-33dd17deb6bf.png)
+
+### Task 4 - Create a Webtop
+
+1. Select **Access** ‑> **Webtops** ‑> **Webtop Lists** >> **+ (Plus Button)**
+
+![image](https://user-images.githubusercontent.com/51786870/210777275-f569aa09-d661-4c92-9983-b8a0d12cbc87.png)
+
+2. In the resulting window, enter the following values:
+
+    * **Name**:	**full_webtop**
+    * **Type**:	**Full** (drop down)
+    * **Minimize To Tray**:	**uncheck**
+
+3. Click **Finished** at the bottom of the GUI
+
+![image](https://user-images.githubusercontent.com/51786870/210777481-65eec353-33e0-4ef1-a130-29527fea4781.png)
+
+### Task 5 - Create a Kerberos AAA Object
+
+1. From the **jumphost**, navigate to the command line enter the command below to generate a **kerberos key tab file**
+
+`ktpass -princ HTTP/idp.acme.com@F5LAB.LOCAL -mapuser f5lab\krbtsrv -ptype KRB5_NT_PRINCIPAL -pass 'P@$$w0rd' -out C:\Users\user1\Desktop\out.keytab`
+
+![image](https://user-images.githubusercontent.com/51786870/210777616-c622568b-1659-48fd-93fc-31aa36ea91bc.png)
+
+2. From the BIG-IP GUI, navigate to **Access** >> **Authentication** >> **Kerberos** >> Click the **+** Plus Symbol
+
+![image](https://user-images.githubusercontent.com/51786870/210777904-e6532875-5520-4e8b-9b15-a705403d35b3.png)
+
+
+    * **Name**:	**idp.acme.com**
+    * **SPN Format**:	**Host-based service**
+    * **Auth Realm**:	**F5LAB.LOCAL**
+    * **Service Name**:	**HTTP**
+    * **Keytab File**:	**out.keytab**
 
 
 #
