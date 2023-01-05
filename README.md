@@ -2098,11 +2098,49 @@ Estimated completion time: 25 minutes
 
 **SP Connector**
 
-1. Click on External SP Connectors (under the SAML Identity Provider tab) in the horizontal navigation menu
+1. Click on **External SP Connectors** (under the **SAML Identity Provider** tab) in the horizontal navigation menu
 
-Click specifically on the Down Arrow next to the Create button (far right)
+2. Click specifically on the **Down Arrow** next to the **Create** button (far right)
 
-Select From Metadata from the drop down menu
+3. Select **From Metadata** from the drop down menu
+
+![image](https://user-images.githubusercontent.com/51786870/210757141-da3b6c4d-ce05-47d7-be26-2a0d61230ba3.png)
+
+4. In the **Create New SAML Service Provider** dialogue box, click **Browse** and select the **sp_acme_com.xml** file from the **Desktop** of your jump host
+
+5. In the **Service Provider Name** field, enter the following: **sp.acme.com**
+
+6. Click **OK** on the dialog box
+
+![image](https://user-images.githubusercontent.com/51786870/210757358-3fbc049a-6561-4d18-99e5-2e3358037fcb.png)
+
+**Note**
+
+`The sp_acme_com.xml file was created previously. Oftentimes SP providers will have a metadata file representing their SP service. This can be imported to save object creation time as has been done in this lab.`
+
+7. Click on **Local IdP Services** (under the **SAML Identity Provider** tab) in the horizontal navigation menu
+
+![image](https://user-images.githubusercontent.com/51786870/210757480-7b45dac6-a4b3-48cd-9d22-ff038773e739.png)
+
+8. Select the **Checkbox** next to the previously created **idp.acme.com** and click the **Bind/Unbind SP Connectors** button at the bottom of the GUI
+
+![image](https://user-images.githubusercontent.com/51786870/210757545-c42f600c-1987-4fda-87ba-a2c81978968a.png)
+
+9. In the **Edit SAML SP’s that use this IdP** dialog, select the **/Common/sp.acme.com** SAML SP Connection Name created previously
+
+10. Click the **OK** button at the bottom of the dialog box
+
+![image](https://user-images.githubusercontent.com/51786870/210757644-ac141c6a-430c-4cc2-bb8e-9bb985cc9d1c.png)
+
+11. Under the **Access** ‑> **Federation** ‑> **SAML Identity Provider** ‑> **Local IdP Services** menu you should now see the following (as shown):
+
+   * **Name**:	**idp.acme.com**
+   * **SAML SP Connectors**:	**sp.acme.com**
+
+![image](https://user-images.githubusercontent.com/51786870/210757786-fa36ea2b-0304-47ba-8e7a-94fdc93aad60.png)
+
+
+
 
 #
 #
