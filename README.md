@@ -1052,7 +1052,7 @@ The environment is the same, but you will have to build the configuration with P
 
 ![image](https://user-images.githubusercontent.com/51786870/210562696-d4abb398-8925-481a-ab91-4ee8fc838b3d.png)
 
-2. Scroll down the page until you see 102 Access Building Blocks on the left
+2. Scroll down the page until you see **102 Access Building Blocks** on the left
 
 ![image](https://user-images.githubusercontent.com/51786870/210562840-570ec080-181d-408d-b34f-a4d6ebf1d4e2.png)
 
@@ -1699,15 +1699,85 @@ In this lab, we will add a Webtop resource to the Access Policy created in the p
 
 2. In between the AD Auth APM Item and the Allow APM item click the + option to add an item.
 
-![image](https://user-images.githubusercontent.com/51786870/210732557-d8bff0a1-9aae-44e6-a71f-8c029a8f28a3.png)
+![image](https://user-images.githubusercontent.com/51786870/210734861-4d5a367e-582d-4d40-8382-e3abfcea0f4b.png)
 
-3. Select the Advanced Resource Assign object. Click on the “Assignment Tab” and select the “Advanced Resource Assign” radio button. Click Add Item.
+3. Select the **Advanced Resource Assign** object. Click on the “**Assignment Tab**” and select the “**Advanced Resource Assign**” radio button. Click **Add Item**.
+
+![image](https://user-images.githubusercontent.com/51786870/210734961-270af786-b7e9-4d37-9ea6-159bc2cd9318.png)
+
+4. Then Click the “**Add New Entry**” button.
+
+![image](https://user-images.githubusercontent.com/51786870/210735178-04f26f96-e2d4-43ea-a4d6-57b0a8323cb8.png)
+
+5. Then under the “**Expression Section**” click the “**Add/Delete**” button
+
+![image](https://user-images.githubusercontent.com/51786870/210735387-d1316aac-bee5-47eb-b18b-ff1eb6d13a23.png)
+
+6. Click on the **Webtop** tab, select the radio button for **MyFullWebtop**. Click on the **Webop Links** tab, and select the radio button for **F5Rocks** then click the Update button at the bottom of the screen.
+
+![image](https://user-images.githubusercontent.com/51786870/210735560-21bb1343-32e8-49ae-a5f5-a876a0b5e465.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210735609-107d9c5e-69dc-46f1-b724-8f1ce043af71.png)
+
+7. Click **Save**.
+
+8. At the top left of the browser window, click on **Apply Access Policy**, then close the tab. Replace the Access Profile on your app-https VIP with your myaccesspolicy Access profile and set the Per-Request Policy to None
+
+![image](https://user-images.githubusercontent.com/51786870/210735659-921f6382-d2d4-43e3-b79f-34b10a79e032.png)
+
+9. Navigate to **Local Traffic** –> **Virtual Servers** –> **Virtual Server List**
+
+**Note**
+
+```
+`Make sure you are in the Common Partition`
+
+![image](https://user-images.githubusercontent.com/51786870/210735880-e6eb387a-f708-4eaa-9751-e5d09dc4e6b9.png)
+```
+
+10. Open the **app-https** Virtual server, scroll down to the **Access Policy** section and ensure that **MyAccessPolicy** has been assigned to this virtual server.
+
+![image](https://user-images.githubusercontent.com/51786870/210736203-be0a6e93-73e7-420c-8df9-95e8821c1a91.png)
+
+### Task 8: Testing
+
+1. Open a **New Incognito web browser** to the virtual server created in the previous lab by navigating to **https://app.acme.com**. You will be presented with a Logon page similar to the one from the last lab.
+
+2. Enter the following credentials:
+
+| Username:	| user1 |
+| ---- | ---- |
+| Password:	| user1 |
+
+3. Click **Logon**.
+
+This will open the APM Webtop landing page that shows the resources you are allowed to access. In this lab, we’ve only configured one resource:
+
+**F5 Rocks**, but you can add as many as you want and they will appear on this Webtop page.
+
+### Task 9: Lab Cleanup
+
+1. Open a new tab and click on the Access: PORTAL bookmark then select **CLASSES**
+
+2. Locate the **102 Access Building Blocks** Tile and click on the **Stop** button
+
+![image](https://user-images.githubusercontent.com/51786870/210737541-9c29e057-2e27-46aa-94d4-b7b208d30e99.png)
 
 
 
+
+![image](https://user-images.githubusercontent.com/51786870/210558798-88c9bb09-18d9-41a0-b1bf-0dfb934bc100.png)
+
+3. Wait about 30 seconds for the processing to begin
+
+![image](https://user-images.githubusercontent.com/51786870/210737528-4ce9e728-9bb4-495a-be80-0ea68315956f.png)
+
+4. This process will take up to 30 seconds. Scroll to the bottom of the script and verify no issues.
 
 
 **Module 3 is now complete.**
+
+
 
 ## Module 4
 ## Module 4: Server-Side Single Sign-On and Webtop Access Policy Build
