@@ -2914,10 +2914,10 @@ Up to this point any authenticated user to the API is authorized to use them. In
 
 8. Exit the logs using Ctrl+Z
 
-9. Enter the command sessiondump -subkeys <subsessionID>
+9. Enter the command sessiondump -subkeys < subsessionID >
 
 ![image](https://user-images.githubusercontent.com/51786870/210812072-7df648ee-29e1-4d0a-a29c-b1ab59efd732.png)
-
+ 
 10. Scroll through input until you find the session variable for subsession.oauth.scope.last.jwt.groups
 
 ![image](https://user-images.githubusercontent.com/51786870/210812107-621641c8-bb8c-4445-ad02-c1395a3eedf8.png)
@@ -3048,152 +3048,156 @@ Up to this point any authenticated user to the API is authorized to use them. In
 # Section 1.4 - Implement Rate Limiting
 The API Protection Profile allows a BIG-IP administrator to throttle the amount of connections to an API through the use of Key Names.
 
-Task 1 - Test pre-rate limiting Access¶
-Click the arrow located to the right of the student-class3-module4-lab01 collection.
+### Task 1 - Test pre-rate limiting Access
 
-Click Run
+1. Click the arrow located to the right of the student-class3-module4-lab01 collection.
 
-image104
+2. Click Run
 
-Deselect all requests except Request 3: Retrieve User Attributes with JWT
+![image](https://user-images.githubusercontent.com/51786870/210814346-33dcad62-1075-4cae-8ed4-5c5054df2b82.png)
 
-Set the iterations to 100
+3. Deselect all requests except Request 3: Retrieve User Attributes with JWT
 
-Click the blue Run Student-class3-module4-la… button
+4. Set the iterations to 100
 
-image105
+5. Click the blue Run Student-class3-module4-la… button
 
-You receive a 200 OK for every request. Leave Runner open
+![image](https://user-images.githubusercontent.com/51786870/210814397-09cf859a-d3a1-43fc-8a52-df34794a4420.png)
 
-image92
+6. You receive a 200 OK for every request. Leave Runner open
 
-Task 2 - Define the rate limiting keys¶
-Navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile. Not the + Plus symbol.
+![image](https://user-images.githubusercontent.com/51786870/210814431-2c1d9be2-77a8-40f0-af39-d4eb9a37b42b.png)
 
-image48
+### Task 2 - Define the rate limiting keys
 
-Click api-protection
+1. Navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile. Not the + Plus symbol.
 
-image64
+![image](https://user-images.githubusercontent.com/51786870/210814529-f4621d8d-8e56-4822-b006-025fae35a1d3.png)
 
-Click Rate Limiting from the top ribbon
+2. Click api-protection
 
-image69
+![image](https://user-images.githubusercontent.com/51786870/210814566-97c19314-ea05-4b3b-bf40-9ce349d350ff.png)
 
-Note
+3. Click Rate Limiting from the top ribbon
 
-The API protection profile default settings contains five Key Names created, but their values are empty. Additional Keys can be created if necessary
+![image](https://user-images.githubusercontent.com/51786870/210814656-0c14714e-bcea-460a-9a65-4fb42148adaa.png)
 
-Click api-protection_auto_rate_limiting_key1
+**Note**
 
-image70
+`The API protection profile default settings contains five Key Names created, but their values are empty. Additional Keys can be created if necessary`
 
-Enter the Key Value %{subsession.oauth.scope.last.jwt.user}
+4. Click api-protection_auto_rate_limiting_key1
 
-Click Edit
+![image](https://user-images.githubusercontent.com/51786870/210814710-6ec68574-d932-4a57-a638-6c97c0bd9750.png)
 
-image71
+5. Enter the Key Value %{subsession.oauth.scope.last.jwt.user}
 
-Click api-protection_auto_rate_limiting_key2
+6. Click Edit
 
-Enter the Key Value %{subsession.oauth.scope.last.jwt.groupid}
+![image](https://user-images.githubusercontent.com/51786870/210814761-872092c6-a10b-4120-bc0b-1b10f6255882.png)
 
-Click Edit
+7. Click api-protection_auto_rate_limiting_key2
 
-image73
+8. Enter the Key Value %{subsession.oauth.scope.last.jwt.groupid}
 
-Click api-protection_auto_rate_limiting_key3
+9. Click Edit
 
-Enter the Key Value %{subsession.oauth.scope.last.jwt.client}
+![image](https://user-images.githubusercontent.com/51786870/210814834-2dcc66f5-cf6a-4e52-a580-63b5b5902646.png)
 
-Click Edit
+10. Click api-protection_auto_rate_limiting_key3
 
-image75
+11. Enter the Key Value %{subsession.oauth.scope.last.jwt.client}
 
-Click api-protection_auto_rate_limiting_key4
+12. Click Edit
 
-Enter the Key Value %{subsession.oauth.scope.last.jwt.tier}
+![image](https://user-images.githubusercontent.com/51786870/210814899-2465165c-821a-494a-a851-d15686c53bd1.png)
 
-Click Edit
+13. Click api-protection_auto_rate_limiting_key4
 
-image77
+14. Enter the Key Value %{subsession.oauth.scope.last.jwt.tier}
 
-Click api-protection_auto_rate_limiting_key5
+15. Click Edit
 
-Enter the Key Value %{subsession.oauth.scope.last.jwt.org}
+![image](https://user-images.githubusercontent.com/51786870/210814941-5b96c37b-ebe3-495f-a65c-d985ace7dd4f.png)
 
-Click Edit
+16. Click api-protection_auto_rate_limiting_key5
 
-image79
+17. Enter the Key Value %{subsession.oauth.scope.last.jwt.org}
 
-Click Save
+18. Click Edit
 
-image80
+![image](https://user-images.githubusercontent.com/51786870/210814996-d83714bc-6638-47bf-b163-5622e5a34010.png)
 
-Task 3 - Create a Rate Limiting Policy¶
-Click Create in the rate limiting section
+19. Click Save
 
-image81
+![image](https://user-images.githubusercontent.com/51786870/210815026-aa85e854-0d15-4aef-b904-4c86527141ac.png)
 
-Enter the Name acme-rate-limits
+### Task 3 - Create a Rate Limiting Policy
 
-Move all five keys under Selected Keys
+1. Click Create in the rate limiting section
 
-Enter 10 for the number of requests per minute
+![image](https://user-images.githubusercontent.com/51786870/210815069-66c75ce4-4c41-445f-a0ad-8f807eb2cd38.png)
 
-Enter 5 for the number requests per second
+2. Enter the Name acme-rate-limits
 
-Click Add.
+3. Move all five keys under Selected Keys
 
-image82
+4. Enter 10 for the number of requests per minute
 
-Click Save
+5. Enter 5 for the number requests per second
 
-image83
+6. Click Add.
 
-Task 4 - Apply the Rate Limiting Policy¶
-Click Access Control from the ribbon
+![image](https://user-images.githubusercontent.com/51786870/210815137-90e4d2bf-e9bf-4575-b527-ecf2d98b5c6a.png)
 
-image93
+7. Click Save
 
-Click Edit Per Request Policy
+![image](https://user-images.githubusercontent.com/51786870/210815181-a14518a0-15f7-4e1e-91a4-dae8f95f9213.png)
 
-image94
+### Task 4 - Apply the Rate Limiting Policy
 
-Click the + (Plus Symbol) on the Out branch of the OAuth Scope Check AuthZ Macro
+1. Click Access Control from the ribbon
 
-image95
+![image](https://user-images.githubusercontent.com/51786870/210815257-fa43dc39-9016-4054-bf1d-f6266f056a2f.png)
 
-Click the Traffic Management tab
+2. Click Edit Per Request Policy
 
-Select API Rate Limiting
+![image](https://user-images.githubusercontent.com/51786870/210815299-ffa49ab4-a579-495f-93c3-1a8d699fd437.png)
 
-Click Add Item
+3. Click the + (Plus Symbol) on the Out branch of the OAuth Scope Check AuthZ Macro
 
-image96
+![image](https://user-images.githubusercontent.com/51786870/210815330-669a557d-c437-4680-82a8-2e95798b5af1.png)
 
-Click Add new entry
+4. Click the Traffic Management tab
 
-Select acme-rate-limits
+5. Select API Rate Limiting
 
-Click Save
+6. Click Add Item
 
-image97
+![image](https://user-images.githubusercontent.com/51786870/210815391-25d10b69-c8af-45cb-a578-c7e28cbc49b5.png)
 
-Verify the Rate Limiting agent now appears in the appropriate location
+7. Click Add new entry
 
-image98
+8. Select acme-rate-limits
 
-Task 5 - Test Rate Limiting¶
-Return to Postman
+9. Click Save
 
-Click Run Again to rerun the request an additional 100 times.
+![image](https://user-images.githubusercontent.com/51786870/210815446-1cd9c9cc-8213-4f38-8063-b549332de5a1.png)
 
-image103
+10. Verify the Rate Limiting agent now appears in the appropriate location
 
-On the 6th request you begin to receive a 429 Too Many Requests response status code
+![image](https://user-images.githubusercontent.com/51786870/210815496-25c8ea22-8fb5-486a-91cf-a5ae117b372d.png)
 
-image99
+### Task 5 - Test Rate Limiting
+
+1. Return to Postman
+
+2. Click Run Again to rerun the request an additional 100 times.
+
+![image](https://user-images.githubusercontent.com/51786870/210815563-c51cb0fd-55d3-4a79-8588-1eaf56d3cabc.png)
+
+3. On the 6th request you begin to receive a 429 Too Many Requests response status code
+
 
 Section 1.5 - Onboard a New API¶
 Organizations change. With this change, new APIs are introduced requiring modifications to the API Gateway. In this section you will learn how to add additional paths.
