@@ -1544,6 +1544,68 @@ Let’s walk through the policy flow:
 
 4. Click on **solution6-ldap-servers**. A single LDAP server of 10.1.20.7 has been configured with a admin service account to support queries
 
+![image](https://user-images.githubusercontent.com/51786870/210728534-5a774c67-b44b-4605-af9c-8a54b0bba0f9.png)
+
+5. Navigated to **Access** -> **Single Sign-On** -> **Kerberos** and review the Kerberos SSO Object **solution6-kerbsso**
+
+   * The Username Source field has been modified from the default to reference the sAMAccountName stored in session.logon.last.username
+   * Kerberos Realm has been set to the Active Directory domain (realms should always be in uppercase)
+   * The service account used for Kerberos Constrained Delegation (Service Account Names should be in SPN format)
+   * SPN Pattern has been hardcoded to HTTP/solution6.acme.com (This is only necessary if the SPN doesn’t match the FQDN typed in the web browser by the user)
+
+![image](https://user-images.githubusercontent.com/51786870/210728648-33336656-16e5-4967-bb58-74f818bdfd39.png)
+
+### Task 3: Access Profile Configuration
+
+1. Navigate to **Access** -> **Profiles/Policies** -> **Access Profiles (Per-Session Policies)** and locate the **solution6-psp** profile. Click on the profile and review the customized APM Profile Settings
+
+2. Click on the SSO/Auth Domains of the APM profile and note it is configured with the Kerberos SSO Profile which will be used to authenticate to the backend server.
+
+![image](https://user-images.githubusercontent.com/51786870/210728763-8ac6c972-3c33-4d36-a6ee-9c379c5cccc9.png)
+
+3. Click on **Access Policy** and the Edit Access Policy for Profile “**solution6-psp**” link
+
+**Note**
+
+`You can also see from this screen any AAA server objects associated with this profile/policy. You can see we will be using the OCSP responder.
+
+4. Click on the **On-Demand Cert Auth** box in the VPE. The agent uses the default settings of **Auth Mode = Request**
+
+![image](https://user-images.githubusercontent.com/51786870/210728951-6aa8b876-a86b-4c86-9535-67dd48183263.png)
+
+5. Click **Cancel**
+
+6. Click on the **OCSP Auth** box. The OCSP Agent validates the certificate against the OCSP responder configured
+
+![image](https://user-images.githubusercontent.com/51786870/210729019-949b006c-fcf7-4539-8f17-ced669a850af.png)
+
+7. Click **Cancel**
+
+8. Click the **upn extract** box. Under Assignment click on the **Change** link
+
+![image](https://user-images.githubusercontent.com/51786870/210729125-cd5e0f9a-6dfd-42c7-bc10-440dd26e62a8.png)
+
+![image](https://user-images.githubusercontent.com/51786870/210729279-e4fc65cb-b616-4f37-b052-a8b90e613515.png)
+
+9. Note that a custom variable will be created called session.custom.upn. We will write an expression that will extract the othername:UPN field from the certificate for a new custom variable.
+
+```
+set x509e_fields [split [mcget {session.ssl.cert.x509extension}] "n"];
+# For each element in the list:
+foreach field $x509e_fields {
+# If the element contains UPN:
+if { $field contains "othername:UPN" } {
+## set start of UPN variable
+set start [expr {[string first "othername:UPN<" $field] +14}]
+# UPN format is <user@domain>
+# Return the UPN, by finding the index of opening and closing brackets, then use string range to get everything between.
+return [string range $field $start [expr { [string first ">" $field $start] - 1 } ] ];  } }
+# Otherwise return UPN Not Found:
+return "UPN-NOT-FOUND";
+```
+10. Click **Cancel** twice
+
+
 
 #
 #
