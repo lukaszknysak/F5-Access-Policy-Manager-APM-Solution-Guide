@@ -3199,54 +3199,58 @@ The API Protection Profile allows a BIG-IP administrator to throttle the amount 
 3. On the 6th request you begin to receive a 429 Too Many Requests response status code
 
 
-Section 1.5 - Onboard a New API¶
+**Section 1.5 - Onboard a New API**
+
 Organizations change. With this change, new APIs are introduced requiring modifications to the API Gateway. In this section you will learn how to add additional paths.
 
-Task 1 - Verify no access to API¶
-From Postman, select the request Request 9: Create DNS Entry
+### Task 1 - Verify no access to API
 
-Select the Authorization tab
+1. From Postman, select the request Request 9: Create DNS Entry
 
-Select the previously created User1 token from the Available Tokens dropdown
+2. Select the Authorization tab
 
-The Token field is now populated
+3. Select the previously created User1 token from the Available Tokens dropdown
 
-Click Send
+4. The Token field is now populated
 
-You receive a 403 Forbidden response status code because the the new API has not been published at the Gateway.
+5. Click Send
 
-Task 2 - Add the new API path¶
-From the browser, navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile (not the + Plus symbol)
+6. You receive a 403 Forbidden response status code because the the new API has not been published at the Gateway.
 
-image48
+### Task 2 - Add the new API path
 
-Click api-protection
+1. From the browser, navigate to API Protection >> Profile. Click Profile to modify the previously created API protection Profile (not the + Plus symbol)
+
+2. Click api-protection
 
 image64
 
-Click Paths
+3. Click Paths
 
 image65
 
-Click Create
+4. Click Create
 
 image66
 
-The URI /dns
+5. The URI /dns
 
-Select the Method POST
+6. Select the Method POST
 
-Click Add
+7. Click Add
 
 image67
 
-Click Save
+8. Click Save
 
 image68
 
-Task 3 - Test Access to the new path¶
-From Postman, select the request Request 9: Create DNS Entry
-You receive a 200 OK that the endpoint is now published.
+### Task 3 - Test Access to the new path
+
+1. From Postman, select the request Request 9: Create DNS Entry
+
+2. You receive a 200 OK that the endpoint is now published.
+
 image102
 
 
