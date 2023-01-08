@@ -20,12 +20,8 @@ The following labs and exercises will instruct you on how to configure and troub
 
 ## - [Class 2 – API Protection with AWAF and APM modules](#class-2)
   * [Module 5 Part 1: Deploy an APM API Protection Profile](#module-5-part-1)
-  * 
+  * [Module 5 Part 2: Deploy an AWAF Bot Defense and WAF protection](#module-5-part-2)
 
-
-Class 2 – API Protection
-Module 1: API Security AWAF and APM modules
-Part 1 Deploy an API Protection Profile
 
 
 # Environment Overview
@@ -3250,6 +3246,11 @@ Organizations change. With this change, new APIs are introduced requiring modifi
 
 ![image](https://user-images.githubusercontent.com/51786870/210821695-1939c47b-2a32-4c1d-af0a-ba0bff134670.png)
 
+
+
+
+# Module 5 Part 2
+# Module 5 Part 2: Deploy an AWAF Bot Defense and WAF protection
 
 
 
