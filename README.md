@@ -3012,7 +3012,7 @@ Up to this point any authenticated user to the API is authorized to use them. In
 
 9. Click **Send**
 
-10. You receive a 200 OK response status code when using user2. User2 does contain the proper claim data
+10. You receive a **200 OK** response status code when using **user2**. **User2** does contain the proper claim data
 
 ![image](https://user-images.githubusercontent.com/51786870/210813757-cfefebc2-ad05-4718-bce2-731980d7f6fd.png)
 
