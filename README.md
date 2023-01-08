@@ -18,11 +18,14 @@ The following labs and exercises will instruct you on how to configure and troub
   * [Module 4 Part 2: SAML Identity Provider (IdP) - Certificate Auth](#module-4-part-2)
 
 
-## - [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
-  * [Module 1: API Security AWAF and APM modules](#module-1)
+## - [Class 2 – API Protection with AWAF and APM modules](#class-2)
+  * [Module 5 Part 1: Deploy an APM API Protection Profile](#module-5-part-1)
+  * 
 
 
-
+Class 2 – API Protection
+Module 1: API Security AWAF and APM modules
+Part 1 Deploy an API Protection Profile
 
 
 # Environment Overview
@@ -2521,14 +2524,15 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 6. **This concludes the lab.**
 
 
+
+
 ## Class 2
-### Class 2 – API Protection
-  * Module 1: API Security AWAF and APM modules
+## Class 2 – API Protection with AWAF and APM modules
 
-# Part 1 Deploy an API Protection Profile
+# Module 5 Part 1
+# Module 5 Part 1: Deploy an APM API Protection Profile
 
-Lab 1: Deploy an API Protection Profile¶
-Section 1.1 - Setup Lab Environment¶
+Section 1.1 - Setup Lab Environment
 To access your dedicated student lab environment, you will need a web browser and Remote Desktop Protocol (RDP) client software. The web browser will be used to access the Unified Demo Framework (UDF) Training Portal. The RDP client will be used to connect to the jumphost, where you will be able to access the BIG-IP management interfaces (HTTPS, SSH).
 
 Click DEPLOYMENT located on the top left corner to display the environment
