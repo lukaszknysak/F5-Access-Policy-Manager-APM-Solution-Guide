@@ -27,7 +27,8 @@ The following labs and exercises will instruct you on how to configure and troub
   * [Module 1: APM GUI Overview](#module-1)
   * [Module 2: Building a Basic Access Policy](#module-2)
   * [Module 3: Server-Side Single Sign-On](#module-3)
-  * [Module 4: Identity Federation sample use case](#module-4)
+  * [Module 4 Part 1: SAML SP Access Guided Configuration (AGC)](#module-4-part-1)
+
 
 - [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
   * [Module 1: API Security AWAF and APM modules](#module-1)
