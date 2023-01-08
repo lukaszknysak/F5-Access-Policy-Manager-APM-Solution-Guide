@@ -23,8 +23,11 @@ The following labs and exercises will instruct you on how to configure and troub
 
 
 ## Table of Contents
-- [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
+## - [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
   * [Module 1: APM GUI Overview](#module-1)
+  * [Module 2: Building a Basic Access Policy](#module-2)
+  * [Module 3: Server-Side Single Sign-On](#module-3)
+  * [Module 4: Identity Federation sample use case](#module-4)
 
 - [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
   * [Module 1: API Security AWAF and APM modules](#module-1)
