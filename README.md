@@ -3228,14 +3228,450 @@ Organizations change. With this change, new APIs are introduced requiring modifi
 
 ![image](https://user-images.githubusercontent.com/51786870/210821695-1939c47b-2a32-4c1d-af0a-ba0bff134670.png)
 
-
+**This concludes this lab**
 
 
 # Module 5 Part 2
 # Module 5 Part 2: Deploy an AWAF Bot Defense and WAF protection
 
+The API protection profile provides authorization and basic WAF policy to protect an API. This module will demonstrate how to layer on additional protections to further validate what is accessing the API and that the client is behaving within the norms of the API.
+
+By default, security events are not logged, in this lab the student will create a security logging profile with Application Security, Bot Defense and DOS Protection enabled. The student will also place the waf policy in trasnparent to show the difference in behavior when client traffic that is deemed malicious is and is not blocked.
+
+**Section 2.1 - Setup Lab Environment**
+
+### Task 1 - Import Postman Collection
+
+1. From the Jumpbox, open **Postman** via the desktop shortcut or toolbar at the bottom
+
+![image](https://user-images.githubusercontent.com/51786870/211199681-58a05e88-369b-4c85-b9bb-a6c90dd7e813.png)
+
+2. Click **Yes** if prompted for “Do you want to allow this app to make changes to your device?”
+
+![image](https://user-images.githubusercontent.com/51786870/211199703-fe0aa22e-ff3c-4db8-aa71-f070597349c4.png)
+
+3. Click **Import** located on the top left of the Postman application
+
+**image003**
+
+4. Click **Upload Files**
+
+![image](https://user-images.githubusercontent.com/51786870/211199757-03d04327-5469-44ff-8018-ca3e9298b1a6.png)
+
+5. Navigate to **C:\access-labs\class3\module4\student_files**, select **student-class3-module4-lab02.postman_collection.json**, and click **Open**
+
+![image](https://user-images.githubusercontent.com/51786870/211199775-dd98bea3-0126-496c-aea1-1c934f274a76.png)
+
+6. Click **Import**
+
+![image](https://user-images.githubusercontent.com/51786870/211199790-8a5e1f72-7adf-4f3b-92c6-538127b06c03.png)
+
+7. A collection called **student-class3-module4-lab02** will appear on the left side in Postman
+
+### Task 2 - Add Vulnerable API
+
+**Note**
+
+`Ensure you are logged into BIGIP1`
+
+1. From the web browser, navigate to **Access >> API Protection >> Profile**. Click **Profile** to modify the existing profile **api-protection** Profile (not the + Plus symbol)
+
+![image](https://user-images.githubusercontent.com/51786870/211199942-5f9cc430-d14d-4679-bc21-314b7f9e8eb5.png)
+
+2. Click **Edit** Under Per-Request Policy
+
+![image](https://user-images.githubusercontent.com/51786870/211199950-77fab730-5e1a-4e87-bdbb-c39d64d64c8e.png)
+
+3. Click the **+ (Plus Symbol)** located between **Start** and **OAuth Scope Check AuthZ**
+
+![image](https://user-images.githubusercontent.com/51786870/211199989-a4e339f9-806f-4841-a172-6a9bebc32904.png)
+
+4. Select the **Classification** tab
+
+5. Select **Request Classification**
+
+6. Click **Add Item**
+
+![image](https://user-images.githubusercontent.com/51786870/211200024-adaef105-5a7e-4935-945f-b45d7cf6519c.png)
+
+7. Select **Branch Rules**
+
+8. Click **Add Branch Rule**
+
+9. Enter name **GET /vulnerable**
+
+10. Click **Change**
+
+![image](https://user-images.githubusercontent.com/51786870/211200061-e4a21366-7068-450b-821d-8080464a9e8a.png)
+
+11. Click **Add Expression**
+
+![image](https://user-images.githubusercontent.com/51786870/211200071-7f4afe06-68c3-4ba9-a455-e7771aff56ee.png)
+
+12. Select **Request** from the **Context dropdown**
+
+13. Click** Add Expression**
+
+![image](https://user-images.githubusercontent.com/51786870/211200076-d9813cb6-f40d-4c8f-a0a7-9d471072dafd.png)
+
+14. Click **Add Expression** on the AND line
+
+![image](https://user-images.githubusercontent.com/51786870/211200118-f6410f5f-a804-4dd9-a858-695626d6cc5b.png)
+
+15. Select **Path (value)** from the Request dropdown
+
+16. Enter **/vulnerable** in the empty text box
+
+17. Click **Add Expression**
+
+![image](https://user-images.githubusercontent.com/51786870/211200152-6d427c06-ed97-4b16-be07-459b3f4e9d81.png)
+
+18. Click **Finished**
+
+![image](https://user-images.githubusercontent.com/51786870/211200159-8d98c106-8ece-43aa-adb0-3f3d66efd086.png)
+
+19. Click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/211200179-d66750c6-e651-469f-8864-2987675f46d5.png)
+
+20 Click the **+ Plus Symbol** on the **GET /vulnerable** branch
+
+![image](https://user-images.githubusercontent.com/51786870/211200192-ddf386d0-2a8b-4f56-859a-713a5975fd42.png)
+
+21. Click **API Server Selection**
+
+22. Click **Add Item**
+
+![image](https://user-images.githubusercontent.com/51786870/211200210-e465dc7d-81f7-413c-8ff2-507993ee99e1.png)
+
+23. Select **api-protection_server1** from the dropdown
+
+24. Click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/211200228-a60e9945-aa98-4ebf-990f-1aa29e4aa0e4.png)
+
+25. Click the **Reject** terminal at the end of API Server Selection
+
+![image](https://user-images.githubusercontent.com/51786870/211200246-43a68325-420b-4700-874a-177a708085b3.png)
+
+26. Select **Allow**
+
+27. Click **Save**
+
+![image](https://user-images.githubusercontent.com/51786870/211200272-caa55a73-3796-4361-9dc2-533061565174.png)
+
+28. The completed policy should look like the below.
+
+![image](https://user-images.githubusercontent.com/51786870/211200284-60bbcc72-4a8f-4de4-a24a-edf6d11c74dc.png)
 
 
+**Section 2.2 - Create and Assign Profiles**
+
+### Task 1 - Create and assign a Security Logging Profile to the virtual¶
+
+1. From the web browser, click on the **Security -> Event Logs -> Logging Profile** and click **Create**.
+
+2. For the Profile Name enter **api.acme.com_logprofile**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200377-f720ebd4-cee1-48e6-9026-bcc44f303fb6.png)
+
+3. Enable **Application Security**, an Application Security configuration menu will open up at the bottom. Change the Request Type from Illegal requests only to **All requests**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200405-c6a53631-65d1-4d6e-88f7-48d88d606012.png)
+
+4. Enable **DoS Protection**, a DoS Protection configuration menu will open up at the bottom. Enable **Local Publisher**
+
+![image](https://user-images.githubusercontent.com/51786870/211200441-41580a84-4505-4aa4-aae2-4850a93f0ad2.png)
+
+5. Enable **Bot Defense**, a Bot Defense configuration menu will open up at the bottom. Enable **Local Publisher** and all other checkboxes, leave Remote Publisher set to none.
+
+![image](https://user-images.githubusercontent.com/51786870/211200459-59b78dc4-cf3e-4b4d-bb63-8e69e2f58109.png)
+
+6. Click **Create**
+
+7. Apply the log profile to the api.acme.com virtual by navigating to **Local Traffic -> Virtual Servers -> api.acme.com -> Security -> Policies** and after choosing “Enabled” from the dropdown, set the Selected Log Profile to **api.acme.com_logprofile**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200500-35b6aa1c-dae1-40d5-8d42-e7645187f2a1.png)
+
+8. Click **Update**. The virtual will now log Application Security, DoS and Bot related events under **Security -> Event Logs** when an appropriate security profiles have been applied to the virtual.
+
+### Task 2 - Set the WAF policy to Transparent and assign it to the virtual
+
+1. From the web browser, click on the **Security -> Application Security -> Security Policies -> Policies List**. Click **api-protection**. Scroll down and you’ll notice the Enforcement Mode is set to Blocking. Set the **Enforcement Mode** to **Transparent**. Be sure to click **Save**, then **Apply Policy**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200549-f6fc6b6a-30d1-45d5-bd50-8abbc550d19c.png)
+
+2. Apply the waf policy to the **api.acme.com** virtual by navigating to **Local Traffic -> Virtual Servers -> api.acme.com -> Security -> Policies** and set the Application Security Policy to enabled and the Policy to **api-protection**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200571-bb21211f-dd1b-43b9-9246-1e960c80833a.png)
+
+3. Click **Update**.
+
+### Task 3 - Create and assign a Bot Defense Profile
+
+An api’s clients, unlike a typical web application, will often be non-human, maybe even exclusively. This leaves bot defense more difficult to configure in an api protection scenario, for instance javascript such as captcha cannot be used to proactively determine whether the client is human. In this lab, we demonstrate some scenarios the admin may encounter and how to address them.
+
+**Note**
+
+`Ensure you are logged into BIGIP1`
+
+1. From the web browser, click on the **Security -> Bot Defense -> Bot Defense Profiles** and click **Create**.
+
+2. For the name enter **api.acme.com_botprofile**, leave all other settings at their defaults.
+
+![image](https://user-images.githubusercontent.com/51786870/211200673-0091fbee-f744-4a22-bf17-c733511c79b8.png)
+
+3. Click **Save**
+
+The bot profile is left in transparent mode to demonstrate the logging behavior and behavior differences to the client.
+
+4. Apply the bot profile to the api.acme.com virtual by navigating to **Local Traffic -> Virtual Servers -> api.acme.com -> Security -> Policies**.
+
+For **Bot Defense Profile** select **Enabled** and select **api.acme.com_botprofile** as the **Profile**. Click **Update**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200711-d3712f06-28e0-4238-9bf4-3bb64b300c08.png)
+
+**Section 2.3 - Test Bot Protection¶**
+
+### Task 1 - Test Bot Protection in Transparent Mode
+
+1. Now we will test the Bot Defense Profile to see how it affects clients. Go to **Postman**, expand the collection **student-class3-module4-lab02** and select the request **Request 1: Retrieve Attributes** and click **Send**.
+
+2. Return to the bigip01 gui and navigate to **Security -> Event Logs -> Bot Defense -> Bot Requests** and find the request to the **/vulnerable** uri as shown below
+
+![image](https://user-images.githubusercontent.com/51786870/211200782-066ffe04-ebc9-4784-a89f-25f8732e3ca9.png)
+
+**Note**
+
+`The student should pay special attention to the Request Status, Mitigation Action and Bot Class. Bot Class will be one of the categories found in **Security -> Bot Defense -> Bot Defense Profiles -> api.acme.com_botprofile -> Bot Mitigation Settings** under **Mitigation Settings**.`
+
+### Task 2 - Place Bot Profile in blocking and allow appropriate clients
+
+The bot profile was left in transparent to demonstrate the behavior, now we will configure the bot profile to block bot traffic. Keep in mind that the bot profile allows for fine-grained control of categories of bots, which bot fits in those categories. We will explore this later.
+
+1. Navigate back to **Security -> Bot Defense -> Bot Defense Profiles -> api.acme.com_botprofile**, change the **Enforcement Mode** to **Blocking** and click **Save**.
+
+![image](https://user-images.githubusercontent.com/51786870/211200855-d864f944-e0e0-49c4-b2c7-eae6c5430fce.png)
+
+2. Go back to **Postman** once again and select the request **Request 1: Retrieve Attributes** and click **Send** another time.
+
+3. Return to the bigip01 gui and navigate to **Security -> Event Logs -> Bot Defense -> Bot Requests** and find the 2nd request to the **/vulnerable** uri as shown below
+
+![image](https://user-images.githubusercontent.com/51786870/211200887-94070977-cfb1-48db-82f7-e77dfa9e8896.png)
+
+**Note**
+
+`Why was this request not blocked? To understand this, we must take a closer look at the Mitigation Settings.`
+
+1. Navigate to **Security -> Bot Defense -> Bot Defense Profiles -> api.acme.com_botprofile -> Bot Mitigation Settings** and examine the **Unknown** categorization, note that bots that are of category Unknown are simply rate limited.
+
+![image](https://user-images.githubusercontent.com/51786870/211200930-b19927c1-8bf8-4543-ab07-52118b239571.png)
+
+2. Go back to **Postman** once again, click on the **three dots* in the right corner of the collection** **student-class3-module4-lab02 collection to open Runner**.
+
+3. Click **Run Collection**
+
+![image](https://user-images.githubusercontent.com/51786870/211200987-77a46879-24e4-4f9c-b030-2d226d13a8e0.png)
+
+4. Configure Runner so **iterations** is set to **100** and the only request selected is **Request 1: Retrieve Attributes**.
+
+5. Click **Run** **student-class3-module4-la…**.
+
+![image](https://user-images.githubusercontent.com/51786870/211201017-3b7b0a51-4aa6-4179-845a-7e4c52587aa5.png)
+
+6. Notice all responses are 200 OKs.
+
+![image](https://user-images.githubusercontent.com/51786870/211201023-c034631c-fc4b-4abd-8f80-e4b8b1281a01.png)
+
+7. Return to the bigip01 gui and navigate to **Security -> Event Logs -> Bot Defense -> Bot Requests** and find the **Denied request** to the **/vulnerable** uri as shown below.
+
+![image](https://user-images.githubusercontent.com/51786870/211201050-c1751d5e-2837-468d-8321-12d28e096eb1.png)
+
+8. We will recategorize the Postman client so that it is a trusted client, this is done via bot signatures. Navigate to **Security -> Bot Defense -> Bot Signatures -> Bot Signatures Categories List** and click **Create**.
+
+9. Fill in the Bot Signature Category Name of **Trusted Development Tools** and select **Trusted Bot** from the Bot Class dropdown.
+
+![image](https://user-images.githubusercontent.com/51786870/211201100-de1801d4-cabf-44e8-8cf3-16ff1c02338b.png)
+
+10. Navigate to **Security -> Bot Defense -> Bot Signatures -> Bot Signatures List** and click **Create**.
+
+![image](https://user-images.githubusercontent.com/51786870/211201124-6e2bf317-212c-4359-b31e-8ae2118d7543.png)
+
+11. Fill in the **Bot Name**, **Bot Category** and **Rule (User Agent)** with the following, leaving all other values at their defaults.
+
+![image](https://user-images.githubusercontent.com/51786870/211201132-0e0a8c34-eaeb-4acb-a7c0-3947e025d689.png)
+
+12. Click **Save**.
+
+13. Go back to Postman once again and select the request **Request 1: Retrieve Attributes** and click **Send** another time. Note this is done at the main Postman window, not in Runner.
+
+14. Navigate to **Security -> Event Logs -> Bot Defense -> Bot Requests** and find the Trusted Bot categorized request to the /vulnerable uri as shown below
+
+![image](https://user-images.githubusercontent.com/51786870/211201174-8a064580-0fd6-4264-9750-9319ed3680b6.png)
+
+**Section 2.4 - Layer on WAF to provide additional security**
+
+APIs are a collection of technologies just like any other application, in the lab the api is built on top of a windows server using powershell. This lab demonstrate how to tune the WAF policy to use attack signatures and meta-character enforcement to provide additional protection against malicious clients.
+
+Meta-character enforcement allows the WAF admin to enforce which characters are allowed into a web application, whether it be in the header, url or parameter. In this lab we examine parameter meta-character enforcement.
+
+### Task 1 - Configure Attack Signatures and Change WAF Policy to Blocking
+
+1. Open a command prompt on the jumphost (a shortcut is on the desktop)
+
+![image](https://user-images.githubusercontent.com/51786870/211201207-2521c13f-27a7-4a22-a35e-170ae245515a.png)
+
+2. Run the following command curl -k “https://api.acme.com/vulnerable?Inject=|powershell%20badprogram.ps1” -v
+
+**Note**
+
+`Pay special attention to the double quotes (“”) around the url.`
+
+3. Navigate to **Security -> Event Logs -> Application -> Requests** and find this latest request. Locate the parameter value **|powershell badprogram.ps1**. Click the parameter and then hover over the parameter value and additional details will describe this part of the attack.
+
+![image](https://user-images.githubusercontent.com/51786870/211201281-6416f5df-c68d-487c-8373-c6b632a18854.png)
+
+**Note**
+
+`The Enforcement Action is None`
+
+`The F5 WAF highlights the part of the request it detects as malicious based on the policy’s configuration. This can be very useful for learning and troubleshooting purposes.`
+
+4. Next hover over the User-Agent portion of the request.
+
+![image](https://user-images.githubusercontent.com/51786870/211201311-c0038059-dc05-4f00-ac95-913af73b5007.png)
+
+Notice the user-agent is curl, which may be a legitimate client. Make note of this.
+
+Ideally we want to block any malicious request, in this case the powershell execution attempt, but want to allow curl as it’s a legitimate client in our case. What about the %20 meta character, should it be allowed? Depending on the application, this could be legitimate.
+
+In your environment, you must decide what is legitimate and what is illegitimate traffic, the F5 WAF can guide you via learning and help eliminate noise using Bot Defense, however to increase security beyond a basic WAF policy, understanding the application is needed.
+
+5. Click on the **Security -> Application Security -> Policy Building -> Learning and Blocking Settings -> Attack Signatures** and click **Change**
+
+![image](https://user-images.githubusercontent.com/51786870/211201340-3b62a46b-c2b1-40aa-a227-c83baeabbc6c.png)
+
+6. Enable **Command Execution Signatures** and click **Change**
+
+![image](https://user-images.githubusercontent.com/51786870/211201358-a89f4bea-fad0-4f6b-9069-ce5f9e3cfa2e.png)
+
+7. Scroll to the bottom anc click **Save**.
+
+![image](https://user-images.githubusercontent.com/51786870/211201369-e60b6604-cfe4-4250-82ba-10d2f2ce09ee.png)
+
+8. Navigate to **Security -> Application Security -> Security Policies -> Policies List**.
+
+9. Click **api-protection**
+
+10. Click **Attack Signatures**
+
+11. Click the filter icon to easily locate the Automated client access “curl” signature.
+
+![image](https://user-images.githubusercontent.com/51786870/211201425-f5f809e3-4441-4e5e-b089-0459ab41e3bc.png)
+
+12. For the Attack Signature Name enter **Automated client access “curl”** and click **Apply Filter**.
+
+![image](https://user-images.githubusercontent.com/51786870/211201441-15e28539-21e0-4e27-9d01-244bb9b5c308.png)
+
+The result is
+
+![image](https://user-images.githubusercontent.com/51786870/211201452-b4625977-a539-41c2-87fe-ec442fd655b6.png)
+
+13. Select this signature and click **Disable**
+
+![image](https://user-images.githubusercontent.com/51786870/211201471-b0666cfe-bc07-4bd9-ae9b-eee97c9f5f25.png)
+
+14. Click **General Settings** and scroll down to “**Enforcement Mode**” and change it to “**Blocking**.” Click **Save** and then **Apply the Policy**
+
+![image](https://user-images.githubusercontent.com/51786870/211201501-50ef7a5b-3dce-4627-9cf5-4efab2cc359d.png)
+
+15. Once again run the following command **curl -k “https://api.acme.com/vulnerable?Inject=|powershell%20badprogram.ps1” -v**
+
+**Pay special attention to the double quotes (“”) around the url.**
+
+16. Navigate to **Security -> Event Logs -> Application -> Requests** and find this latest request.
+
+![image](https://user-images.githubusercontent.com/51786870/211201545-fa7418be-af9c-444b-8056-6083c22c6c1d.png)
+
+Notice the enforcement action is still None but also notice the user-agent curl is no longer highlighted (since the signature was disabled). We changed the Policy to Blocking so why wasn’t the request blocked? Hint: Click the “1” under Occurrences and you’ll see the current status of the Attack Signature.
+
+17. Hover over the highlighted payload and notice that the powershell attack signature is triggered.
+
+![image](https://user-images.githubusercontent.com/51786870/211201578-e1b9e860-f3b2-4ba1-b580-7c3cc52e7b65.png)
+
+Powershell execution via http parameters is now mitigated. If you noticed in the request, that the | is considered illegal. What if that character was a legitimate value for a parameter?
+
+![image](https://user-images.githubusercontent.com/51786870/211201584-e6004eaf-2a72-4973-96e6-ab5cdf6980d2.png)
+
+18. Go back to the command prompt on the jumphost and run
+
+**curl -k “https://api.acme.com/vulnerable?param1=|legitimate%20value” -v**
+
+19. Navigate to **Security -> Event Logs -> Application -> Requests** and find this latest request. Notice the **|** is considered illegal. However its not blocked, the Enforcement Action is None
+
+![image](https://user-images.githubusercontent.com/51786870/211201627-8e3685be-703b-4b16-8e36-cb835a8f9cb3.png)
+
+20. To see why this parameter character violation is not being blocked, but is being logged (alarmed). Navigate to **Security -> Application Security -> Policy Building -> Learning and Blocking Settings -> Parameters** and enable the Block column for the **Illegal meta character in value** under the Parameters Section
+
+![image](https://user-images.githubusercontent.com/51786870/211201649-86e6ba25-ee7a-4f6d-8287-f4fdc042f725.png)
+
+21. Click **Save** then **Apply Policy**
+
+22. Go back to the command prompt on the jumphost and run
+
+**curl -k “https://api.acme.com/vulnerable?param1=|legitimate%20value” -v**
+
+23. Navigate to **Security -> Event Logs -> Application -> Requests** and find this latest request. Notice the | is considered illegal and is now blocked.
+
+![image](https://user-images.githubusercontent.com/51786870/211201689-1d7fffe3-59fd-4b50-b58f-79da538e7e9c.png)
+
+### Task 2 - Implement Static Parameter values
+
+1. From Postman, click **Send** on the **Request 2: SSRF Attack-Google request**.
+
+![image](https://user-images.githubusercontent.com/51786870/211201736-e1a700fa-a9fe-4cd8-85a6-8ac2281223fd.png)
+
+2. From Postman, run **Request 3: SSRF Attack-unprotected-json**. This site contains an example ID and Secret key in JSON format. You can now see the endpoint is vulnerable to Server Side Request Forgery attacks because the endpoint can be directed to locations other than Google. Hackers will uses your servers as a jump off point to gain access to internal resources.
+
+![image](https://user-images.githubusercontent.com/51786870/211201761-f185cdd9-c5ec-400d-851c-5e26a9bfa70f.png)
+
+3. Navigate to **Security -> Event Logs -> Application -> Requests** and find both requests. Notice nothing appears malicious about these requests except for the destinations.
+
+![image](https://user-images.githubusercontent.com/51786870/211201780-7d38bed7-d594-4c97-9f60-e463660979b5.png)
+
+4. We are going to secure the the uri parameter, so it only allows access to Google, but not access to the internal private data.
+
+5. Navigate to **Security -> Application Security -> Parameters -> Parameters List**. Click the **+ Plus Symbol**
+
+![image](https://user-images.githubusercontent.com/51786870/211201798-874a790f-4c3e-4389-954e-a734b5cf03ce.png)
+
+6. Enter the Name uri
+
+7. Uncheck **Perform Staging**
+
+8. From the Parameter Value Type dropdown select **Static Content Value**
+
+9. Enter **https://www.google.com** for the New Static Value
+
+10. Click **Add**
+
+11. Click **Create**
+
+![image](https://user-images.githubusercontent.com/51786870/211201836-7f7c1dbf-4b3c-409c-be3d-0df3d106f016.png)
+
+12. Click **Apply Policy**
+
+13. From Postman, run **Request 2: SSRF Attack-Google**. Access to Google is still allowed.
+
+14. From Post, run **Request 3: SSRF Attack-unprotected-json**. This site is now blocked as intended
+
+![image](https://user-images.githubusercontent.com/51786870/211201884-a7a2de81-b36c-4cd5-a46f-37872db132ed.png)
+
+15. Navigate to **Security -> Event Logs -> Application -> Requests** and find the latest blocked request. The uri parameter is highlighted due to Illegal Static Parameter Value.
+
+![image](https://user-images.githubusercontent.com/51786870/211201906-32c694ac-39bc-4fc0-b1e6-ddd99cd2ef35.png)
+
+**This is the end of the lab**
 
 #
 #
