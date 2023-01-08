@@ -1049,6 +1049,8 @@ Click on **vpn-webtop**
 
 **Module 1 is now complete.**
 
+# Module 2
+
 # Module 2: Building a Basic Access Policy
 
 The environment is the same, but you will have to build the configuration with Postman/Newman scrits automating the configuration.
