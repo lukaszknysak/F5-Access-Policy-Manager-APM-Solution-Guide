@@ -9,36 +9,19 @@ The following labs and exercises will instruct you on how to configure and troub
 
 [Original Lab Guide](https://github.com/f5devcentral/f5-agility-labs-iam)
 
-# Table of Contents
-1. [Example](#example)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-
-
-## Example
-## Example2
-## Third Example
-
-
-
-
 ## Table of Contents
 ## - [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
   * [Module 1: APM GUI Overview](#module-1)
   * [Module 2: Building a Basic Access Policy](#module-2)
   * [Module 3: Server-Side Single Sign-On](#module-3)
   * [Module 4 Part 1: SAML SP Access Guided Configuration (AGC)](#module-4-part-1)
+  * [Module 4 Part 2: SAML Identity Provider (IdP) - Certificate Auth](#module-4-part-2)
 
 
-- [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
+## - [Class 2 – Access Policy Manager Solution (F5 APM)](#class-2)
   * [Module 1: API Security AWAF and APM modules](#module-1)
 
-## Class 1
-## Class 1 – Access Policy Manager Solution (F5 APM)
-  * Module 1: APM GUI Overview
-  * Module 2: Building a Basic Access Policy
-  * Module 3: Server-Side Single Sign-On
-  * Module 4: Identity Federation sample use case
+
 
 
 
