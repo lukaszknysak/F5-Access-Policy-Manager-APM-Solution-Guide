@@ -9,8 +9,8 @@ The following labs and exercises will instruct you on how to configure and troub
 
 [Original Lab Guide](https://github.com/f5devcentral/f5-agility-labs-iam)
 
-## Table of Contents
-## - [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
+# Table of Contents
+# - [Class 1 – Access Policy Manager Solution (F5 APM)](#class-1)
   * [Module 1: APM GUI Overview](#module-1)
   * [Module 2: Building a Basic Access Policy](#module-2)
   * [Module 3: Server-Side Single Sign-On](#module-3)
@@ -18,7 +18,7 @@ The following labs and exercises will instruct you on how to configure and troub
   * [Module 4 Part 2: SAML Identity Provider (IdP) - Certificate Auth](#module-4-part-2)
 
 
-## - [Class 2 – API Protection with AWAF and APM modules](#class-2)
+# - [Class 2 – API Protection with AWAF and APM modules](#class-2)
   * [Module 5 Part 1: Deploy an APM API Protection Profile](#module-5-part-1)
   * [Module 5 Part 2: Deploy an AWAF Bot Defense and WAF protection](#module-5-part-2)
 
@@ -155,8 +155,8 @@ Internal
 
 Credentials: admin/admin
 
-## Module 1
-## Module 1 : APM GUI Overview
+# Module 1
+# Module 1 : APM GUI Overview
 Objectives
 The intention of this lab will be to show how to enable Access Policy Manager (APM) through resource provisioning. Next we will explore all the components within the Access left menu. This is not a deep dive on the components but an overview of the components, features and concepts of APM.
 
@@ -1473,8 +1473,8 @@ What we have demonstrated here is the application of step-up authentication to a
 
 **Module 2 is now complete.**
 
-## Module 3
-## Module 3: Server-Side Single Sign-On and Webtop Access Policy Build
+# Module 3
+# Module 3: Server-Side Single Sign-On and Webtop Access Policy Build
 
 The purpose of this lab is to demonstrate Single Sign-On capabilities of APM. The SSO Credential Mapping action enables users to forward stored user names and passwords to applications and servers automatically, without having to input credentials repeatedly. This allows single sign-on (SSO) functionality for secure user access. As different applications and resources support different authentication mechanisms, the SSO system may be required to store and transform credentials to meet these requirements. For example, username and password may be transformed into forms-based authentication, a SAML assertion into Kerberos or Kerberos authentication into SAML.
 
@@ -1769,19 +1769,19 @@ This will open the APM Webtop landing page that shows the resources you are allo
 
 
 
-## Module 4 Part 1
-## Module 4: Part 1 - SAML SP Access Guided Configuration (AGC)
+# Module 4 Part 1
+# Module 4: Part 1 - SAML SP Access Guided Configuration (AGC)
 
 The purpose of this lab is to configure and test SAML Federation Services. This lab will be configured in two parts.
 
 Students will leverage Access Guided Configuration (AGC) to configure the various aspects of a SAML Service Provider (SP), import and bind to a SAML Identity Provider (IdP) and test SP-Initiated SAML Federation.
 
-### Objective:
+## Objective:
 
    * Gain an understanding of SAML Federation configurations and their component parts through Access Guided Configuration (AGC)
    * Gain an understanding of the access flow for IDP & SP Initiated SAML
 
-### Lab Requirements:
+## Lab Requirements:
 
    * All Lab requirements will be noted in the tasks that follow
    * Estimated completion time: 25-30 minutes
@@ -1993,8 +1993,8 @@ Students will leverage Access Guided Configuration (AGC) to configure the variou
 
 **This concludes Part 1**
 
-## Module 4 Part 2
-## Module 4: Part 2 - SAML Identity Provider (IdP) - Certificate Auth
+# Module 4 Part 2
+# Module 4: Part 2 - SAML Identity Provider (IdP) - Certificate Auth
 
 To access your dedicated student lab environment, you will need a web browser and Remote Desktop Protocol (RDP) client software. The web browser will be used to access the Unified Demo Framework (UDF) Training Portal. The RDP client will be used to connect to the jumphost, where you will be able to access the BIG-IP management interfaces (HTTPS, SSH).
 
