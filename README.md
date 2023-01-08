@@ -2216,45 +2216,45 @@ Admin Password:	admin
 
 ![image](https://user-images.githubusercontent.com/51786870/210794502-40143390-9dd7-4878-8bf9-01d8b9956a96.png)
 
-10. Click Save in the resulting Logon Page dialog box
+10. Click **Save** in the resulting Logon Page dialog box
 
 ![image](https://user-images.githubusercontent.com/51786870/210794604-89029ba3-1231-463d-9f9d-7b4c2c7e2620.png)
 
-11. On the successful branch of the On-Demand Cert Auth Policy-Item click the Plus (+) Sign
+11. On the successful branch of the On-Demand Cert Auth Policy-Item click the **Plus (+) Sign**
 
 ![image](https://user-images.githubusercontent.com/51786870/210794710-d5396d01-655c-44fc-9585-d6eefd742017.png)
 
-12. In the pop-up dialog box, select the Authentication tab and then select the Radio next to OCSP Auth, and click the Add Item button
+12. In the pop-up dialog box, select the **Authentication** tab and then select the **Radio** next to **OCSP Auth**, and click the **Add Item** button
 
 ![image](https://user-images.githubusercontent.com/51786870/210794863-be46f00d-ff7a-4bd9-b9ad-c6284894741e.png)
 
 
 
-13. Select /Common/ocsp_servers from the OCSP Responder drop down menu.
+13. Select /Common/ocsp_servers from the **OCSP Responder** drop down menu.
 
-14. Click Save at the bottom of the window
+14. Click **Save** at the bottom of the window
 
 ![image](https://user-images.githubusercontent.com/51786870/210795031-ae68f557-755c-4580-a24a-07d2aa054bef.png)
 
-15. Click the Plus (+) Sign on the successful branch between OCSP Auth and Deny
+15. Click the **Plus (+)** Sign on the successful branch between **OCSP Auth** and **Deny**
 
 ![image](https://user-images.githubusercontent.com/51786870/210795087-cd8d0446-63c4-4912-a990-5d1c143b1562.png)
 
-16. In the pop-up dialog box, select the Assignment tab and then select the Radio next to Variable Assign, and click the Add Item button
+16. In the pop-up dialog box, select the **Assignment** tab and then select the **Radio** next to **Variable Assign**, and click the **Add Item** button
 
 ![image](https://user-images.githubusercontent.com/51786870/210795197-7a94059b-da42-4e6d-b0f4-411474777ee5.png)
 
-17. Enter the Name upn_extract
+17. Enter the Name **upn_extract**
 
-18. Click Add new entry
+18. Click **Add new entry**
 
-19. Click Change
+19. Click **Change**
 
 ![image](https://user-images.githubusercontent.com/51786870/210795392-e383eb63-b6cf-40ab-ba4f-0972ce82a72e.png)
 
-20. Enter the Custom Variable session.custom.upn
+20. Enter the Custom Variable **session.custom.upn**
 
-21. Select Custom Expresssion from the right drop down menu
+21. Select **Custom Expresssion** from the right drop down menu
 
 22. Enter the text below for the custom expression.
 
@@ -2273,42 +2273,42 @@ return [string range $field $start [expr { [string first ">" $field $start] - 1 
 return "UPN-NOT-FOUND";
 ```
 
-23. Click Finished
+23. Click **Finished**
 
 ![image](https://user-images.githubusercontent.com/51786870/210795726-9892d4a5-1566-4cfd-af68-f55877f51265.png)
 
-24. Click Save
+24. Click **Save**
 
 ![image](https://user-images.githubusercontent.com/51786870/210795763-a4f713a4-7310-4e76-8caf-db9dce303815.png)
 
 
-25. Click the Plus (+) Sign between upn_extract and Deny
+25. Click the **Plus (+)** Sign between **upn_extract** and **Deny**
 
 ![image](https://user-images.githubusercontent.com/51786870/210795815-63c9c4b2-a25b-4430-8a61-52443b3e7e3d.png)
 
-26. Change the **Name** of the branch to **Successful**.
+26. In the pop-up dialog box, select the **Authentication** tab and then select the **Radio** next to **LDAP Query**, and click the **Add Item** button
 
 ![image](https://user-images.githubusercontent.com/51786870/210795896-cbabb9eb-2cf4-4323-a4ce-436cf2afd740.png)
 
-27. In the LDAP Query Properties window, enter the following information:
+27. In the **LDAP Query Properties** window, enter the following information:
 
-Server:	/Common/ldap_servers (drop down)
-Search DN:	dc=f5lab,dc=local 
-SearchFilter:	(userPrincipalName=%{session.custom.upn})
+   * **Server**:	**/Common/ldap_servers** (drop down)
+   * **Search DN**:	**dc=f5lab,dc=local** 
+   * **SearchFilter**:	**(userPrincipalName=%{session.custom.upn})**
 
-28. Click Add new entry
+28. Click **Add new entry**
 
-29. Add sAMAccountName to the list of Required Attributes
+29. Add **sAMAccountName** to the list of Required Attributes
 
 ![image](https://user-images.githubusercontent.com/51786870/210796110-ede296df-b67b-481f-b579-85b99b4fc057.png)
 
-30. Click the Branch Rules tab
+30. Click the **Branch Rules** tab
 
-31. Click the X on the User Group Membership line
+31. Click the **X** on the User Group Membership line
 
 ![image](https://user-images.githubusercontent.com/51786870/210796219-08299017-7eb4-4f80-a8a8-15da07428942.png)
 
-32. Click Add Branch Rule
+32. Click **Add Branch Rule**
 
 ![image](https://user-images.githubusercontent.com/51786870/210796491-c40bc475-6171-4001-91ab-779a76983c5c.png)
 
@@ -2318,130 +2318,130 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 
 ![image](https://user-images.githubusercontent.com/51786870/210796701-0058fef9-c6dd-48ba-9ab3-3cb42fe21cd6.png)
 
-35. Click Add Expression
+35. Click **Add Expression**
 
 ![image](https://user-images.githubusercontent.com/51786870/210796753-105d7a9b-bf0e-4944-978c-48a755707171.png)
 
-36. Select LDAP Query from the Context dropdown menu
+36. Select **LDAP Query** from the Context dropdown menu
 
-37. Select LDAP Query Passed from the Condition dropdown menu
+37. Select **LDAP Query Passed** from the Condition dropdown menu
 
-38. Click Add Expression
+38. Click **Add Expression**
 
 ![image](https://user-images.githubusercontent.com/51786870/210796929-e5b68dec-f323-4cad-87e6-fab42eaf2435.png)
 
-39. Click Finsished
+39. Click **Finsished**
 
 ![image](https://user-images.githubusercontent.com/51786870/210796957-abb2948c-14e0-43c5-a4f8-99979e1abb37.png)
 
-40. Click Save
+40. Click **Save**
 
 ![image](https://user-images.githubusercontent.com/51786870/210797039-f4054d66-92b8-4507-9c80-a29c3953fb0b.png)
 
-41. Click the Plus (+) Sign on the LDAP Query Passed branch between LDAP Query and Deny
+41. Click the **Plus (+) Sign** on the **LDAP Query Passed** branch between **LDAP Query** and **Deny**
 
 ![image](https://user-images.githubusercontent.com/51786870/210797077-8fba8452-7b56-451e-8cc0-f86bb58aa3fd.png)
 
-42.In the pop-up dialog box, select the Assignment tab and then select the Radio next to Variable Assign, and click the Add Item button
+42.In the pop-up dialog box, select the **Assignment** tab and then select the Radio next to **Variable Assign**, and click the **Add Item** button
 
 ![image](https://user-images.githubusercontent.com/51786870/210797232-1c3e4123-9bb3-4ebb-9b08-2044b4cd5582.png)
 
-43. Enter the Name set_username
+43. Enter the Name **set_username**
 
 ![image](https://user-images.githubusercontent.com/51786870/210782278-81871182-9f55-48d5-9c0f-b1469690f8a5.png)
 
-44. Click Add new entry
+44. Click **Add new entry**
 
-45. Click Change
+45. Click **Change**
 
 ![image](https://user-images.githubusercontent.com/51786870/210797369-0b40f90c-4e14-4a64-bdbd-6e2a9d170b78.png)
 
-46. Enter the Custom Variable session.logon.last.username
+46. Enter the Custom Variable **session.logon.last.username**
 
-47. Select Session Variable from the right drop down menu
+47. Select **Session Variable** from the right drop down menu
 
-48. Enter the session variable name session.ldap.last.attr.sAMAccountName
+48. Enter the session variable name **session.ldap.last.attr.sAMAccountName**
 
-49. Click Finished
+49. Click **Finished**
 
 ![image](https://user-images.githubusercontent.com/51786870/210797853-5d690ec1-614f-437b-902b-56249c591c61.png)
 
-50. Click Save
+50. Click **Save**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798000-67c44035-2d1f-4780-9b88-77d9831f61c0.png)
 
-51. Click the Plus (+) Sign between set_username and Deny
+51. Click the **Plus (+) Sign** between **set_username** and **Deny**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798053-283c5c38-233e-4407-95c6-729bfb079e9e.png)
 
-52. In the pop-up dialog box, select the Assignment tab and then select the Radio next to Advanced Resource Assign, and click the Add Item button
+52. In the pop-up dialog box, select the **Assignment** tab and then select the **Radio** next to **Advanced Resource Assign**, and click the **Add Item** button
 
 ![image](https://user-images.githubusercontent.com/51786870/210798093-2fc5ce9e-0da4-4926-a8ce-de6544c8c1da.png)
 
-53. In the new Resource Assignment entry, click the Add/Delete link
+53. In the new Resource Assignment entry, click the **Add/Delete** link
 
 ![image](https://user-images.githubusercontent.com/51786870/210798136-0ed9a1c8-5618-4d56-ba8a-41e40b596953.png)
 
-54. In the resulting pop-up window, click the SAML tab, and select the Checkbox next to /Common/sp.acme.com
+54. In the resulting pop-up window, click the **SAML** tab, and select the **Checkbox** next to **/Common/sp.acme.com**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798276-42dfc0c1-5fde-438c-a993-ccb505d7cdff.png)
 
-55. Click the Webtop tab, and select the Checkbox next to /Common/full_webtop
+55. Click the **Webtop** tab, and select the **Checkbox** next to **/Common/full_webtop**
 
-56. Click the Update button at the bottom of the window to complete the Resource Assignment entry
+56. Click the **Update** button at the bottom of the window to complete the Resource Assignment entry
 
 ![image](https://user-images.githubusercontent.com/51786870/210798352-91905033-2b0a-4dfe-b405-5fa8fd777248.png)
 
-57. Click the Save button at the bottom of the Advanced Resource Assign window
+57. Click the **Save** button at the bottom of the **Advanced Resource Assign** window
 
 ![image](https://user-images.githubusercontent.com/51786870/210798477-a6379f57-ce1b-4e0f-9024-3b594b4390d6.png)
 
-58. In the Visual Policy Editor, select the Deny ending on the fallback branch following Advanced Resource Assign
+58. In the **Visual Policy Editor**, select the **Deny** ending on the fallback branch following **Advanced Resource Assign**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798595-11820a96-5187-4f9e-a3e3-f5c3f440af73.png)
 
-59. In the Select Ending dialog box, selet the Allow radio button and then click Save
+59. In the **Select Ending** dialog box, selet the **Allow** radio button and then click **Save**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798636-b7e8ddcf-f4d2-4428-b4f3-281e07ee06fb.png)
 
-60. In the Visual Policy Editor, click Apply Access Policy (top left), and close the Visual Policy Editor
+60. In the **Visual Policy Editor**, click **Apply Access Policy** (top left), and close the **Visual Policy Editor**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798693-95a1e272-db74-415e-b277-5f3ed9dfacf9.png)
 
 
 ### Task 8 - Create a Client-side SSL Profile
 
-1. Navigate to Local Traffic ‑> Profile -> SSL -> Client. Click the Plus (+) Sign
+1. Navigate to Local Traffic ‑> Profile -> SSL -> Client. Click the **Plus (+) Sign**
 
 ![image](https://user-images.githubusercontent.com/51786870/210798992-763c6993-4042-4030-b935-739d37a9ee7b.png)
 
-2. Enter the Name idp.acme.com-clientssl
+2. Enter the Name **idp.acme.com-clientssl**
 
-3. Check the custom box on the Certificate Key Chain Line
+3. Check the **custom box** on the Certificate Key Chain Line
 
-4. Click Add
+4. Click **Add**
 
 ![image](https://user-images.githubusercontent.com/51786870/210799065-e42d2255-e263-4729-b902-e80ac44da398.png)
 
-5. Select acme.com-wildcard from the Certificate dropdown menu
+5. Select **acme.com-wildcard** from the Certificate dropdown menu
 
-6. Select acme.com-wildcard from the Key dropdown menu
+6. Select **acme.com-wildcard** from the Key dropdown menu
 
-7. Click Add
+7. Click **Add**
 
 ![image](https://user-images.githubusercontent.com/51786870/210799121-e5bcfa17-d763-4a65-82ea-93fd048fe350.png)
 
-8. Check the custom box on the Trusted Certificate Authorities Line
+8. Check the **custom box** on the Trusted Certificate Authorities Line
 
-9. Select ca.f5lab.local from the Trusted Certificate Authorities dropdown menu
+9. Select **ca.f5lab.local** from the Trusted Certificate Authorities dropdown menu
 
-10. Check the custom box on the Advertised Certificate Authorities Line
+10. Check the **custom box** on the Advertised Certificate Authorities Line
 
-11. Select ca.f5lab.local from the Advertised Certificate Authorities dropdown menu
+11. Select **ca.f5lab.local** from the Advertised Certificate Authorities dropdown menu
 
 ![image](https://user-images.githubusercontent.com/51786870/210799193-d3aa0436-ae41-48c7-97cc-7eb265940326.png)
 
-12. Click Finished
+12. Click **Finished**
 
 
 
@@ -2491,9 +2491,9 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 
 ![image](https://user-images.githubusercontent.com/51786870/210800066-9f2c7fe3-09a0-439f-9af5-1a99e984aed2.png)
 
-6. Review your Active Sessions (Access ‑> Overview ‑> Active Sessions­­­)
+6. Review your Active Sessions (**Access ‑> Overview ‑> Active Sessions**)
 
-7. Review your Access Report Logs (Access ‑> Overview ‑> Access Reports)
+7. Review your Access Report Logs (**Access ‑> Overview ‑> Access Reports**)
 
 ### Task 11 - Lab Cleanup
 
@@ -2503,11 +2503,11 @@ SearchFilter:	(userPrincipalName=%{session.custom.upn})
 
 ![image](https://user-images.githubusercontent.com/51786870/210806286-7f5e114f-0f2c-4550-a535-91cf1acee990.png)
 
-3. Scroll down the page until you see 301 SAML Federation on the left
+3. Scroll down the page until you see **301 SAML Federation** on the left
 
 ![image](https://user-images.githubusercontent.com/51786870/210806359-40348c50-bb16-4810-9a8e-a877645cae1b.png)
 
-4. Hover over tile SAML Identity Provider (IdP) - Cert Auth. A start and stop icon should appear within the tile. Click the Stop Button to trigger the automation to remove any prebuilt objects from the environment
+4. Hover over tile **SAML Identity Provider (IdP) - Cert Auth**. A start and stop icon should appear within the tile. Click the **Stop Button** to trigger the automation to remove any prebuilt objects from the environment
 
 ![image](https://user-images.githubusercontent.com/51786870/210806402-12332300-d350-43ec-92ca-6e1352128c8e.png)
 
