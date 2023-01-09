@@ -1,5 +1,3 @@
-# THIS IS UNDER CONSTRUCTION
-
 # F5-Access-Policy-Manager-APM-Solution-Guide
 
 
