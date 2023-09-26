@@ -2553,7 +2553,7 @@ return "UPN-NOT-FOUND";
 
 The cornerstone of the API protection profile is the ability to authorize users using JWT. Unlike Guided Configuration that creates the JWT Provider for you based on a few defined parameters, you must create the provider manually.
 
-1. Navigate to **Access >> Federation >> OAuth Client/Resource Server >> Provider**. Click the **+ (Plus Symbol)**
+1. From bigip1.f5lab.local - 10.1.1.4 (Click bigip1 tab in Chrome browser), than login as admin/admin and navigate to **Access >> Federation >> OAuth Client/Resource Server >> Provider**. Click the **+ (Plus Symbol)**
 
 ![image](https://user-images.githubusercontent.com/51786870/210808884-f4940a4a-bafe-4fb0-a538-be9aa2888fd9.png)
 
